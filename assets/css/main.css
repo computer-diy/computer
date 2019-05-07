@@ -218,6 +218,7 @@ span {
 
 /* page-title */
 .page-title {
+  width: 100%;
   font-size: 16px;
   color: #7d91aa; }
   .page-title h2 {

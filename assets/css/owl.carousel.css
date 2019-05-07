@@ -168,3 +168,53 @@
   z-index: 1;
   height: 100%;
   width: 100%; }
+  /* 首页轮播图 */
+.carousel-inner img {
+  width: 100%
+}
+.el-carousel__item h3 {
+  color: #475669;
+  font-size: 14px;
+  opacity: 0.75;
+  line-height: 200px;
+  margin: 0;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n+1) {
+  background-color: #d3dce6;
+}
+
+/* 卡片 */
+.text {
+  font-size: 14px;
+}
+
+.item {
+  margin-bottom: 18px;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both
+}
+
+.box-card {
+  width: 100%;
+  margin-top: 20px;
+}
+.box-card-little {
+  margin:5px;
+  height: 140px;
+  line-height:16px;
+  float: left;
+  text-align: left;
+  width: 100%;
+}
