@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+  <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <span v-pre>{{ 这里的内容不会被编译 }}</span>
+    <p v-if="seen">现在你看到我了</p>
+    <div v-for="a in list" :key="a."></div>
+
+    <span v-html="link"></span>
+  </div>
+
+</body>
+
+</html>
+
+<script>
+
+var app = new Vue({
+    el: '#app',
+    data: {
+      link: '<a href="#" rel="external nofollow" >这是一个连接</a>',
+      seen: true,
+      list:[]
+    }
+  })
+
+  app.all('*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    next();
+});
+  let _this = this
+  axios({
+    method: 'post',
+    url: 'https://lock.iot.gdatacloud.com/user/member/login',
+    data:{
+      username:111,
+      password:111
+    }
+  }).then(function (res) {
+    console.log(res)
+    if(res.data.code == 0){
+      axios({
+    method: 'get', 
+    headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+    url: 'https://lock.iot.gdatacloud.com/device/lock?adminORauthorized=0&current=1&size=10',
+  }).then((re)=>{
+    console.log(re)
+    if(re.data.code === 0 ){  
+      this.app.$data.list == re.data.content
+    }
+  })
+    }
+    this.app.$data.seen = false
+  });
+
+
+</script>
