@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <!-- Required CSS files -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/owl.carousel.css">
+    <link rel="stylesheet" href="assets/css/barfiller.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/slicknav.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+
+<body>
+    <div id="app1">
+        <!-- 头部 -->
+        <div class="preloader">
+            <span class="preloader-spin"></span>
+        </div>
+        <div class="site">
+            <header>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6 col-sm-3 logo-column">
+                            <a href="index.html" class="logo">
+                                <img src="assets/img/logo.png" alt="logo">
+                            </a>
+                        </div>
+                        <div class="col-6 col-sm-9 nav-column clearfix">
+                            <div class="right-nav">
+                                <span class="search-icon fa fa-search"></span>
+                                <form action="#" class="search-form">
+                                    <input type="search" placeholder="search now">
+                                    <button type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </form>
+                                <div class="header-social">
+                                    <a href="#" class="fa fa-facebook"></a>
+                                    <a href="#" class="fa fa-twitter"></a>
+                                    <a href="#" class="fa fa-github"></a>
+                                </div>
+                            </div>
+                            <nav id="menu" class="d-none d-lg-block">
+                                <ul>
+                                    <li class="current-menu-item has-child">
+                                        <a href="index.html">主页</a>
+                                        <ul class="sub-menu">
+                                            <li>
+                                                <a href="index.html">Home - 01</a>
+                                            </li>
+                                            <li>
+                                                <a href="index-2.html">Home - 02</a>
+                                            </li>
+                                            <li>
+                                                <a href="index-3.html">Home - 03</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="about.html">关于</a>
+                                    </li>
+                                    <li>
+                                        <a href="portfolio.html">Portfolio</a>
+                                    </li>
+                                    <li class="has-child">
+                                        <a href="#">Pages</a>
+                                        <ul class="sub-menu">
+                                            <li>
+                                                <a href="404.html">404</a>
+                                            </li>
+                                            <li>
+                                                <a href="about.html">About</a>
+                                            </li>
+                                            <li>
+                                                <a href="career.html">Career</a>
+                                            </li>
+                                            <li>
+                                                <a href="coming-soon.html">Coming Soon</a>
+                                            </li>
+                                            <li>
+                                                <a href="contact.html">Contact</a>
+                                            </li>
+                                            <li>
+                                                <a href="faq.html">Faq</a>
+                                            </li>
+                                            <li>
+                                                <a href="portfolio.html">Portfolio</a>
+                                            </li>
+                                            <li>
+                                                <a href="pricing.html">Pricing</a>
+                                            </li>
+                                            <li>
+                                                <a href="service.html">Service</a>
+                                            </li>
+                                            <li>
+                                                <a href="team.html">Team</a>
+                                            </li>
+                                            <li>
+                                                <a href="testimonial.html">Testimonial</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="contact.html">反馈建议</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <!-- 头部卡片 公告 -->
+
+
+        <el-breadcrumb class="font1" separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+            <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+            <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+        </el-breadcrumb>
+
+
+
+        <el-row style="margin-bottom:16px;">
+            <el-col :span="12" style="margin:20px 0px 0px 200px">
+                <el-card :body-style="{ }">
+                    <el-tag color="#ff6600">
+                        <h6 color="black" style="line-height:30px">今日话题</h6>
+                    </el-tag>
+                    <span>11111111111111111111111111111111111111111111</span>
+                    <el-input class="textarea" type="textarea" :rows="2" placeholder="吐槽 ..." v-model="textarea">
+                    </el-input>
+                    <el-button type="success" class="button">回复</el-button>
+                </el-card>
+            </el-col>
+        </el-row>
+        <div v-for="it in tableData" style="width:90%;margin:0px auto;">
+            <el-card class="box-card">
+                <div style="float:left">
+                    <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
+                </div>
+                <div style="float:left">
+                    <div slot="header" class="clearfix">
+                        <span style="font-size:18px;color:#aaa">[{{it.module}}]</span>
+                        <span style="margin-left:8px;">{{it.title}}</span>
+                        <span style="margin-left:40px;font-size:20px" v-if="it.num > 10">
+                            <el-tag type="danger">HOT
+                                <i class="el-icon-sunny"></i>
+                            </el-tag>
+                        </span>
+                    </div>
+                    <br/>
+                    <div class="text item">
+                        <span style="color:green">
+                            <i class="el-icon-user-solid"></i>{{it.author}}</span>
+                        <span style="margin-left:10px;">
+                            <i class="el-icon-date"></i>{{it.date}}</span>
+                        <span style="margin-left:10px;">
+                            <i class="el-icon-chat-dot-round"></i>{{it.num}}</span>
+                        <span style="margin-left:10px;">最后回复{{it.date}}</span>
+                    </div>
+                </div>
+            </el-card>
+        </div>
+        <div style="margin-top:10px;margin-left:30%;">
+            <el-pagination :page-size="3" :pager-count="10" background layout="prev ,pager, next" @current-change="pageChange" :total="total">
+            </el-pagination>
+        </div>
+
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="assets/js/jquery-2.2.4.min.js"></script>
+    <script src="assets/js/vendor/popper.min.js"></script>
+    <script src="assets/js/vendor/bootstrap.min.js"></script>
+    <script src="assets/js/vendor/owl.carousel.min.js"></script>
+    <script src="assets/js/vendor/isotope.pkgd.min.js"></script>
+    <script src="assets/js/vendor/jquery.barfiller.js"></script>
+    <script src="assets/js/vendor/loopcounter.js"></script>
+    <script src="assets/js/vendor/slicknav.min.js"></script>
+    <script src="assets/js/active.js"></script>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app1',
+        data: {
+            message: 'Hello Vue!',
+            textarea: '',
+            total: 100,
+            tableData: [{
+                title: '2016-05-02',
+                author: '王小虎',
+                module: '上海市普陀区金沙江路 1518 弄',
+                date: '1213231',
+                num: 31223
+            }, {
+                title: '2016-05-02',
+                author: '王小虎',
+                module: '上海市普陀区金沙江路 1518 弄',
+                date: '1213231',
+                num: 2
+            }, {
+                title: '2016-05-02',
+                author: '王小虎',
+                module: '上海市普陀区金沙江路 1518 弄',
+                date: '1213231',
+                num: 3
+            }, {
+                title: '2016-05-02',
+                author: '王小虎',
+                module: '上海市普陀区金沙江路 1518 弄',
+                date: '1213231',
+                num: 32
+            }, {
+                title: '2016-05-02',
+                author: '王小虎',
+                module: '上海市普陀区金沙江路 1518 弄',
+                date: '1213231',
+                num: 12
+            }]
+        },
+        methods: {
+            pageChange() {
+                this.$http.get('http://localhost:888/invitation/page')
+                    .then(function (response) {
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        },
+        mounted() {
+            this.pageChange()
+
+        },
+    })
+</script>
+
+<style>
+    .card1 {
+        width: 100%;
+    }
+
+    .time {
+        font-size: 13px;
+        color: #999;
+    }
+
+    .bottom {
+        margin-top: 13px;
+        line-height: 12px;
+    }
+
+    .image {
+        width: 70px;
+        height: 70px;
+    }
+
+    .button {
+        margin-top: 6px;
+        float: right;
+        width: 80px;
+        height: 40px;
+        margin-bottom: 10px;
+    }
+
+    .textarea {
+        margin-top: 12px;
+    }
+
+    .font1 {
+        font-size: 18px;
+        color: #eee;
+        margin-top: 4px;
+        margin-left: 10px;
+    }
+
+    .clearfix:before,
+    .clearfix:after {
+        display: table;
+        content: "";
+    }
+
+    .clearfix:after {
+        clear: both
+    }
+</style>
+
+</html>
