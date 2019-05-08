@@ -24,19 +24,11 @@
 </head>
 
 <body>
-<<<<<<< HEAD
-<div id = "app">
-    <div class="preloader">
-        <span class="preloader-spin"></span>
-    </div>
-    <div class="site">
-=======
     <div id="app">
         <div class="preloader">
             <span class="preloader-spin"></span>
         </div>
         <div class="site">
->>>>>>> 45047ba668bceac0954d122d53a4695cd355a040
             <header>
                 <div class="container">
                     <div class="row">
@@ -62,7 +54,7 @@
                                 <ul>
                                     <li class="current-menu-item has-child">
                                         <a href="index.html">主页</a>
-                                        <ul class="sub-menu">
+                                        <ul class="sub-menu" style="z-index: 1000">
                                             <li><a href="index.html">Home - 01</a></li>
                                             <li><a href="index-2.html">Home - 02</a></li>
                                             <li><a href="index-3.html">Home - 03</a></li>
@@ -72,7 +64,7 @@
                                     <li><a href="portfolio.html">Portfolio</a></li>
                                     <li class="has-child">
                                         <a href="#">Pages</a>
-                                        <ul class="sub-menu">
+                                        <ul class="sub-menu" style="z-index: 1000">
                                             <li><a href="404.html">404</a></li>
                                             <li><a href="about.html">About</a></li>
                                             <li><a href="career.html">Career</a></li>
@@ -95,120 +87,67 @@
             </header>
 
             <div class="container text-center">
-                <el-carousel :interval="4000" type="card" height="400px">
-                    <el-carousel-item v-for="img in imgs" :key="item">
-                        <img :src="img" style="width:100%;height:400px;" alt="portfolio-image">
-                    </el-carousel-item>
-                </el-carousel>
-                <div class="portfolio-area sp">
-                    <div class="container">
-                        <div class="row">
-                            <ul class="isotope-menu">
-                                <li data-filter="*" class="active">显示全部</li>
-                                <li data-filter=".ceramics">CPU、内存、主板</li>
-                                <!-- <li data-filter=".branding">显卡及游戏玩家</li>
-                                <li data-filter=".design">机箱、电源、散热</li>
-                                <li data-filter=".photography">键鼠外设</li> -->
-                            </ul>
-                        </div>
-                        <div class="row portfolio-isotope">
 
-                            <!-- CPU、内存、主板  -->
-                            <div v-for="img in imgs" class="single-portfolio col-md-4 ceramics">
-                                <div class="inner">
-                                    <div class="portfolio-img">
-                                        <img :src="img" style="width:100%;height:220px;" alt="portfolio-image">
-                                        <div class="hover-content">
-                                            <div>
-                                                <a href="#" class="button">View Case Study</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="portfolio-content">
-                                        <a href="#">
-                                            <h3>The Back Chiropractor</h3>
-                                        </a>
-                                        <span>Ceramics, Design</span>
-                                    </div>
-                                </div>
+                <el-card class="box-card">
+                    <el-row :gutter="20">
+                        <el-col :span="3">
+                            <div class="grid-content bg-purple" style="float:left;">
+                                <img style="width:100px;border-radius:50%;float:left;display: block"
+                                    src="https://i7.3conline.com/images/upload/upc/face/25/40/98/46/25409846_50x50"
+                                    alt="">
+                                <br>
+                                <el-button type="danger" style="float:left;margin-top: 10px" round>修改资料</el-button>
                             </div>
-                            <!-- CPU、内存、主板  end-->
+                        </el-col>
+                        <el-col :span="18">
+                            <div class="grid-content bg-purple" style="float:left;padding-left:10px;color:#989898">
 
+                                <p>昵称：</p>
+                                <p>性别：</p>
+                                <p>手机号：</p>
 
-                        </div>
-
-                        <el-divider></el-divider>
-                        <!-- 板块部分 -->
-                        <el-card class="box-card">
-                            <div slot="header" class="clearfix">
-                                <span style="float:left;font-size:22px;color:#e2761c"><b>DIY大杂烩</b></span>
-                                <el-button style="float: right; padding: 3px 0;color:#e2761c" type="text">编辑</el-button>
                             </div>
-                            <div class="text item">
-                                <el-row class="row-bg" justify="space-between">
-                                    <el-col :span="8" v-for="o in list" :key="o.moduleId">
-                                        <div class="grid-content bg-purple">
-                                            <el-card class="box-card-little">
-                                                <el-row>
-                                                    <el-col :span="7">
-                                                        <img :src="o.img" @click="toDetail()"
-                                                            style="border-radius:10px;width:200px;height:100px;float:left"
-                                                            alt="">
-                                                    </el-col>
-                                                    <el-col :span="17">
-                                                        <div style="float:left;padding-left: 10px">
-                                                            <p><a href="list.html">{{o.NAME}}</a> </p>
-                                                            <p>主题数：{{o.num}}万帖子数：{{o.num}}</p>
-                                                            <p>最新发表：<a href="detail.html">{{o.newest.title}}</a> </p>
-                                                        </div>
+                        </el-col>
 
-                                                    </el-col>
-                                                </el-row>
-                                            </el-card>
-                                        </div>
-                                    </el-col>
+                    </el-row>
+                    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal"
+                        @select="">
+                        <el-menu-item index="1">动态</el-menu-item>
+                        <el-menu-item index="4">评论</el-menu-item>
+                    </el-menu>
 
-                                </el-row>
-                            </div>
+                </el-card>
+
+                <br>
+
+
+                <el-row :gutter="20">
+                    <el-col :span="16">
+                        <el-tabs type="border-card">
+                            <el-tab-pane label="动态">动态</el-tab-pane>
+                            <el-tab-pane label="论坛">论坛</el-tab-pane>
+                            <el-tab-pane label="点评">点评</el-tab-pane>
+                            <el-tab-pane label="设备">设备</el-tab-pane>
+                        </el-tabs>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-card style="height:200px;margin-bottom: 20px">
+                            <el-tabs v-model="activeName3" @tab-click="handleClick">
+                                <el-tab-pane label="关注(0)" name="0">
+                                    <img style="width:30%" src="" alt="">
+                                </el-tab-pane>
+                                <el-tab-pane label="粉丝(0)" name="1">
+                                    <img style="width:30%" src="" alt="">
+
+                                </el-tab-pane>
+                            </el-tabs>
                         </el-card>
-                        <!-- 板块部分 -->
+                        <el-card style="height:200px;margin-bottom: 20px">
 
-                        <!-- 板块部分 -->
-                        <el-card class="box-card">
-                            <div slot="header" class="clearfix">
-                                <span style="float:left;font-size:22px;color:#e2761c"><b>产品技术讨论区</b></span>
-                                <el-button style="float: right; padding: 3px 0;color:#e2761c" type="text">编辑</el-button>
-                            </div>
-                            <div class="text item">
-                                <el-row class="row-bg" justify="space-between">
-                                    <el-col :span="8" v-for="o in list" :key="o.moduleId">
-                                        <div class="grid-content bg-purple">
-                                            <el-card class="box-card-little">
-                                                <el-row>
-                                                    <el-col :span="7">
-                                                        <img :src="o.img"
-                                                            style="border-radius:10px;width:200px;height:100px;float:left"
-                                                            alt="">
-                                                    </el-col>
-                                                    <el-col :span="17">
-                                                        <div style="float:left;padding-left: 10px">
-                                                            <p>{{o.NAME}}</p>
-                                                            <p>主题数：{{o.num}}万帖子数：{{o.num}}</p>
-                                                            <p>最新发表：{{o.newest.title}}</p>
-                                                        </div>
-
-                                                    </el-col>
-                                                </el-row>
-                                            </el-card>
-                                        </div>
-                                    </el-col>
-
-                                </el-row>
-                            </div>
                         </el-card>
-                        <!-- 板块部分 -->
-                    </div>
-                </div>
+                    </el-col>
+
+                </el-row>
 
 
 
@@ -287,16 +226,22 @@
                 link: '<a href="#" rel="external nofollow" >这是一个连接</a>',
                 seen: true,
                 list: [],
+                activeIndex: '1',
+                activeIndex2: '1',
+                activeName3: '0',
                 imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/24/c19/144112747_1556100405099.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/01/c11/140114944_1554093874677.jpg']
 
             },
-            methods:{
-                toDetail(){
-                    location.href=('detail.html')
+            methods: {
+                toDetail() {
+                    location.href = ('detail.html')
+                },
+                handleClick(e) {
+                    this.$data.activeName3 = e.name
                 }
             },
             created: function () {
-                
+
                 let _this = this
                 axios({
                     method: 'get',
