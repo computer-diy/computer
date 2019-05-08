@@ -96,22 +96,39 @@
                                     src="https://i7.3conline.com/images/upload/upc/face/25/40/98/46/25409846_50x50"
                                     alt="">
                                 <br>
-                                <el-button type="danger" style="float:left;margin-top: 10px" round>修改资料</el-button>
+                                <el-button type="danger" @click="dialogFormVisible = true"
+                                    style="float:left;margin-top: 10px" round>修改资料</el-button>
                             </div>
                         </el-col>
-                        <el-col :span="18">
-                            <div class="grid-content bg-purple" style="float:left;padding-left:10px;color:#989898">
-
-                                <p>昵称：</p>
-                                <p>性别：</p>
-                                <p>手机号：</p>
-
-                            </div>
+                        <el-col :span="18" style="text-align:left">
+                            <el-row>
+                                <el-col :span="12">
+                                    <p>昵称：{{userInfo.name}}</p>
+                                </el-col>
+                                <el-col :span="12">
+                                    <p>性别：{{userInfo.sex}}</p>
+                                </el-col>
+                            </el-row>
+                            <el-row>
+                                <el-col :span="12">
+                                    <p>手机号：{{userInfo.phone}}</p>
+                                </el-col>
+                                <el-col :span="12">
+                                    <p>邮箱：{{userInfo.mail}}</p>
+                                </el-col>
+                            </el-row>
+                            <el-row>
+                                <el-col :span="12">
+                                    <p>地址：{{userInfo.phone}}</p>
+                                </el-col>
+                                <el-col :span="12">
+                                    <p>签名：{{userInfo.phone}}</p>
+                                </el-col>
+                            </el-row>
                         </el-col>
 
                     </el-row>
-                    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal"
-                        @select="">
+                    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="">
                         <el-menu-item index="1">动态</el-menu-item>
                         <el-menu-item index="4">评论</el-menu-item>
                     </el-menu>
@@ -152,6 +169,30 @@
 
 
             </div>
+            <el-dialog title="修改个人信息" :visible.sync="dialogFormVisible">
+                <el-form :model="form" style="text-align: left;">
+                    <el-form-item label="昵称：" :label-width="formLabelWidth">
+                        <el-input v-model="form.name" autocomplete="off" v-value='2'></el-input>
+                    </el-form-item>
+                    <el-form-item label="手机号：" :label-width="formLabelWidth">
+                        <el-input v-model="form.phone" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="性别：" :label-width="formLabelWidth">
+                        <el-select v-model="form.sex" placeholder="请选择性别">
+                            <el-option label="男" value="男"></el-option>
+                            <el-option label="女" value="女"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="邮箱：" :label-width="formLabelWidth">
+                        <el-input v-model="form.email" autocomplete="off"></el-input>
+                    </el-form-item>
+
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                </div>
+            </el-dialog>
             <footer>
                 <div class="footer-top">
                     <div class="container">
@@ -226,10 +267,14 @@
                 link: '<a href="#" rel="external nofollow" >这是一个连接</a>',
                 seen: true,
                 list: [],
+                dialogFormVisible: false,
                 activeIndex: '1',
+                userInfo: {},
                 activeIndex2: '1',
+                formLabelWidth: '100px',
                 activeName3: '0',
-                imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/24/c19/144112747_1556100405099.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/01/c11/140114944_1554093874677.jpg']
+                imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/24/c19/144112747_1556100405099.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/01/c11/140114944_1554093874677.jpg'],
+                form: {}
 
             },
             methods: {
@@ -238,17 +283,23 @@
                 },
                 handleClick(e) {
                     this.$data.activeName3 = e.name
-                }
+                },
+
             },
             created: function () {
-
+                let userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
+                if (userInfo != null) {
+                    this.$data.userInfo = userInfo
+                    this.$data.form= userInfo
+                }
+                console.log('user', userInfo)
                 let _this = this
                 axios({
                     method: 'get',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    url: 'http://192.168.1.12:888/module/list',
+                    url: 'http://172.20.10.3:888/module/list',
                 }).then((re) => {
                     console.log(re)
                     if (re.data.code === 0) {

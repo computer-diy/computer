@@ -1016,7 +1016,8 @@ footer {
 
 .contact-form {
   padding: 40px;
-  border-radius: 11px; }
+  border-radius: 11px;
+ }
   .contact-form input:not([type="submit"]),
   .contact-form textarea {
     border: 1px solid #cad4de;
