@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title></title>
+    <!-- <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <!-- Required CSS files -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/owl.carousel.css">
+    <link rel="stylesheet" href="assets/css/barfiller.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/slicknav.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="preloader">
+            <span class="preloader-spin"></span>
+        </div>
+        <div class="site">
+            <header>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6 col-sm-3 logo-column">
+                            <a href="index.html" class="logo">
+                                <img src="assets/img/logo.png" alt="logo">
+                            </a>
+                        </div>
+                        <div class="col-6 col-sm-9 nav-column clearfix">
+                            <div class="right-nav">
+                                <span class="search-icon fa fa-search"></span>
+                                <form action="#" class="search-form">
+                                    <input type="search" placeholder="search now">
+                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                </form>
+                                <div class="header-social">
+                                    <a href="#" class="fa fa-facebook"></a>
+                                    <a href="#" class="fa fa-twitter"></a>
+                                    <a href="#" class="fa fa-github"></a>
+                                </div>
+                            </div>
+                            <nav id="menu" class="d-none d-lg-block">
+                                <ul>
+                                    <li class="current-menu-item has-child">
+                                        <a href="index.html">主页</a>
+                                        <ul class="sub-menu" style="z-index: 1000">
+                                            <li><a href="index.html">Home - 01</a></li>
+                                            <li><a href="index-2.html">Home - 02</a></li>
+                                            <li><a href="index-3.html">Home - 03</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="about.html">关于</a></li>
+                                    <li><a href="portfolio.html">Portfolio</a></li>
+                                    <li class="has-child">
+                                        <a href="#">Pages</a>
+                                        <ul class="sub-menu" style="z-index: 1000">
+                                            <li><a href="404.html">404</a></li>
+                                            <li><a href="about.html">About</a></li>
+                                            <li><a href="career.html">Career</a></li>
+                                            <li><a href="coming-soon.html">Coming Soon</a></li>
+                                            <li><a href="contact.html">Contact</a></li>
+                                            <li><a href="faq.html">Faq</a></li>
+                                            <li><a href="portfolio.html">Portfolio</a></li>
+                                            <li><a href="pricing.html">Pricing</a></li>
+                                            <li><a href="service.html">Service</a></li>
+                                            <li><a href="team.html">Team</a></li>
+                                            <li><a href="testimonial.html">Testimonial</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="contact.html">反馈建议</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="container text-center">
+
+                <el-card class="box-card">
+                    <el-row :gutter="20">
+                        <el-col :span="3">
+                            <div class="grid-content bg-purple" style="float:left;">
+                                <img style="width:100px;border-radius:50%;float:left;display: block"
+                                    src="https://i7.3conline.com/images/upload/upc/face/25/40/98/46/25409846_50x50"
+                                    alt="">
+                                <br>
+                                <el-button type="danger" style="float:left;margin-top: 10px" round>修改资料</el-button>
+                            </div>
+                        </el-col>
+                        <el-col :span="18">
+                            <div class="grid-content bg-purple" style="float:left;padding-left:10px;color:#989898">
+
+                                <p>昵称：</p>
+                                <p>性别：</p>
+                                <p>手机号：</p>
+
+                            </div>
+                        </el-col>
+
+                    </el-row>
+                    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal"
+                        @select="">
+                        <el-menu-item index="1">动态</el-menu-item>
+                        <el-menu-item index="4">评论</el-menu-item>
+                    </el-menu>
+
+                </el-card>
+
+                <br>
+
+
+                <el-row :gutter="20">
+                    <el-col :span="16">
+                        <el-tabs type="border-card">
+                            <el-tab-pane label="动态">动态</el-tab-pane>
+                            <el-tab-pane label="论坛">论坛</el-tab-pane>
+                            <el-tab-pane label="点评">点评</el-tab-pane>
+                            <el-tab-pane label="设备">设备</el-tab-pane>
+                        </el-tabs>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-card style="height:200px;margin-bottom: 20px">
+                            <el-tabs v-model="activeName3" @tab-click="handleClick">
+                                <el-tab-pane label="关注(0)" name="0">
+                                    <img style="width:30%" src="" alt="">
+                                </el-tab-pane>
+                                <el-tab-pane label="粉丝(0)" name="1">
+                                    <img style="width:30%" src="" alt="">
+
+                                </el-tab-pane>
+                            </el-tabs>
+                        </el-card>
+                        <el-card style="height:200px;margin-bottom: 20px">
+
+                        </el-card>
+                    </el-col>
+
+                </el-row>
+
+
+
+            </div>
+            <footer>
+                <div class="footer-top">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-3 footer_widget">
+                                <div class="inner">
+                                    <h4>About</h4>
+                                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
+                                        turpis egestas.</p>
+                                    <p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet,
+                                        antesenectus et netus et malesuada fames ac turpis egestas.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3 footer_widget">
+                                <div class="inner">
+                                    <h4>Company</h4>
+                                    <ul>
+                                        <li><a href="#">Company Overview</a></li>
+                                        <li><a href="#">Meet The Team</a></li>
+                                        <li><a href="#">Our Awesome Partners</a></li>
+                                        <li><a href="#">Our Services</a></li>
+                                        <li><a href="#">Frequently Asked Questions</a></li>
+                                        <li><a href="#">Contact Us</a></li>
+                                        <li><a href="#">Terms of Use</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="copyright-txt">
+                                    Copyright &copy; 2019.Company name All rights reserved.<a target="_blank"
+                                        href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 text-right">
+                                <div class="footer-nav">
+                                    <a href="#">Home</a>
+                                    <a href="#">Portfolio</a>
+                                    <a href="#">Pages</a>
+                                    <a href="#">Shortcode</a>
+                                    <a href="#">Blog</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+
+        </div>
+    </div>
+
+    <!--Required JS files-->
+    <script src="assets/js/jquery-2.2.4.min.js"></script>
+    <script src="assets/js/vendor/popper.min.js"></script>
+    <script src="assets/js/vendor/bootstrap.min.js"></script>
+    <script src="assets/js/vendor/owl.carousel.min.js"></script>
+    <script src="assets/js/vendor/isotope.pkgd.min.js"></script>
+    <script src="assets/js/vendor/jquery.barfiller.js"></script>
+    <script src="assets/js/vendor/loopcounter.js"></script>
+    <script src="assets/js/vendor/slicknav.min.js"></script>
+    <script src="assets/js/active.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                link: '<a href="#" rel="external nofollow" >这是一个连接</a>',
+                seen: true,
+                list: [],
+                activeIndex: '1',
+                activeIndex2: '1',
+                activeName3: '0',
+                imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/24/c19/144112747_1556100405099.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/01/c11/140114944_1554093874677.jpg']
+
+            },
+            methods: {
+                toDetail() {
+                    location.href = ('detail.html')
+                },
+                handleClick(e) {
+                    this.$data.activeName3 = e.name
+                }
+            },
+            created: function () {
+
+                let _this = this
+                axios({
+                    method: 'get',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    url: 'http://192.168.1.12:888/module/list',
+                }).then((re) => {
+                    console.log(re)
+                    if (re.data.code === 0) {
+                        this.$data.list = re.data.content
+                    }
+                })
+            }
+        })
+
+
+    </script>
+</body>
+
+</html>

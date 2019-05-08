@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title></title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
+    <!-- Required CSS files -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/owl.carousel.css">
+    <link rel="stylesheet" href="assets/css/barfiller.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/slicknav.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <style type="text/css">
+        .el-carousel__item h3 {
+            color: #475669;
+            font-size: 18px;
+            opacity: 0.75;
+            line-height: 500px;
+            margin: 0;
+        }
+
+        .el-carousel__item:nth-child(2n) {
+            background-color: #99a9bf;
+        }
+
+        .el-carousel__item:nth-child(2n+1) {
+            background-color: #d3dce6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app" class="site">
+        <div class="preloader">
+            <span class="preloader-spin"></span>
+        </div>
+        <header>
+            <div class="container">
+                <div class="row">
+                    <div class="col-6 col-sm-3 logo-column">
+                        <a href="index.html" class="logo">
+                            <img src="assets/img/logo.png" alt="logo">
+                        </a>
+                    </div>
+                    <div class="col-6 col-sm-9 nav-column clearfix">
+                        <div class="right-nav">
+                            <span class="search-icon fa fa-search"></span>
+                            <form action="#" class="search-form">
+                                <input type="search" placeholder="search now">
+                                <button type="submit"><i class="fa fa-search"></i></button>
+                            </form>
+                            <div class="header-social">
+                                <a href="#" class="fa fa-facebook"></a>
+                                <a href="#" class="fa fa-twitter"></a>
+                                <a href="#" class="fa fa-github"></a>
+                            </div>
+                        </div>
+                        <nav id="menu" class="d-none d-lg-block">
+                            <ul>
+                                <li class="current-menu-item has-child">
+                                    <a href="index.html">产品库</a>
+                                    <ul class="sub-menu" style="z-index: 1000">
+                                        <li><a href="#">硬件</a></li>
+                                        <li><a href="#">软件</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="about.html">关于</a></li>
+                                <li><a href="login.html">登录</a></li>
+                                <li class="has-child">
+                                    <a href="#">建议</a>
+                                    <ul class="sub-menu" style="z-index: 1000">
+                                        <li><a href="#">留言</a></li>
+                                        <li><a href="#">反馈建议</a></li>
+                                        <li><a href="#">联系我们</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <el-carousel height="800px" indicator-position="outside">
+            <el-carousel-item v-for="item in imgs" :key="item" style="height:800px;width: 100%">
+                <img :src="item" style="height:800px;width:100%" alt="">
+            </el-carousel-item>
+        </el-carousel>
+        <div class="contact-area sp" style="position: absolute;right:10px; top:200px; z-index: 100;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5 contact-info">
+
+                    </div>
+                    <div class="col-md-8">
+
+                        <el-tabs type="border-card" style="background:rgba(0,0,0,0.5);border:0px dashed;border-radius:10px">
+                            <el-tab-pane>
+                                <span slot="label"><i class="el-icon-s-promotion"></i> 登录</span>
+                                <form action="#" class="contact-form">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <input type="text" name="username" placeholder="手机号">
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <input type="password" name="password" placeholder="密码">
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <input class="btn btn-info" type="submit" value="立即登录">
+                                            <a href="register.html" style="float:left;margin-right: 20px"
+                                                class="btn btn-danger" type="success">忘记密码</a>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </el-tab-pane>
+                            <el-tab-pane>
+                                    <span slot="label"><i class="el-icon-user"></i> 注册</span>
+                                <form action="#" class="contact-form">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <input type="text" name="username" placeholder="手机号">
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <input type="password" name="password" placeholder="密码">
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <input type="password" name="rePassword" placeholder="再次输入密码">
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <input class="btn btn-info" type="submit" value="立即注册">
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </el-tab-pane>
+                        </el-tabs>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div class="footer-top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-3 footer_widget">
+                            <div class="inner">
+                                <h4>About</h4>
+                                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
+                                    egestas.</p>
+                                <p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, antesenectus
+                                    et netus et malesuada fames ac turpis egestas.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 footer_widget">
+                            <div class="inner">
+                                <h4>Company</h4>
+                                <ul>
+                                    <li><a href="#">Company Overview</a></li>
+                                    <li><a href="#">Meet The Team</a></li>
+                                    <li><a href="#">Our Awesome Partners</a></li>
+                                    <li><a href="#">Our Services</a></li>
+                                    <li><a href="#">Frequently Asked Questions</a></li>
+                                    <li><a href="#">Contact Us</a></li>
+                                    <li><a href="#">Terms of Use</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 footer_widget">
+                            <div class="inner">
+                                <h4>Recent Posts</h4>
+                                <div class="media">
+                                    <a href="#">
+                                        <img src="assets/img/recent1.jpg" class="d-flex mr-3" alt="">
+                                    </a>
+                                    <div class="media-body">
+                                        <h5>
+                                            <a href="#">Curling irons are as individual as the women</a>
+                                        </h5>
+                                        <span>June 22, 2019</span>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <a href="#">
+                                        <img src="assets/img/recent2.jpg" class="d-flex mr-3" alt="">
+                                    </a>
+                                    <div class="media-body">
+                                        <h5>
+                                            <a href="#">Curling irons are as individual as the women</a>
+                                        </h5>
+                                        <span>June 22, 2019</span>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <a href="#">
+                                        <img src="assets/img/recent3.jpg" class="d-flex mr-3" alt="">
+                                    </a>
+                                    <div class="media-body">
+                                        <h5>
+                                            <a href="#">Curling irons are as individual as the women</a>
+                                        </h5>
+                                        <span>June 22, 2019</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 footer_widget">
+                            <div class="inner">
+                                <h4>Address</h4>
+                                <h5>Flat Pro, Inc.</h5>
+                                <p>649 Folsom Ave, Suite 400 <br>San Francisco, CA 63105 <br>P: (123) 456-7890</p>
+                                <h4>Newsletter</h4>
+                                <form action="#" class="nw_form">
+                                    <input placeholder="Enter your email" type="email">
+                                    <button><i class="fa fa-paper-plane"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="copyright-txt">
+                                Copyright &copy; 2019.Company name All rights reserved.<a target="_blank"
+                                    href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 text-right">
+                            <div class="footer-nav">
+                                <a href="#">Home</a>
+                                <a href="#">Portfolio</a>
+                                <a href="#">Pages</a>
+                                <a href="#">Shortcode</a>
+                                <a href="#">Blog</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+
+    </div>
+
+    <!--Required JS files-->
+    <script src="assets/js/jquery-2.2.4.min.js"></script>
+    <script src="assets/js/vendor/popper.min.js"></script>
+    <script src="assets/js/vendor/bootstrap.min.js"></script>
+    <script src="assets/js/vendor/owl.carousel.min.js"></script>
+    <script src="assets/js/vendor/isotope.pkgd.min.js"></script>
+    <script src="assets/js/vendor/jquery.barfiller.js"></script>
+    <script src="assets/js/vendor/loopcounter.js"></script>
+    <script src="assets/js/vendor/slicknav.min.js"></script>
+    <script src="assets/js/active.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                link: '<a href="#" rel="external nofollow" >这是一个连接</a>',
+                seen: true,
+                list: [],
+                imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/24/c19/144112747_1556100405099.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/01/c11/140114944_1554093874677.jpg']
+
+            },
+            methods: {
+                toDetail() {
+                    location.href = ('detail.html')
+                }
+            },
+            created: function () {
+
+                let _this = this
+                axios({
+                    method: 'get',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    url: 'http://192.168.1.12:888/module/list',
+                }).then((re) => {
+                    console.log(re)
+                    if (re.data.code === 0) {
+                        this.$data.list = re.data.content
+                    }
+                })
+            }
+        })
+
+
+    </script>
+</body>
+
+</html>

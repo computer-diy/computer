@@ -1015,9 +1015,8 @@ footer {
     margin-right: 8px; }
 
 .contact-form {
-  border: 1px solid #cad4de;
   padding: 40px;
-  border-radius: 3px; }
+  border-radius: 11px; }
   .contact-form input:not([type="submit"]),
   .contact-form textarea {
     border: 1px solid #cad4de;
