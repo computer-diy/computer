@@ -122,25 +122,29 @@
                 </div>
             </header>
         </div>
-        <!-- 详情页面 -->
+        <h1 style="text-align:center;">话题贴发布</h1>
+        <div class="editor">
+            <div ref="toolbar" style="width:90%;margin:0px auto" class="toolbar">
+            </div>
+            <div ref="editor" style="width:90%;margin:0px auto;border:1px solid #bbb;height:500px" class="text">
+            </div>
+        </div>
 
-
-
+        <div style="float:right;margin-right:340px;margin-top:40px;">
+            <el-button type="success" @click="aaaa()" style="float:right;">发布</el-button>
+            <el-input v-model="title" placeholder="请输入标题" style="float:right;width:180px;"></el-input>
+            <el-select v-model="moduleId" placeholder="请选择发布版块" style="float:right;">
+                <el-option v-for="item in options" :key="item.moduleId" :label="item.NAME" :value="item.moduleId">
+                </el-option>
+            </el-select>
+            <!-- 详情页面 -->
+        </div>
     </div>
     <!-- body container -->
-<div class="container">
-        <div style="max-width:1100px;">
-            <!--demo-->
-            <div style="text-align:left;">
-                <div id="divDemo"></div>
-            </div><!--demo end-->
-        </div>
-</div><!-- body container end -->
- 
-<script type="text/javascript" src='http://www.wangeditor.com/js/jquery-1.10.2.min.js'></script>
-<script type="text/javascript" src='http://www.wangeditor.com/bootstrap-3.3.0/js/bootstrap.min.js'></script>
-<script type="text/javascript" src='http://unpkg.com/wangeditor/release/wangEditor.min.js'></script>
-<script type="text/javascript" src='http://www.wangeditor.com/index.js'></script>
+
+
+
+    <script src="https://unpkg.com/wangeditor@3.1.1/release/wangEditor.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="assets/js/jquery-2.2.4.min.js"></script>
     <script src="assets/js/vendor/popper.min.js"></script>
@@ -154,13 +158,77 @@
 
 </body>
 <script>
-
+    var E = window.wangEditor
+    // var editor = new E('#divDemo')
     var app = new Vue({
         el: '#app2',
         data: {
-            message: 'Hello Vue!'
-        }
+            message: 'Hello Vue!',
+            moduleId: '',
+            title: '',
+            content: '',
+            options: [],
+            editor: null
+        },
+        methods: {
+            aaaa() {
+                this.content = this.editor.$textElem['0'].innerHTML
+                axios({
+                    method: 'POST',
+                    data: { "content": this.content, "title": this.title, "moduleId": this.moduleId },
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    url: 'http://192.168.1.12:888/invitation/add',
+                }).then((re) => {
+                    if (re.data.code === 0) {
+                        this.$data.options = re.data.content
+                    }
+                })
+            }
+        },
+        mounted() {
+            this.editor = new E(this.$refs.toolbar, this.$refs.editor)
+            this.editor.customConfig.uploadImgShowBase64 = true // base 64 存储图片
+            this.editor.customConfig.menus = [
+                'head', // 标题
+                'bold', // 粗体
+                'fontSize', // 字号
+                'fontName', // 字体
+                'italic', // 斜体
+                'underline', // 下划线
+                'strikeThrough', // 删除线
+                'foreColor', // 文字颜色
+                'backColor', // 背景颜色
+                'link', // 插入链接
+                'list', // 列表
+                'justify', // 对齐方式
+                'quote', // 引用
+                'emoticon', // 表情
+                'image', // 插入图片
+                'table', // 表格
+                'video', // 插入视频
+                'code', // 插入代码
+                'undo', // 撤销
+                'redo', // 重复
+                'fullscreen' // 全屏
+            ]
+            this.editor.create()
+            axios({
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                url: 'http://192.168.1.12:888/module/list',
+            }).then((re) => {
+                if (re.data.code === 0) {
+                    this.$data.options = re.data.content
+                }
+            })
+        },
     })
+
+
 </script>
 
 
