@@ -23,7 +23,7 @@
 </head>
 
 <body>
-    <div id="app1">
+    <div id="app2">
         <!-- 头部 -->
         <div class="preloader">
             <span class="preloader-spin"></span>
@@ -122,65 +122,25 @@
                 </div>
             </header>
         </div>
-        <!-- 头部卡片 公告 -->
+        <!-- 详情页面 -->
 
 
-        <el-breadcrumb class="font1" separator-class="el-icon-arrow-right">
-            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-            <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-            <el-breadcrumb-item>活动详情</el-breadcrumb-item>
-        </el-breadcrumb>
-
-
-
-        <el-row style="margin-bottom:16px;">
-            <el-col :span="12" style="margin:20px 0px 0px 200px">
-                <el-card :body-style="{ }">
-                    <el-tag color="#ff6600">
-                        <h6 color="black" style="line-height:30px">今日话题</h6>
-                    </el-tag>
-                    <span>11111111111111111111111111111111111111111111</span>
-                    <el-input class="textarea" type="textarea" :rows="2" placeholder="吐槽 ..." v-model="textarea">
-                    </el-input>
-                    <el-button type="success" class="button">回复</el-button>
-                </el-card>
-            </el-col>
-        </el-row>
-        <div v-for="it in tableData" style="width:90%;margin:0px auto;">
-            <el-card class="box-card">
-                <div style="float:left">
-                    <img :src="it.img" class="image">
-                </div>
-                <div style="float:left">
-                    <div slot="header" class="clearfix">
-                        <span style="font-size:18px;color:#aaa">[{{it.moduleName}}]</span>
-                        <span style="margin-left:8px;">{{it.title}}</span>
-                        <span style="margin-left:40px;font-size:20px" v-if="it.assess_times > 10">
-                            <el-tag type="danger">HOT
-                                <i class="el-icon-sunny"></i>
-                            </el-tag>
-                        </span>
-                    </div>
-                    <br/>
-                    <div class="text item">
-                        <span style="color:green">
-                            <i class="el-icon-user-solid"></i>{{it.name}}</span>
-                        <span style="margin-left:10px;">
-                            <i class="el-icon-date"></i>{{it.publish_time}}</span>
-                        <span style="margin-left:10px;">
-                            <i class="el-icon-chat-dot-round"></i>{{it.assess_times}}</span>
-                        <span style="margin-left:10px;">最后回复{{it.date}}</span>
-                    </div>
-                </div>
-            </el-card>
-        </div>
-        <div style="margin-top:10px;margin-left:30%;">
-            <el-pagination :page-size="3" :pager-count="10" background layout="prev ,pager, next" @current-change="pageChange" :total="total">
-            </el-pagination>
-        </div>
 
     </div>
+    <!-- body container -->
+<div class="container">
+        <div style="max-width:1100px;">
+            <!--demo-->
+            <div style="text-align:left;">
+                <div id="divDemo"></div>
+            </div><!--demo end-->
+        </div>
+</div><!-- body container end -->
+ 
+<script type="text/javascript" src='http://www.wangeditor.com/js/jquery-1.10.2.min.js'></script>
+<script type="text/javascript" src='http://www.wangeditor.com/bootstrap-3.3.0/js/bootstrap.min.js'></script>
+<script type="text/javascript" src='http://unpkg.com/wangeditor/release/wangEditor.min.js'></script>
+<script type="text/javascript" src='http://www.wangeditor.com/index.js'></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="assets/js/jquery-2.2.4.min.js"></script>
     <script src="assets/js/vendor/popper.min.js"></script>
@@ -191,86 +151,18 @@
     <script src="assets/js/vendor/loopcounter.js"></script>
     <script src="assets/js/vendor/slicknav.min.js"></script>
     <script src="assets/js/active.js"></script>
+
 </body>
 <script>
-    var app = new Vue({
-        el: '#app1',
-        data: {
-            message: 'Hello Vue!',
-            textarea: '',
-            total: 100,
-            tableData: []
-        },
-        methods: {
-            pageChange() {
-                axios({
-                    method: 'get',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    url: 'http://192.168.1.12:888/invitation/page',
-                }).then((re) => {
-                    if (re.data.code === 0) {
-                        this.$data.tableData = re.data.content.records
-                    }
-                })
-            }
-        },
-        mounted() {
-            this.pageChange()
 
-        },
+    var app = new Vue({
+        el: '#app2',
+        data: {
+            message: 'Hello Vue!'
+        }
     })
 </script>
 
-<style>
-    .card1 {
-        width: 100%;
-    }
 
-    .time {
-        font-size: 13px;
-        color: #999;
-    }
-
-    .bottom {
-        margin-top: 13px;
-        line-height: 12px;
-    }
-
-    .image {
-        width: 70px;
-        height: 70px;
-    }
-
-    .button {
-        margin-top: 6px;
-        float: right;
-        width: 80px;
-        height: 40px;
-        margin-bottom: 10px;
-    }
-
-    .textarea {
-        margin-top: 12px;
-    }
-
-    .font1 {
-        font-size: 18px;
-        color: #eee;
-        margin-top: 4px;
-        margin-left: 10px;
-    }
-
-    .clearfix:before,
-    .clearfix:after {
-        display: table;
-        content: "";
-    }
-
-    .clearfix:after {
-        clear: both
-    }
-</style>
 
 </html>
