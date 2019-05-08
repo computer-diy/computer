@@ -173,16 +173,29 @@
         methods: {
             aaaa() {
                 this.content = this.editor.$textElem['0'].innerHTML
+                if(this.moduleId === '') {
+                    alert('请选择模块');
+                    return;
+                }
+                if(this.title === '') {
+                    alert('请选择模块');
+                    return;
+                }
+                if(this.content === '') {
+                    alert('请输入要发布的内容');
+                    return;
+                }
+                let data = { "content": this.content, "title": this.title, "moduleId": this.moduleId }
                 axios({
                     method: 'POST',
-                    data: { "content": this.content, "title": this.title, "moduleId": this.moduleId },
+                    data: data,
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    url: 'http://192.168.1.12:888/invitation/add',
+                    url: 'http://172.20.10.3:888/invitation/add',
                 }).then((re) => {
                     if (re.data.code === 0) {
-                        this.$data.options = re.data.content
+                        alert('发布成功 可以到我的个人信息查看')
                     }
                 })
             }
@@ -219,9 +232,10 @@
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                url: 'http://192.168.1.12:888/module/list',
+                url: 'http://172.20.10.3:888/module/list',
             }).then((re) => {
                 if (re.data.code === 0) {
+                    console.log(re.data)
                     this.$data.options = re.data.content
                 }
             })
