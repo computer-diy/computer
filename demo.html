@@ -3,69 +3,95 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-  <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+  <!-- 别忘了导包 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
+  <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.js"></script>
+  <script src="https://cdn.bootcss.com/vue-router/3.0.1/vue-router.js"></script>
 </head>
 
 <body>
   <div id="app">
-    <span v-pre>{{ 这里的内容不会被编译 }}</span>
-    <p v-if="seen">现在你看到我了</p>
-    <div v-for="a in list" :key="a."></div>
-
-    <span v-html="link"></span>
+    <ul>
+      <li>
+        <!-- 跳转显示不同的组件用router-link,to是组件的地址。在routes里配置 -->
+        <router-link to="/home?id=22">首页</router-link>
+      </li>
+      <li>
+        <router-link to="/new">新闻</router-link>
+      </li>
+      <li>
+        <router-link to="/hot">热点</router-link>
+      </li>
+    </ul>
+    <!-- router-view是组件显示的地方 -->
   </div>
 
+  <!-- 自定义组件模板 -->
+
+  <script>
+ 
+
+
+
+    //总思想：把各个组件都拆分开来 顺序是:自定义组件模板template(定义模板内容)→routes(绑定地址)→
+    //VueRouter(绑定routes属性)→最后到Vue(绑定VueRouter)
+    //先绑定template组件模板,用Vue.extend方法
+    var Home = Vue.extend({ div: "#app" });
+    //再把VueRouteer内的routes给绑定赋值(把地址和组件模板绑定起来)
+    var routes = [
+      {
+        path: "/home",
+        component: Home
+      },
+    ];
+    //把VueRouter绑定routes属性，一层连一层
+    var router = new VueRouter({
+      routes: routes /*这里可以简写成routes。*/
+    });
+    var app = new Vue({
+      el: '#app',
+      router: router, /*这里也可以简写成router*/
+      data: {
+        link: '<a href="#" rel="external nofollow" >这是一个连接</a>',
+        seen: true,
+        list: [],
+        imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/24/c19/144112747_1556100405099.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/01/c11/140114944_1554093874677.jpg'],
+        userInfo: {},
+        form: {
+          password: ''
+        },
+        dialogFormVisible: false,
+
+      },
+      methods: {
+        toDetail() {
+          location.href = ('detail.html')
+        },
+        logout() {
+          axios({
+            method: 'get',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            url: 'http://192.168.1.12:888/module/list',
+          }).then((re) => {
+            console.log(re)
+            if (re.data.code === 0) {
+              this.$data.list = re.data.content
+            }
+          })
+        }
+      },
+      created: function (p) {
+        console.log('ggg',this.$route.query.id)
+
+        console.log('user', this.$route)
+  
+      }
+    })
+  </script>
 </body>
 
 </html>
-
-<script>
-
-var app = new Vue({
-    el: '#app',
-    data: {
-      link: '<a href="#" rel="external nofollow" >这是一个连接</a>',
-      seen: true,
-      list:[]
-    }
-  })
-
-  app.all('*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");
-    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-    next();
-});
-  let _this = this
-  axios({
-    method: 'post',
-    url: 'https://lock.iot.gdatacloud.com/user/member/login',
-    data:{
-      username:111,
-      password:111
-    }
-  }).then(function (res) {
-    console.log(res)
-    if(res.data.code == 0){
-      axios({
-    method: 'get', 
-    headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-    url: 'https://lock.iot.gdatacloud.com/device/lock?adminORauthorized=0&current=1&size=10',
-  }).then((re)=>{
-    console.log(re)
-    if(re.data.code === 0 ){  
-      this.app.$data.list == re.data.content
-    }
-  })
-    }
-    this.app.$data.seen = false
-  });
-
-
-</script>

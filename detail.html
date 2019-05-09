@@ -92,86 +92,96 @@
 
 
 
+
             <div class="" style="width:80%;margin: 0 auto">
                 <el-row :gutter="20">
                     <el-col :span="16">
-                        <el-card>
+                        <el-card style="">
                             <el-row :gutter="20">
-                                <el-col :span="24" style="text-align:left" class="box-card-span">
-                                    <span style="color:#e58434;font-size:16px">
-                                        <el-tag>今日话题</el-tag>
-                                        #【二手论坛新版规】2016.7.4总结重申，发帖必看，请严格遵守#
-                                        <a href="#"></a>
-                                    </span>
-                                    <p style="padding:10px;margin:10px">
-                                        版规置顶在此，被删贴或被封号的就来这里逐条对照版规，看看自己哪里违规，别再来问什么“”我为何被删帖子、为何被封号“”，一概不回复！版主不会没事吃饱撑着去封号！大条版规已经摆在这，偏不看！违规被封号了，再说什么“”无辜被封“”的，一律加倍...
+                                <el-col :span="5">
+                                    <div class="grid-content bg-purple" style="float:left;">
+                                        <img style="width:100px;border-radius:50%;float:left;display: block"
+                                            src="https://i7.3conline.com/images/upload/upc/face/25/40/98/46/25409846_50x50"
+                                            alt="">
+                                        <br>
+                                    </div>
+                                </el-col>
+                                <el-col :span="18" style="text-align:left" class="box-card-span">
+                                    <p>刚下载了个老游戏，问下谁通关过？要多长时间啊：{{content.name}}</p>
+                                    <p style="color:#363636">ssyy1121{{content.author}} <el-tag color="#96cbfc"
+                                            size="mini" style="color:#fff">LV2</el-tag>
+                                        <el-tag size="mini">太平洋舰队下士</el-tag>
 
+                                        <span style="float:right">
+                                            <el-tag>楼主</el-tag>
+                                        </span>
                                     </p>
+                                    <p style="color:#989898">2019-05-07 21:17{{content.createTime}}</p>
 
                                 </el-col>
 
-                            </el-row>
-                            <el-row>
-                                <el-col :span="22">
-                                    <el-input class="textarea" style="height:50px" type="textarea" :rows="2"
-                                        placeholder="吐槽 ..." v-model="textarea">
-                                    </el-input>
-                                </el-col>
-                                <el-col :span="2">
-                                    <el-button type="primary" style="width:50px;height:50px;margin-left: 10px"
-                                        icon="el-icon-edit" circle></el-button>
-
-                                </el-col>
                             </el-row>
 
 
                         </el-card>
-
-
                         <el-divider></el-divider>
-                        <el-card v-for="o in list">
+                        <el-card>
+                            <div>
+                                <!-- 内容区域
+                                 -->
+                                {{content}}
+                                <img style="margin-top:20px"
+                                    src="https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1905/07/c33/146527204_1557235048627_1024x1024.png"
+                                    alt="">
+                                <img style="margin-top:20px"
+                                    src="https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1905/07/c33/146527242_1557235052115_1024x1024.png"
+                                    alt="">
+
+                                <div style="margin:50px;text-align: center">
+                                    <el-button type="primary" size="medium" icon="el-icon-s-flag">评分</el-button>
+                                    <el-button type="primary" size="medium" icon="el-icon-share">分享</el-button>
+
+                                </div>
+                                <div style="float:right;margin:10px">
+                                    <a style="color:#e58434" href="#" type="warning">回复</a>
+                                    <a style="color:#e58434" href="#" type="warning">评分</a>
+                                    <a style="color:#e58434" href="#" type="warning">举报</a>
+                                </div>
+                            </div>
+
+                        </el-card>
+                        <br>
+
+                        <el-card v-for="(o,index) in commentList" style="margin-bottom:1px">
                             <el-row>
-                                <el-col :span="4" style="text-align:right;">
-                                    <img style="width:80px;height:80px" :src="o.img" alt="">
-
+                                <el-col :span="6" style="text-align:right;padding:10px">
+                                    <img style="width:80px;height:80px"
+                                        src="https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1905/07/c33/146527204_1557235048627_1024x1024.png"
+                                        alt="">
                                 </el-col>
-                                <el-col :span="20" style="text-align:left;padding-left:10px">
-                                    <p><span
-                                            style="color:#989898"><b>{{o.topic?'"["+o.topic+"]"':''}}{{o.title}}</b></span>
+                                <el-col :span="18" style="text-align:left;padding-left:10px">
+                                    <p>
+                                        {{o.username}} <el-tag size="mini">{{o.lv}}</el-tag> <span
+                                            style="color:#989898">{{o.time}}</span>
+                                        <el-tag style="float:right" size="mini">{{index+1}}楼</el-tag>
                                     </p>
-                                    <p class="tz">
-                                        <span> <b><i class="el-icon-user-solid"></i>{{o.name}}</b></span>
-                                        <span style="color:#989898">{{o.publish_time}}</span>
-                                        <span><i class="el-icon-chat-line-square"></i>{{o.assess_times}}</span>
-                                        <span><i class="el-icon-view"></i> {{o.replyNum}}</span>
-                                        <span>最后回复：{{o.lastReplyName}}</span>
+                                    <p>
+                                        {{o.content}}
+                                        <div style="float:right;margin:10px">
+                                            <a style="color:#989898" href="#" type="warning">回复</a>
+                                            <a style="color:#989898" href="#" type="warning">评分</a>
+                                            <a style="color:#989898" href="#" type="warning">举报</a>
+                                        </div>
+                                        <br>
+                                        <div v-if="o.signature" style="color:#989898">
+                                            <el-divider content-position="left"><i class="el-icon-edit"></i>签名档
+                                            </el-divider>
+                                            <p style="margin:10px">{{o.signature}}</p>
+                                        </div>
                                     </p>
-
                                 </el-col>
                             </el-row>
-                        </el-card>
-                        <br>
-                        <el-card>
 
-                            <el-tabs v-model="activeName" type="card">
-                                <el-tab-pane label="论坛热帖" name="first">
-                                    <el-row>
-                                        <el-col v-for="o in hotlist" :span="8">
-                                            <a href="#">{{o.name}}</a>
-                                        </el-col>
-                                    </el-row>
-
-                                </el-tab-pane>
-                                <el-tab-pane label="最新热帖" name="second">配置管理</el-tab-pane>
-                            </el-tabs>
-                        </el-card>
-                        <br>
-                        <el-card>
-                            论坛热词
-                            <span v-for="o in hotkeys">
-                                <a href="#">{{o.name}}</a>
-
-                            </span>
                         </el-card>
                         <br>
                     </el-col>
@@ -191,12 +201,17 @@
 
                         <el-card style="height:220px;margin-top:20px">
                             <p>
-                                <span style="color:#e58434;font-size:16px">板块信息 </span>
+                                <span style="color:#e58434;font-size:16px">Ta的帖子 </span>
+                                <a href="#" style="float:right">更多>></a>
                                 <el-divider></el-divider>
+                                <ul style="list-style:none;">
+                                    <li class="text-control" v-for="o in list">
+                                        <a href="#"> {{o.name}}
+                                        </a>
+                                    </li>
+                                </ul>
+
                             </p>
-                            <p><span style="color:#989898">版主：</span>sss bbb</p>
-                            <p><span style="color:#989898">版副：</span>sss bbb</p>
-                            <p><span style="color:#989898">嘉宾：</span>sss bbb</p>
                         </el-card>
                         <el-card style="height:330px;margin-top:20px">
                             <span style="color:#e58434;font-size:16px">推荐阅读 </span>
@@ -212,18 +227,6 @@
                                     <a href="#"> {{o.name}}
 
                                     </a>
-                                </li>
-                            </ul>
-                        </el-card>
-                        <el-card style="height:220px;margin-top:20px">
-                            <p>
-                                <span style="color:#e58434;font-size:16px">DIV讨论区本周热帖 </span>
-                            </p>
-                            <ul style="margin-bottom:15px;padding-bottom:15px">
-                                <li class="text-control" v-for="(o,index) in list">
-
-                                    <a v-if="index < 3" href="#" style="color:#e58434">{{index+1}} {{o.name}}</a>
-                                    <a v-else href="#">{{index+1}} {{o.name}}</a>
                                 </li>
                             </ul>
                         </el-card>
@@ -261,18 +264,6 @@
                             </div>
                         </div>
                     </div>
-<<<<<<< HEAD
-                    <br/>
-                    <div class="text item">
-                        <span style="color:green">
-                            <i class="el-icon-user-solid"></i>{{it.name}}</span>
-                        <span style="margin-left:10px;">
-                            <i class="el-icon-date"></i>{{it.publish_time}}</span>
-                            <span style="margin-left:10px;">
-                                <i class="el-icon-chat-dot-round"></i>{{it.replyNum}}</span>
-                                <span style="margin-left:10px;">浏览量{{it.assess_times}}</span>
-                        <span style="margin-left:10px;">最后回复{{it.lastReplyName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{it.lastReplyTime}}</span>
-=======
                 </div>
                 <div class="footer-bottom">
                     <div class="container">
@@ -293,7 +284,6 @@
                                 </div>
                             </div>
                         </div>
->>>>>>> 7677c5922ef92521c3c24b3a29c99e093ff1f383
                     </div>
                 </div>
             </footer>
@@ -331,11 +321,6 @@
             data: {
                 link: '<a href="#" rel="external nofollow" >这是一个连接</a>',
                 seen: true,
-                items: [
-
-                ],
-                activeName: 'first',
-                textarea: '',
                 commentList: [
                     {
                         username: "李四",
@@ -350,53 +335,18 @@
                         content: "支线任务太费时了，以前玩古墓丽影系列都是顺着路线玩，不会刻意完成每个任务，太累人了。我是玩游戏，不是游戏玩我啊"
                     },
                 ],
-                hotlist: [
-                    {
-                        name: "旗舰笔记本Spectre x360开箱小测"
-                    },
-                    {
-                        name: "用汽车CD机改造了个音响"
-                    },
-                    {
-                        name: "飞利浦空净双11狂欢送充值卡"
-                    },
-                    {   
-                        name: "【图赏】进击的“能力者”OPPO R7s"
-                    },
-                ], hotkeys: [
-                    {
-                        name: "旗舰笔记本Spectre x360开箱小测"
-                    },
-                    {
-                        name: "用汽车CD机改造了个音响"
-                    },
-                    {
-                        name: "飞利浦空净双11狂欢送充值卡"
-                    },
-                    {
-                        name: "【图赏】进击的“能力者”OPPO R7s"
-                    },
-                ],
                 list: [
                     {
-                        name: "五一装机正当时，4K预算打造三A平台"
+                        name: "刚下载了个老游戏，问下谁通关过？要多长时间啊"
                     },
                     {
-                        name: "游戏玩家的好帮手，ReLive Overlay功能体验"
+                        name: "感觉WINDOWS10自带的任务管理器显示频率不对，你们也是这样的吗？"
                     },
                     {
-                        name: "求大佬看看还能不能救"
+                        name: "AMD比INTEL厚道多了，看1级2级3级缓存，特别是32MB的3级缓存"
                     },
                     {
-                        name: "只求最高性价比，老司机用3600配出5000元的主机分享"
-                    }, {
-                        name: "甜点的三度进化，讯景RX 590 8G 黑狼版开箱拆解&试玩体验"
-                    }
-                    , {
-                        name: "电脑休眠后移动鼠标、随意按键盘就会唤醒"
-                    }
-                    , {
-                        name: "萌新配置，大佬帮忙看一下，谢谢各位"
+                        name: "感觉ZIP比RAR压缩效率高些，有个问题请高人解答"
                     }
                 ],
                 introList: [
@@ -444,7 +394,7 @@
 
             },
             methods: {
-                he() {
+                he(){
                     console.log('ss')
                 },
                 toDetail() {
@@ -484,20 +434,17 @@
                 console.log('user', userInfo)
                 if (userInfo != null) {
                     this.$data.userInfo = userInfo
-                } else {
-                    this.$message.error('请登录,1.5s后跳转到登录页')
-                    setTimeout("location.href=('login.html')", 1500)
                 }
                 axios({
                     method: 'get',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    url: 'http://192.168.1.12:888/invitation/page',
+                    url: '补充url',
                 }).then((res) => {
-                    console.log('res', res)
+                    console.log(res)
                     if (res.data.code === 0) {
-                        this.$data.list = res.data.content.records
+                        this.$data.content = res.data.content
                     }
                 })
             }
