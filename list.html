@@ -168,9 +168,10 @@
                             <i class="el-icon-user-solid"></i>{{it.name}}</span>
                         <span style="margin-left:10px;">
                             <i class="el-icon-date"></i>{{it.publish_time}}</span>
-                        <span style="margin-left:10px;">
-                            <i class="el-icon-chat-dot-round"></i>{{it.assess_times}}</span>
-                        <span style="margin-left:10px;">最后回复{{it.date}}</span>
+                            <span style="margin-left:10px;">
+                                <i class="el-icon-chat-dot-round"></i>{{it.replyNum}}</span>
+                                <span style="margin-left:10px;">浏览量{{it.assess_times}}</span>
+                        <span style="margin-left:10px;">最后回复{{it.lastReplyName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{it.lastReplyTime}}</span>
                     </div>
                 </div>
             </el-card>
@@ -208,9 +209,10 @@
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    url: 'http://172.20.10.3:888/invitation/page',
+                    url: 'http://192.168.1.12:888/invitation/page',
                 }).then((re) => {
                     if (re.data.code === 0) {
+                        console.log(re.data.content.records)
                         this.$data.tableData = re.data.content.records
                     }
                 })
