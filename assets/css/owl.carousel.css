@@ -255,3 +255,6 @@ li text control*/
   white-space: nowrap;
   text-overflow:ellipsis;
 }
+.tz span{
+  padding: 4px;
+}

@@ -6,8 +6,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title></title>
+    <!-- <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <!-- 引入样式 -->
+    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <!-- 引入组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
@@ -20,11 +21,15 @@
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/slicknav.css">
     <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        a {
+            color: #000
+        }
+    </style>
 </head>
 
 <body>
-    <div id="app1">
-        <!-- 头部 -->
+    <div id="app">
         <div class="preloader">
             <span class="preloader-spin"></span>
         </div>
@@ -42,146 +47,261 @@
                                 <span class="search-icon fa fa-search"></span>
                                 <form action="#" class="search-form">
                                     <input type="search" placeholder="search now">
-                                    <button type="submit">
-                                        <i class="fa fa-search"></i>
-                                    </button>
+                                    <button type="submit"><i class="fa fa-search"></i></button>
                                 </form>
-                                <div class="header-social">
-                                    <a href="#" class="fa fa-facebook"></a>
-                                    <a href="#" class="fa fa-twitter"></a>
-                                    <a href="#" class="fa fa-github"></a>
-                                </div>
                             </div>
                             <nav id="menu" class="d-none d-lg-block">
                                 <ul>
                                     <li class="current-menu-item has-child">
-                                        <a href="index.html">主页</a>
-                                        <ul class="sub-menu">
-                                            <li>
-                                                <a href="index.html">Home - 01</a>
-                                            </li>
-                                            <li>
-                                                <a href="index-2.html">Home - 02</a>
-                                            </li>
-                                            <li>
-                                                <a href="index-3.html">Home - 03</a>
-                                            </li>
+                                        <a href="index.html">产品库</a>
+                                        <ul class="sub-menu" style="z-index: 1000">
+                                            <li><a href="#">硬件</a></li>
+                                            <li><a href="#">软件</a></li>
                                         </ul>
                                     </li>
-                                    <li>
-                                        <a href="about.html">关于</a>
-                                    </li>
-                                    <li>
-                                        <a href="portfolio.html">Portfolio</a>
-                                    </li>
+                                    <li><a href="about.html">关于</a></li>
+
                                     <li class="has-child">
-                                        <a href="#">Pages</a>
-                                        <ul class="sub-menu">
-                                            <li>
-                                                <a href="404.html">404</a>
-                                            </li>
-                                            <li>
-                                                <a href="about.html">About</a>
-                                            </li>
-                                            <li>
-                                                <a href="career.html">Career</a>
-                                            </li>
-                                            <li>
-                                                <a href="coming-soon.html">Coming Soon</a>
-                                            </li>
-                                            <li>
-                                                <a href="contact.html">Contact</a>
-                                            </li>
-                                            <li>
-                                                <a href="faq.html">Faq</a>
-                                            </li>
-                                            <li>
-                                                <a href="portfolio.html">Portfolio</a>
-                                            </li>
-                                            <li>
-                                                <a href="pricing.html">Pricing</a>
-                                            </li>
-                                            <li>
-                                                <a href="service.html">Service</a>
-                                            </li>
-                                            <li>
-                                                <a href="team.html">Team</a>
-                                            </li>
-                                            <li>
-                                                <a href="testimonial.html">Testimonial</a>
-                                            </li>
+                                        <a href="#">建议</a>
+                                        <ul class="sub-menu" style="z-index: 1000">
+                                            <li><a href="#">留言</a></li>
+                                            <li><a href="#">反馈建议</a></li>
+                                            <li><a href="#">联系我们</a></li>
                                         </ul>
                                     </li>
-                                    <li>
-                                        <a href="contact.html">反馈建议</a>
+                                    <li v-if="userInfo.name" class="has-child">
+                                        <a href="mine.html">{{userInfo.name}}</a>
+                                        <ul class="sub-menu" style="z-index: 1000">
+                                            <li><a href="#">注销</a></li>
+                                            <li><a @click="dialogFormVisible = true">修改密码</a></li>
+                                        </ul>
                                     </li>
+                                    <li v-else><a href="login.html">登录</a></li>
                                 </ul>
                             </nav>
                         </div>
                     </div>
                 </div>
             </header>
-        </div>
-        <!-- 头部卡片 公告 -->
 
-
-        <el-breadcrumb class="font1" separator-class="el-icon-arrow-right">
-            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-            <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-            <el-breadcrumb-item>活动详情</el-breadcrumb-item>
-        </el-breadcrumb>
+            <el-breadcrumb separator-class="el-icon-arrow-right" style="margin:30px;">
+                <el-breadcrumb-item><a href="index.html">首页</a></el-breadcrumb-item>
+                <el-breadcrumb-item><a href="#"></a>板块</el-breadcrumb-item>
+                <el-breadcrumb-item><a href="#"></a>正文</el-breadcrumb-item>
+            </el-breadcrumb>
 
 
 
-        <el-row style="margin-bottom:16px;">
-            <el-col :span="12" style="margin:20px 0px 0px 200px">
-                <el-card :body-style="{ }">
-                    <el-tag color="#ff6600">
-                        <h6 color="black" style="line-height:30px">今日话题</h6>
-                    </el-tag>
-                    <span>11111111111111111111111111111111111111111111</span>
-                    <el-input class="textarea" type="textarea" :rows="2" placeholder="吐槽 ..." v-model="textarea">
-                    </el-input>
-                    <el-button type="success" class="button">回复</el-button>
-                </el-card>
-            </el-col>
-        </el-row>
-        <div v-for="it in tableData" style="width:90%;margin:0px auto;">
-            <el-card class="box-card">
-                <div style="float:left">
-                    <img :src="it.img" class="image">
-                </div>
-                <div style="float:left">
-                    <div slot="header" class="clearfix">
-                        <span style="font-size:18px;color:#aaa">[{{it.moduleName}}]</span>
-                        <span style="margin-left:8px;">{{it.title}}</span>
-                        <span style="margin-left:40px;font-size:20px" v-if="it.assess_times > 10">
-                            <el-tag type="danger">HOT
-                                <i class="el-icon-sunny"></i>
-                            </el-tag>
-                        </span>
+            <div class="" style="width:80%;margin: 0 auto">
+                <el-row :gutter="20">
+                    <el-col :span="16">
+                        <el-card>
+                            <el-row :gutter="20">
+                                <el-col :span="24" style="text-align:left" class="box-card-span">
+                                    <span style="color:#e58434;font-size:16px">
+                                        <el-tag>今日话题</el-tag>
+                                        #【二手论坛新版规】2016.7.4总结重申，发帖必看，请严格遵守#
+                                        <a href="#"></a>
+                                    </span>
+                                    <p style="padding:10px;margin:10px">
+                                        版规置顶在此，被删贴或被封号的就来这里逐条对照版规，看看自己哪里违规，别再来问什么“”我为何被删帖子、为何被封号“”，一概不回复！版主不会没事吃饱撑着去封号！大条版规已经摆在这，偏不看！违规被封号了，再说什么“”无辜被封“”的，一律加倍...
+
+                                    </p>
+
+                                </el-col>
+
+                            </el-row>
+                            <el-row>
+                                <el-col :span="22">
+                                    <el-input class="textarea" style="height:50px" type="textarea" :rows="2"
+                                        placeholder="吐槽 ..." v-model="textarea">
+                                    </el-input>
+                                </el-col>
+                                <el-col :span="2">
+                                    <el-button type="primary" style="width:50px;height:50px;margin-left: 10px"
+                                        icon="el-icon-edit" circle></el-button>
+
+                                </el-col>
+                            </el-row>
+
+
+                        </el-card>
+
+
+                        <el-divider></el-divider>
+                        <el-card v-for="o in list">
+                            <el-row>
+                                <el-col :span="4" style="text-align:right;">
+                                    <img style="width:80px;height:80px" :src="o.img" alt="">
+
+                                </el-col>
+                                <el-col :span="20" style="text-align:left;padding-left:10px">
+                                    <p><span
+                                            style="color:#989898"><b>{{o.topic?'"["+o.topic+"]"':''}}{{o.title}}</b></span>
+                                    </p>
+                                    <p class="tz">
+                                        <span> <b><i class="el-icon-user-solid"></i>{{o.name}}</b></span>
+                                        <span style="color:#989898">{{o.publish_time}}</span>
+                                        <span><i class="el-icon-chat-line-square"></i>{{o.assess_times}}</span>
+                                        <span><i class="el-icon-view"></i> {{o.replyNum}}</span>
+                                        <span>最后回复：{{o.lastReplyName}}</span>
+                                    </p>
+
+                                </el-col>
+                            </el-row>
+                        </el-card>
+                        <br>
+                        <el-card>
+
+                            <el-tabs v-model="activeName" type="card">
+                                <el-tab-pane label="论坛热帖" name="first">
+                                    <el-row>
+                                        <el-col v-for="o in hotlist" :span="8">
+                                            <a href="#">{{o.name}}</a>
+                                        </el-col>
+                                    </el-row>
+
+                                </el-tab-pane>
+                                <el-tab-pane label="最新热帖" name="second">配置管理</el-tab-pane>
+                            </el-tabs>
+                        </el-card>
+                        <br>
+                        <el-card>
+                            论坛热词
+                            <span v-for="o in hotkeys">
+                                <a href="#">{{o.name}}</a>
+
+                            </span>
+                        </el-card>
+                        <br>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-card style="height:110px">
+                            <el-dropdown split-button type="primary">
+                                发表新帖
+                                <el-dropdown-menu slot="dropdown">
+                                    <el-dropdown-item><a href="#">发起主题</a></el-dropdown-item>
+                                    <el-dropdown-item><a href="#">发起活动</a></el-dropdown-item>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                            <el-button type="primary" style="float:right;margin-left:10px" icon="el-icon-star-off"
+                                circle></el-button>
+                            <el-button type="primary" style="float:right" icon="el-icon-edit" circle></el-button>
+                        </el-card>
+
+                        <el-card style="height:220px;margin-top:20px">
+                            <p>
+                                <span style="color:#e58434;font-size:16px">板块信息 </span>
+                                <el-divider></el-divider>
+                            </p>
+                            <p><span style="color:#989898">版主：</span>sss bbb</p>
+                            <p><span style="color:#989898">版副：</span>sss bbb</p>
+                            <p><span style="color:#989898">嘉宾：</span>sss bbb</p>
+                        </el-card>
+                        <el-card style="height:330px;margin-top:20px">
+                            <span style="color:#e58434;font-size:16px">推荐阅读 </span>
+                            <el-carousel indicator-position="none" height="150px">
+                                <el-carousel-item v-for="item in introImgs" :key="item">
+                                    <img :src="item.url" alt="" style="width:100%;float:left;height:150px">
+                                    <div class="card-text-attach">{{item.name}}</div>
+                                </el-carousel-item>
+
+                            </el-carousel>
+                            <ul style="list-style:none;" style="margin:20px">
+                                <li class="text-control" v-for="o in introList">
+                                    <a href="#"> {{o.name}}
+
+                                    </a>
+                                </li>
+                            </ul>
+                        </el-card>
+                        <el-card style="height:220px;margin-top:20px">
+                            <p>
+                                <span style="color:#e58434;font-size:16px">DIV讨论区本周热帖 </span>
+                            </p>
+                            <ul style="margin-bottom:15px;padding-bottom:15px">
+                                <li class="text-control" v-for="(o,index) in list">
+
+                                    <a v-if="index < 3" href="#" style="color:#e58434">{{index+1}} {{o.name}}</a>
+                                    <a v-else href="#">{{index+1}} {{o.name}}</a>
+                                </li>
+                            </ul>
+                        </el-card>
+                    </el-col>
+                </el-row>
+
+
+            </div>
+            <footer>
+                <div class="footer-top">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-3 footer_widget">
+                                <div class="inner">
+                                    <h4>About</h4>
+                                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
+                                        turpis egestas.</p>
+                                    <p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet,
+                                        antesenectus et netus et malesuada fames ac turpis egestas.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3 footer_widget">
+                                <div class="inner">
+                                    <h4>Company</h4>
+                                    <ul>
+                                        <li><a href="#">Company Overview</a></li>
+                                        <li><a href="#">Meet The Team</a></li>
+                                        <li><a href="#">Our Awesome Partners</a></li>
+                                        <li><a href="#">Our Services</a></li>
+                                        <li><a href="#">Frequently Asked Questions</a></li>
+                                        <li><a href="#">Contact Us</a></li>
+                                        <li><a href="#">Terms of Use</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <br/>
-                    <div class="text item">
-                        <span style="color:green">
-                            <i class="el-icon-user-solid"></i>{{it.name}}</span>
-                        <span style="margin-left:10px;">
-                            <i class="el-icon-date"></i>{{it.publish_time}}</span>
-                        <span style="margin-left:10px;">
-                            <i class="el-icon-chat-dot-round"></i>{{it.assess_times}}</span>
-                        <span style="margin-left:10px;">最后回复{{it.date}}</span>
+                </div>
+                <div class="footer-bottom">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="copyright-txt">
+                                    Copyright &copy; 2019.Company name All rights reserved.<a target="_blank"
+                                        href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 text-right">
+                                <div class="footer-nav">
+                                    <a href="#">Home</a>
+                                    <a href="#">Portfolio</a>
+                                    <a href="#">Pages</a>
+                                    <a href="#">Shortcode</a>
+                                    <a href="#">Blog</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </el-card>
-        </div>
-        <div style="margin-top:10px;margin-left:30%;">
-            <el-pagination :page-size="3" :pager-count="10" background layout="prev ,pager, next" @current-change="pageChange" :total="total">
-            </el-pagination>
-        </div>
+            </footer>
+            <el-dialog title="修改密码" :visible.sync="dialogFormVisible">
+                <el-form :model="form" style="text-align: left;">
+                    <el-form-item label="新密码" :label-width="formLabelWidth">
+                        <el-input v-model="form.password" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="再次输入新密码" :label-width="formLabelWidth">
+                        <el-input autocomplete="off"></el-input>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                </div>
+            </el-dialog>
 
+        </div>
     </div>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 自定义组件模板 -->
     <script src="assets/js/jquery-2.2.4.min.js"></script>
     <script src="assets/js/vendor/popper.min.js"></script>
     <script src="assets/js/vendor/bootstrap.min.js"></script>
@@ -191,86 +311,185 @@
     <script src="assets/js/vendor/loopcounter.js"></script>
     <script src="assets/js/vendor/slicknav.min.js"></script>
     <script src="assets/js/active.js"></script>
-</body>
-<script>
-    var app = new Vue({
-        el: '#app1',
-        data: {
-            message: 'Hello Vue!',
-            textarea: '',
-            total: 100,
-            tableData: []
-        },
-        methods: {
-            pageChange() {
+    <script>
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                link: '<a href="#" rel="external nofollow" >这是一个连接</a>',
+                seen: true,
+                items: [
+
+                ],
+                activeName: 'first',
+                textarea: '',
+                commentList: [
+                    {
+                        username: "李四",
+                        lv: "LV2",
+                        time: "2019-05-08 00:58",
+                        content: "那时最疯狂最快通关的好像在7个小时以内吧，前提是必须省略过场片段以及次要情节",
+                        signature: "办公兼修图兼剪辑：ThreadRipper 2950X +太极X399 +超白金Vega 64 +DDR4 3200 32G +M9PeG 512G X2 +Win10 Pro 64位 游戏及影视及网购：i7 3930K@4.2G +X79-UP4 +冰龙1070 +DDR3 2133 16G +MP961 256G PCIE转M.2 +Win10 Pro 64位"
+                    }, {
+                        username: "张三",
+                        lv: "LV5",
+                        time: "2019-05-02 14:53",
+                        content: "支线任务太费时了，以前玩古墓丽影系列都是顺着路线玩，不会刻意完成每个任务，太累人了。我是玩游戏，不是游戏玩我啊"
+                    },
+                ],
+                hotlist: [
+                    {
+                        name: "旗舰笔记本Spectre x360开箱小测"
+                    },
+                    {
+                        name: "用汽车CD机改造了个音响"
+                    },
+                    {
+                        name: "飞利浦空净双11狂欢送充值卡"
+                    },
+                    {   
+                        name: "【图赏】进击的“能力者”OPPO R7s"
+                    },
+                ], hotkeys: [
+                    {
+                        name: "旗舰笔记本Spectre x360开箱小测"
+                    },
+                    {
+                        name: "用汽车CD机改造了个音响"
+                    },
+                    {
+                        name: "飞利浦空净双11狂欢送充值卡"
+                    },
+                    {
+                        name: "【图赏】进击的“能力者”OPPO R7s"
+                    },
+                ],
+                list: [
+                    {
+                        name: "五一装机正当时，4K预算打造三A平台"
+                    },
+                    {
+                        name: "游戏玩家的好帮手，ReLive Overlay功能体验"
+                    },
+                    {
+                        name: "求大佬看看还能不能救"
+                    },
+                    {
+                        name: "只求最高性价比，老司机用3600配出5000元的主机分享"
+                    }, {
+                        name: "甜点的三度进化，讯景RX 590 8G 黑狼版开箱拆解&试玩体验"
+                    }
+                    , {
+                        name: "电脑休眠后移动鼠标、随意按键盘就会唤醒"
+                    }
+                    , {
+                        name: "萌新配置，大佬帮忙看一下，谢谢各位"
+                    }
+                ],
+                introList: [
+                    {
+                        name: "入门游戏新机综合搭配"
+
+                    }, {
+                        name: "全侧透光污染主机，微星Z270平台装机"
+
+                    }, {
+                        name: "从奔腾4到G4560，一台老爷机的复活记"
+
+                    }, {
+                        name: "用NAS备份数据，可以无惧比特币勒索！"
+
+                    }
+                ],
+                introImgs: [
+                    {
+                        name: "入门游戏新机综合搭配",
+                        url: "https://s2.ax1x.com/2019/05/06/EBRZqK.jpg"
+
+                    }, {
+                        name: "全侧透光污染主机，微星Z270平台装机",
+                        url: "https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/24/c19/144112747_1556100405099.jpg"
+
+                    }, {
+                        name: "从奔腾4到G4560，一台老爷机的复活记",
+                        url: "ttps://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/01/c11/140114944_1554093874677.jpg"
+
+                    }, {
+                        name: "用NAS备份数据，可以无惧比特币勒索！",
+                        url: "https://s2.ax1x.com/2019/05/06/EBRZqK.jpg"
+
+                    }
+                ],
+                content: {},
+                imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/24/c19/144112747_1556100405099.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/01/c11/140114944_1554093874677.jpg'],
+                userInfo: {},
+                formLabelWidth: '100px',
+                form: {
+                    password: ''
+                },
+                dialogFormVisible: false,
+
+            },
+            methods: {
+                he() {
+                    console.log('ss')
+                },
+                toDetail() {
+                    location.href = ('detail.html')
+                },
+                logout() {
+                    axios({
+                        method: 'get',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        url: 'http://192.168.1.12:888/module/list',
+                    }).then((re) => {
+                        console.log(re)
+                        if (re.data.code === 0) {
+                            this.$data.list = re.data.content
+                        }
+                    })
+                },
+                GetRequest() {
+                    var url = location.search; //获取url中"?"符后的字串  
+                    var theRequest = new Object();
+                    if (url.indexOf("?") != -1) {
+                        var str = url.substr(1);
+                        strs = str.split("&");
+                        for (var i = 0; i < strs.length; i++) {
+                            theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                        }
+                    }
+                    return theRequest;
+                }
+            },
+            created: function () {
+                console.log('ggg', this.GetRequest())
+                let _this = this
+                let userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
+                console.log('user', userInfo)
+                if (userInfo != null) {
+                    this.$data.userInfo = userInfo
+                } else {
+                    this.$message.error('请登录,1.5s后跳转到登录页')
+                    setTimeout("location.href=('login.html')", 1500)
+                }
                 axios({
                     method: 'get',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    url: 'http://172.20.10.3:888/invitation/page',
-                }).then((re) => {
-                    if (re.data.code === 0) {
-                        this.$data.tableData = re.data.content.records
+                    url: 'http://192.168.1.12:888/invitation/page',
+                }).then((res) => {
+                    console.log('res', res)
+                    if (res.data.code === 0) {
+                        this.$data.list = res.data.content.records
                     }
                 })
             }
-        },
-        mounted() {
-            this.pageChange()
-
-        },
-    })
-</script>
-
-<style>
-    .card1 {
-        width: 100%;
-    }
-
-    .time {
-        font-size: 13px;
-        color: #999;
-    }
-
-    .bottom {
-        margin-top: 13px;
-        line-height: 12px;
-    }
-
-    .image {
-        width: 70px;
-        height: 70px;
-    }
-
-    .button {
-        margin-top: 6px;
-        float: right;
-        width: 80px;
-        height: 40px;
-        margin-bottom: 10px;
-    }
-
-    .textarea {
-        margin-top: 12px;
-    }
-
-    .font1 {
-        font-size: 18px;
-        color: #eee;
-        margin-top: 4px;
-        margin-left: 10px;
-    }
-
-    .clearfix:before,
-    .clearfix:after {
-        display: table;
-        content: "";
-    }
-
-    .clearfix:after {
-        clear: both
-    }
-</style>
+        })
+    </script>
+</body>
 
 </html>
