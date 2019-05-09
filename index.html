@@ -44,11 +44,6 @@
                                     <input type="search" placeholder="search now">
                                     <button type="submit"><i class="fa fa-search"></i></button>
                                 </form>
-                                <div class="header-social">
-                                    <a href="#" class="fa fa-facebook"></a>
-                                    <a href="#" class="fa fa-twitter"></a>
-                                    <a href="#" class="fa fa-github"></a>
-                                </div>
                             </div>
                             <nav id="menu" class="d-none d-lg-block">
                                 <ul>
@@ -60,8 +55,7 @@
                                         </ul>
                                     </li>
                                     <li><a href="about.html">关于</a></li>
-                                    <li v-if="userInfo.name"><a href="mine.html">{{userInfo.name}}</a></li>
-                                    <li v-else><a href="login.html">登录</a></li>
+
                                     <li class="has-child">
                                         <a href="#">建议</a>
                                         <ul class="sub-menu" style="z-index: 1000">
@@ -70,13 +64,21 @@
                                             <li><a href="#">联系我们</a></li>
                                         </ul>
                                     </li>
+                                    <li v-if="userInfo.name" class="has-child">
+                                        <a href="mine.html">{{userInfo.name}}</a>
+                                        <ul class="sub-menu" style="z-index: 1000">
+                                            <li><a href="#">注销</a></li>
+                                            <li><a @click="dialogFormVisible = true">修改密码</a></li>
+                                        </ul>
+                                    </li>
+                                    <li v-else><a href="login.html">登录</a></li>
                                 </ul>
                             </nav>
                         </div>
                     </div>
                 </div>
             </header>
-
+           
             <div class="container text-center">
                 <el-carousel :interval="4000" type="card" height="400px">
                     <el-carousel-item v-for="img in imgs" :key="item">
@@ -249,7 +251,20 @@
                 </div>
             </footer>
 
-
+            <el-dialog title="修改密码" :visible.sync="dialogFormVisible">
+                    <el-form :model="form" style="text-align: left;">
+                        <el-form-item label="新密码：" :label-width="formLabelWidth">
+                            <el-input v-model="form.password" autocomplete="off"></el-input>
+                        </el-form-item>
+                        <el-form-item label="再次输入新密码：" :label-width="formLabelWidth">
+                            <el-input autocomplete="off"></el-input>
+                        </el-form-item>
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">
+                        <el-button @click="dialogFormVisible = false">取 消</el-button>
+                        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                    </div>
+                </el-dialog>
         </div>
     </div>
 
@@ -271,15 +286,35 @@
                 seen: true,
                 list: [],
                 imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/24/c19/144112747_1556100405099.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/01/c11/140114944_1554093874677.jpg'],
-                userInfo: {}
+                userInfo: {},
+                formLabelWidth: '140px',
+                form: {
+                    password: ''
+                },
+                dialogFormVisible: false,
+
             },
             methods: {
                 toDetail() {
                     location.href = ('detail.html')
+                },
+                logout() {
+                    axios({
+                        method: 'get',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        url: 'http://172.20.10.3:888/module/list',
+                    }).then((re) => {
+                        console.log(re)
+                        if (re.data.code === 0) {
+                            this.$data.list = re.data.content
+                        }
+                    })
                 }
             },
-            created: function () {
-
+            created: function (p) {
+                console.log('p', this)
                 let _this = this
                 let userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
                 console.log('user', userInfo)

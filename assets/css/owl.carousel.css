@@ -218,3 +218,40 @@
   text-align: left;
   width: 100%;
 }
+.box-card-span{
+  line-height:16px;
+
+}
+
+/* 
+下拉菜单
+*/
+.el-dropdown {
+  vertical-align: top;
+}
+.el-dropdown + .el-dropdown {
+  margin-left: 15px;
+}
+.el-icon-arrow-down {
+  font-size: 12px;
+}
+
+/* card-text-attach */
+.card-text-attach{
+  z-index:100;background:transparent;
+  position:absolute;
+  bottom: 0px;
+ background-color:rgba(0,0,0,0.5);
+ width:100%;
+ float:left;
+ color: #fff;
+  text-align: center
+}
+/* 
+
+li text control*/
+.text-control{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+}
