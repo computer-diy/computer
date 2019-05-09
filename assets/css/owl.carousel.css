@@ -238,13 +238,14 @@
 
 /* card-text-attach */
 .card-text-attach{
-  z-index:100;background:transparent;
-  position:absolute;
-  bottom: 0px;
- background-color:rgba(0,0,0,0.5);
- width:100%;
- float:left;
- color: #fff;
+  z-index:100;
+  background:transparent;
+  position: relative;
+  bottom: 25px;
+  background-color:rgba(0,0,0,0.5);
+  width:100%;
+  float:left;
+  color: #fff;
   text-align: center
 }
 /* 
@@ -256,5 +257,21 @@ li text control*/
   text-overflow:ellipsis;
 }
 .tz span{
-  padding: 4px;
+  padding-right: 20px;
+}
+.container{
+  margin: 0 auto;
+  max-width: 1600px;
+  text-align: left;
+}
+/* elcard */
+.elcard:hover{
+  z-index: 10;
+  -webkit-transform-origin:bottom left;
+  -webkit-transform:scale(1.04); 
+  background: #f2f2f2;
+  transition: 0.9s;
+}
+body{
+  background: #efefef
 }

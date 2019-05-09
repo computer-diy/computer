@@ -7,13 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title></title>
     <!-- <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="assets/js/vue.js"></script>
+    <script src="assets/js/axios.js"></script>
+    <link rel="stylesheet" href="assets/css/element.css">
     <!-- 引入组件库 -->
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="assets/js/element.js"></script>
     <!-- Required CSS files -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
+    <link href="assets/css/fonts.css" rel="stylesheet">
+
+
     <link rel="stylesheet" href="assets/css/owl.carousel.css">
     <link rel="stylesheet" href="assets/css/barfiller.css">
     <link rel="stylesheet" href="assets/css/animate.css">
@@ -23,8 +25,8 @@
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
 
-<body>
-    <div id="app">
+<body style="background:#efefef">
+    <div id="app"  style="background-image:url(https://www1.pconline.com.cn/2017/usercenter/images/cover.png);background-repeat: no-repeat;background-size: 80% 325px;background-position:top center;">
         <div class="preloader">
             <span class="preloader-spin"></span>
         </div>
@@ -44,56 +46,49 @@
                                     <input type="search" placeholder="search now">
                                     <button type="submit"><i class="fa fa-search"></i></button>
                                 </form>
-                                <div class="header-social">
-                                    <a href="#" class="fa fa-facebook"></a>
-                                    <a href="#" class="fa fa-twitter"></a>
-                                    <a href="#" class="fa fa-github"></a>
-                                </div>
                             </div>
                             <nav id="menu" class="d-none d-lg-block">
                                 <ul>
                                     <li class="current-menu-item has-child">
-                                        <a href="index.html">主页</a>
+                                        <a href="index.html">产品库</a>
                                         <ul class="sub-menu" style="z-index: 1000">
-                                            <li><a href="index.html">Home - 01</a></li>
-                                            <li><a href="index-2.html">Home - 02</a></li>
-                                            <li><a href="index-3.html">Home - 03</a></li>
+                                            <li><a href="#">硬件</a></li>
+                                            <li><a href="#">软件</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="about.html">关于</a></li>
-                                    <li><a href="portfolio.html">Portfolio</a></li>
+
                                     <li class="has-child">
-                                        <a href="#">Pages</a>
+                                        <a href="#">建议</a>
                                         <ul class="sub-menu" style="z-index: 1000">
-                                            <li><a href="404.html">404</a></li>
-                                            <li><a href="about.html">About</a></li>
-                                            <li><a href="career.html">Career</a></li>
-                                            <li><a href="coming-soon.html">Coming Soon</a></li>
-                                            <li><a href="contact.html">Contact</a></li>
-                                            <li><a href="faq.html">Faq</a></li>
-                                            <li><a href="portfolio.html">Portfolio</a></li>
-                                            <li><a href="pricing.html">Pricing</a></li>
-                                            <li><a href="service.html">Service</a></li>
-                                            <li><a href="team.html">Team</a></li>
-                                            <li><a href="testimonial.html">Testimonial</a></li>
+                                            <li><a href="#">留言</a></li>
+                                            <li><a href="#">反馈建议</a></li>
+                                            <li><a href="#">联系我们</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="contact.html">反馈建议</a></li>
+                                    <li v-if="userInfo.name" class="has-child">
+                                        <a href="mine.html"><img :src="userInfo.headImg" style="width:30px;height:30px;border-radius:50%" alt="">
+                                        {{userInfo.name}}</a>
+                                        <ul class="sub-menu" style="z-index: 1000">
+                                            <li><a @click="logout">注销</a></li>
+                                            <li><a @click="dialogFormVisible = true">修改密码</a></li>
+                                        </ul>
+                                    </li>
+                                    <li v-else><a href="login.html">登录</a></li>
                                 </ul>
                             </nav>
                         </div>
                     </div>
                 </div>
             </header>
-
             <div class="container text-center">
 
-                <el-card class="box-card">
+                <el-card class="box-card" style="margin-top:50px">
                     <el-row :gutter="20">
                         <el-col :span="3">
                             <div class="grid-content bg-purple" style="float:left;">
                                 <img style="width:100px;border-radius:50%;float:left;display: block"
-                                    src="https://i7.3conline.com/images/upload/upc/face/25/40/98/46/25409846_50x50"
+                                    :src="userInfo.headImg"
                                     alt="">
                                 <br>
                                 <el-button type="danger" @click="dialogFormVisible = true"
@@ -186,11 +181,19 @@
                     <el-form-item label="邮箱：" :label-width="formLabelWidth">
                         <el-input v-model="form.email" autocomplete="off"></el-input>
                     </el-form-item>
+                    <el-form-item label="头像：" :label-width="formLabelWidth">
+                        <el-upload class="upload-demo" drag action="http://0.0.0.0:888/file/img" :on-success="change">
+                            <i class="el-icon-upload"></i>
+                            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                            <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+                        </el-upload>
+                    </el-form-item>
+
 
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="dialogFormVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                    <el-button type="primary" @click="update">确 定</el-button>
                 </div>
             </el-dialog>
             <footer>
@@ -274,23 +277,75 @@
                 formLabelWidth: '100px',
                 activeName3: '0',
                 imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/24/c19/144112747_1556100405099.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/01/c11/140114944_1554093874677.jpg'],
-                form: {}
+                form: {
+                    name: '',
+                    phone: '',
+                    sex: '',
+                    email: '',
+                }
 
             },
             methods: {
+                change(res) {
+                    this.$data.userInfo.headImg=res.content
+                    console.log(res)
+                },
+                update() {
+                    axios({
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        url: 'http://0.0.0.0:888/member/new',
+                        data: form
+                    }).then((re) => {
+                        if (re.data.code === 0) {
+                            this.$message({
+                                message: '修改成功',
+                                type: 'success'
+                            });
+                            this.$data.userInfo = re.data.content
+                            sessionStorage.setItem('userInfo', re.data.content)
+                        }
+                        else {
+                            this.$message.error(re.data.content)
+                        }
+
+                    })
+                },
                 toDetail() {
                     location.href = ('detail.html')
                 },
                 handleClick(e) {
                     this.$data.activeName3 = e.name
                 },
+                logout() {
+                    axios({
+                        method: 'get',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        url: 'http://0.0.0.0:888/member/out',
+                    }).then((re) => {
+                        console.log('re', re)
+                        if (re.data.code === 0) {
+                            this.$message({
+                                message: '注销成功',
+                                type: 'success'
+                            });
+                            setTimeout('location.href=("login.html")', 500)
+
+
+                        }
+                    })
+                }
 
             },
             created: function () {
                 let userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
                 if (userInfo != null) {
                     this.$data.userInfo = userInfo
-                    this.$data.form= userInfo
+                    this.$data.form = userInfo
                 }
                 console.log('user', userInfo)
                 let _this = this
@@ -299,7 +354,7 @@
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    url: 'http://192.168.1.12:888/module/list',
+                    url: 'http://0.0.0.0:888/module/list',
                 }).then((re) => {
                     console.log(re)
                     if (re.data.code === 0) {
