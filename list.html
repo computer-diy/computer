@@ -7,13 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title></title>
     <!-- <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="assets/js/vue.js"></script>
+    <script src="assets/js/axios.js"></script>
+    <link rel="stylesheet" href="assets/css/element.css">
     <!-- 引入组件库 -->
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="assets/js/element.js"></script>
     <!-- Required CSS files -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
+    <link href="assets/css/fonts.css" rel="stylesheet">
+
+
     <link rel="stylesheet" href="assets/css/owl.carousel.css">
     <link rel="stylesheet" href="assets/css/barfiller.css">
     <link rel="stylesheet" href="assets/css/animate.css">
@@ -21,11 +23,6 @@
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/slicknav.css">
     <link rel="stylesheet" href="assets/css/main.css">
-    <style>
-        a {
-            color: #000
-        }
-    </style>
 </head>
 
 <body>
@@ -70,9 +67,10 @@
                                         </ul>
                                     </li>
                                     <li v-if="userInfo.name" class="has-child">
-                                        <a href="mine.html">{{userInfo.name}}</a>
+                                        <a href="mine.html"><img :src="userInfo.headImg" style="width:30px;height:30px;border-radius:50%" alt="">
+                                        {{userInfo.name}}</a>
                                         <ul class="sub-menu" style="z-index: 1000">
-                                            <li><a href="#">注销</a></li>
+                                            <li><a @click="logout">注销</a></li>
                                             <li><a @click="dialogFormVisible = true">修改密码</a></li>
                                         </ul>
                                     </li>
@@ -84,15 +82,16 @@
                 </div>
             </header>
 
-            <el-breadcrumb separator-class="el-icon-arrow-right" style="margin:30px;">
-                <el-breadcrumb-item><a href="index.html">首页</a></el-breadcrumb-item>
-                <el-breadcrumb-item><a href="#"></a>板块</el-breadcrumb-item>
-                <el-breadcrumb-item><a href="#"></a>正文</el-breadcrumb-item>
-            </el-breadcrumb>
 
 
 
-            <div class="" style="width:80%;margin: 0 auto">
+
+            <div class="container text-center" style="width:80%;margin: 0 auto">
+                <el-breadcrumb separator-class="el-icon-arrow-right" style="margin:30px;">
+                    <el-breadcrumb-item><a href="index.html">首页</a></el-breadcrumb-item>
+                    <el-breadcrumb-item><a href="#"></a>板块</el-breadcrumb-item>
+                    <el-breadcrumb-item><a href="#"></a>正文</el-breadcrumb-item>
+                </el-breadcrumb>
                 <el-row :gutter="20">
                     <el-col :span="16">
                         <el-card>
@@ -129,25 +128,23 @@
 
 
                         <el-divider></el-divider>
-                        <el-card v-for="o in list">
+                        <el-card class="elcard" v-for="o in list">
                             <el-row>
-                                <el-col :span="4" style="text-align:right;">
-                                    <img style="width:80px;height:80px" :src="o.img" alt="">
-
-                                </el-col>
-                                <el-col :span="20" style="text-align:left;padding-left:10px">
-                                    <p><span
-                                            style="color:#989898"><b>{{o.topic?'"["+o.topic+"]"':''}}{{o.title}}</b></span>
-                                    </p>
-                                    <p class="tz">
-                                        <span> <b><i class="el-icon-user-solid"></i>{{o.name}}</b></span>
-                                        <span style="color:#989898">{{o.publish_time}}</span>
-                                        <span><i class="el-icon-chat-line-square"></i>{{o.assess_times}}</span>
-                                        <span><i class="el-icon-view"></i> {{o.replyNum}}</span>
-                                        <span>最后回复：{{o.lastReplyName}}</span>
-                                    </p>
-
-                                </el-col>
+                                <div @click="toDetial(o.id)">
+                                <img style=" width:80px;height:80px;float:left;" :src="o.img" alt="">
+                                    <div style="text-align:left;margin-left:20px;float: left">
+                                        <p><span @click="toDetial(o.id)"
+                                                style="color:#989898"><b>{{o.topic?'"["+o.topic+"]"':''}}{{o.title}}</b></span>
+                                        </p>
+                                        <p class="tz">
+                                            <span> <b><i class="el-icon-user-solid"></i>&nbsp{{o.name}}</b></span>
+                                            <span style="color:#989898">{{o.publish_time}}</span>
+                                            <span><i class="el-icon-chat-line-square"></i>&nbsp{{o.assess_times}}</span>
+                                            <span><i class="el-icon-view"></i>&nbsp {{o.replyNum}}</span>
+                                            <span>最后回复：{{o.lastReplyName}}</span>
+                                        </p>
+                                    </div>
+                                </div>
                             </el-row>
                         </el-card>
                         <br>
@@ -178,7 +175,7 @@
                     <el-col :span="8">
                         <el-card style="height:110px">
                             <el-dropdown split-button type="primary">
-                                发表新帖
+                                <a style="color:#fff" href="publish.html">发表新帖</a>
                                 <el-dropdown-menu slot="dropdown">
                                     <el-dropdown-item><a href="#">发起主题</a></el-dropdown-item>
                                     <el-dropdown-item><a href="#">发起活动</a></el-dropdown-item>
@@ -194,11 +191,13 @@
                                 <span style="color:#e58434;font-size:16px">板块信息 </span>
                                 <el-divider></el-divider>
                             </p>
-                            <p><span style="color:#989898">版主：</span>sss bbb</p>
-                            <p><span style="color:#989898">版副：</span>sss bbb</p>
-                            <p><span style="color:#989898">嘉宾：</span>sss bbb</p>
+                            <div style="text-align:left">
+                                <p><span style="color:#989898">版主：</span>sss bbb</p>
+                                <p><span style="color:#989898">版副：</span>sss bbb</p>
+                                <p><span style="color:#989898">嘉宾：</span>sss bbb</p>
+                            </div>
                         </el-card>
-                        <el-card style="height:330px;margin-top:20px">
+                        <el-card style="height:330px;margin-top:20px;text-align: left">
                             <span style="color:#e58434;font-size:16px">推荐阅读 </span>
                             <el-carousel indicator-position="none" height="150px">
                                 <el-carousel-item v-for="item in introImgs" :key="item">
@@ -215,7 +214,7 @@
                                 </li>
                             </ul>
                         </el-card>
-                        <el-card style="height:220px;margin-top:20px">
+                        <el-card style="height:220px;margin-top:20px;text-align: left">
                             <p>
                                 <span style="color:#e58434;font-size:16px">DIV讨论区本周热帖 </span>
                             </p>
@@ -261,7 +260,17 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                    <br/>
+                    <!-- <div class="text item">
+                        <span style="color:green">
+                            <i class="el-icon-user-solid"></i>{{it.name}}</span>
+                        <span style="margin-left:10px;">
+                            <i class="el-icon-date"></i>{{it.publish_time}}</span>
+                            <span style="margin-left:10px;">
+                                <i class="el-icon-chat-dot-round"></i>{{it.replyNum}}</span>
+                                <span style="margin-left:10px;">浏览量{{it.assess_times}}</span>
+                        <span style="margin-left:10px;">最后回复{{it.lastReplyName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{it.lastReplyTime}}</span>
+                </div> -->
                 <div class="footer-bottom">
                     <div class="container">
                         <div class="row">
@@ -321,6 +330,7 @@
                 items: [
 
                 ],
+                userInfo: {},
                 activeName: 'first',
                 textarea: '',
                 commentList: [
@@ -347,7 +357,7 @@
                     {
                         name: "飞利浦空净双11狂欢送充值卡"
                     },
-                    {   
+                    {
                         name: "【图赏】进击的“能力者”OPPO R7s"
                     },
                 ], hotkeys: [
@@ -443,7 +453,7 @@
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: 'http://192.168.1.12:888/module/list',
+                        url: 'http://0.0.0.0:888/module/list',
                     }).then((re) => {
                         console.log(re)
                         if (re.data.code === 0) {
@@ -462,6 +472,9 @@
                         }
                     }
                     return theRequest;
+                },
+                toDetial(id) {
+                    location.href = (`detail.html?id=${id}`)
                 }
             },
             created: function () {
@@ -480,7 +493,7 @@
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    url: 'http://192.168.1.12:888/invitation/page',
+                    url: `http://0.0.0.0:888/invitation/page?moduleId=${this.GetRequest().id}`,
                 }).then((res) => {
                     console.log('res', res)
                     if (res.data.code === 0) {

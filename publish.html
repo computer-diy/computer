@@ -6,13 +6,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title></title>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <!-- 引入样式 -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script> -->
+    <script src="assets/js/vue.js"></script>
+    <script src="assets/js/axios.js"></script>
+    <link rel="stylesheet" href="assets/css/element.css">
     <!-- 引入组件库 -->
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="assets/js/element.js"></script>
     <!-- Required CSS files -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
+    <link href="assets/css/fonts.css" rel="stylesheet">
+
+
     <link rel="stylesheet" href="assets/css/owl.carousel.css">
     <link rel="stylesheet" href="assets/css/barfiller.css">
     <link rel="stylesheet" href="assets/css/animate.css">
@@ -23,8 +26,7 @@
 </head>
 
 <body>
-    <div id="app2">
-        <!-- 头部 -->
+    <div id="app">
         <div class="preloader">
             <span class="preloader-spin"></span>
         </div>
@@ -42,79 +44,37 @@
                                 <span class="search-icon fa fa-search"></span>
                                 <form action="#" class="search-form">
                                     <input type="search" placeholder="search now">
-                                    <button type="submit">
-                                        <i class="fa fa-search"></i>
-                                    </button>
+                                    <button type="submit"><i class="fa fa-search"></i></button>
                                 </form>
-                                <div class="header-social">
-                                    <a href="#" class="fa fa-facebook"></a>
-                                    <a href="#" class="fa fa-twitter"></a>
-                                    <a href="#" class="fa fa-github"></a>
-                                </div>
                             </div>
                             <nav id="menu" class="d-none d-lg-block">
                                 <ul>
                                     <li class="current-menu-item has-child">
-                                        <a href="index.html">主页</a>
-                                        <ul class="sub-menu">
-                                            <li>
-                                                <a href="index.html">Home - 01</a>
-                                            </li>
-                                            <li>
-                                                <a href="index-2.html">Home - 02</a>
-                                            </li>
-                                            <li>
-                                                <a href="index-3.html">Home - 03</a>
-                                            </li>
+                                        <a href="index.html">产品库</a>
+                                        <ul class="sub-menu" style="z-index: 1000">
+                                            <li><a href="#">硬件</a></li>
+                                            <li><a href="#">软件</a></li>
                                         </ul>
                                     </li>
-                                    <li>
-                                        <a href="about.html">关于</a>
-                                    </li>
-                                    <li>
-                                        <a href="portfolio.html">Portfolio</a>
-                                    </li>
+                                    <li><a href="about.html">关于</a></li>
+
                                     <li class="has-child">
-                                        <a href="#">Pages</a>
-                                        <ul class="sub-menu">
-                                            <li>
-                                                <a href="404.html">404</a>
-                                            </li>
-                                            <li>
-                                                <a href="about.html">About</a>
-                                            </li>
-                                            <li>
-                                                <a href="career.html">Career</a>
-                                            </li>
-                                            <li>
-                                                <a href="coming-soon.html">Coming Soon</a>
-                                            </li>
-                                            <li>
-                                                <a href="contact.html">Contact</a>
-                                            </li>
-                                            <li>
-                                                <a href="faq.html">Faq</a>
-                                            </li>
-                                            <li>
-                                                <a href="portfolio.html">Portfolio</a>
-                                            </li>
-                                            <li>
-                                                <a href="pricing.html">Pricing</a>
-                                            </li>
-                                            <li>
-                                                <a href="service.html">Service</a>
-                                            </li>
-                                            <li>
-                                                <a href="team.html">Team</a>
-                                            </li>
-                                            <li>
-                                                <a href="testimonial.html">Testimonial</a>
-                                            </li>
+                                        <a href="#">建议</a>
+                                        <ul class="sub-menu" style="z-index: 1000">
+                                            <li><a href="#">留言</a></li>
+                                            <li><a href="#">反馈建议</a></li>
+                                            <li><a href="#">联系我们</a></li>
                                         </ul>
                                     </li>
-                                    <li>
-                                        <a href="contact.html">反馈建议</a>
+                                    <li v-if="userInfo.name" class="has-child">
+                                        <a href="mine.html"><img :src="userInfo.headImg" style="width:30px;height:30px;border-radius:50%" alt="">
+                                        {{userInfo.name}}</a>
+                                        <ul class="sub-menu" style="z-index: 1000">
+                                            <li><a @click="logout">注销</a></li>
+                                            <li><a @click="dialogFormVisible = true">修改密码</a></li>
+                                        </ul>
                                     </li>
+                                    <li v-else><a href="login.html">登录</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -122,29 +82,37 @@
                 </div>
             </header>
         </div>
-        <h1 style="text-align:center;">话题贴发布</h1>
-        <div class="editor">
-            <div ref="toolbar" style="width:90%;margin:0px auto" class="toolbar">
+        <h1 style="text-align:center;margin:20px">话题贴发布</h1>
+        <el-card style="width:90%;padding:20px;text-align:center;margin:0 auto;z-index: 10;">
+            <div style="float:left;margin-top:40px;z-index: 100;">
+                <el-input v-model="title" placeholder="请输入标题" style="float:left;margin-top:10px"></el-input>
+                <el-select v-model="moduleId" placeholder="请选择发布版块" style="float:left;margin:10px 0 10px 0;">
+                    <el-option v-for="item in options" :key="item.moduleId" :label="item.NAME" :value="item.moduleId">
+                    </el-option>
+                </el-select>
+                <!-- 详情页面 -->
             </div>
-            <div ref="editor" style="width:90%;margin:0px auto;border:1px solid #bbb;height:500px" class="text">
+        </el-card>
+        <br>
+        <el-card style="width:90%;padding:20px;text-align:left;margin:0 auto; z-index: 2;">
+            <div class="editor">
+                <div ref="toolbar" style="width:100%;margin:0px auto" class="toolbar">
+                </div>
+                <div ref="editor" style="width:100%;margin:0px auto;border:1px solid #bbb;height:500px" class="text">
+                </div>
             </div>
-        </div>
+            <el-button type="success" @click="aaaa()" style="float:right;width: 70px;height: 70px;position: fixed;bottom: 40px;right:40px"
+                icon="el-icon-position" circle>
+                发布
+            </el-button>
+        </el-card>
 
-        <div style="float:right;margin-right:340px;margin-top:40px;">
-            <el-button type="success" @click="aaaa()" style="float:right;">发布</el-button>
-            <el-input v-model="title" placeholder="请输入标题" style="float:right;width:180px;"></el-input>
-            <el-select v-model="moduleId" placeholder="请选择发布版块" style="float:right;">
-                <el-option v-for="item in options" :key="item.moduleId" :label="item.NAME" :value="item.moduleId">
-                </el-option>
-            </el-select>
-            <!-- 详情页面 -->
-        </div>
     </div>
     <!-- body container -->
 
 
 
-    <script src="https://unpkg.com/wangeditor@3.1.1/release/wangEditor.min.js"></script>
+    <script src="assets/js/editor.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="assets/js/jquery-2.2.4.min.js"></script>
     <script src="assets/js/vendor/popper.min.js"></script>
@@ -161,30 +129,33 @@
     var E = window.wangEditor
     // var editor = new E('#divDemo')
     var app = new Vue({
-        el: '#app2',
+        el: '#app',
         data: {
             message: 'Hello Vue!',
             moduleId: '',
             title: '',
             content: '',
             options: [],
+            userInfo: {},
             editor: null
         },
         methods: {
             aaaa() {
                 this.content = this.editor.$textElem['0'].innerHTML
-                if(this.moduleId === '') {
-                    alert('请选择模块');
+                console.log('ff',this.content)
+                if (this.title === '') {
+                    this.$message.error('请输入标题')
                     return;
                 }
-                if(this.title === '') {
-                    alert('请选择模块');
+                if (this.moduleId === '') {
+                    this.$message.error('请选择模块')
                     return;
                 }
-                if(this.content === '') {
-                    alert('请输入要发布的内容');
+                if (this.content.length < 50) {
+                    this.$message.error('内容太少啦~')
                     return;
                 }
+
                 let data = { "content": this.content, "title": this.title, "moduleId": this.moduleId }
                 axios({
                     method: 'POST',
@@ -193,10 +164,15 @@
                         'Content-Type': 'application/json',
                         'token': sessionStorage.getItem('token')
                     },
-                    url: 'http://192.168.1.12:888/invitation/add',
+                    url: 'http://0.0.0.0:888/invitation/add',
                 }).then((re) => {
                     if (re.data.code === 0) {
-                        alert('发布成功 可以到我的个人信息查看')
+                        this.$message({
+                            message: '发布成功 可以到我的个人信息查看',
+                            type: 'success'
+                        });
+                        setTimeout('location.href=("mine.html")', 1500)
+
                     }
                 })
             }
@@ -227,13 +203,14 @@
                 'redo', // 重复
                 'fullscreen' // 全屏
             ]
+            this.editor.customConfig.zIndex = 4
             this.editor.create()
             axios({
                 method: 'get',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                url: 'http://192.168.1.12:888/module/list',
+                url: 'http://0.0.0.0:888/module/list',
             }).then((re) => {
                 if (re.data.code === 0) {
                     console.log(re.data)
@@ -242,7 +219,6 @@
             })
         },
     })
-
 
 </script>
 
