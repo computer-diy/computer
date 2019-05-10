@@ -293,24 +293,21 @@
                     location.href = ('detail.html')
                 },
                 login() {
-                    console.log('ee', this.$data.form)
                     let form = this.$data.form
                     axios({
                         method: 'POST',
-                        headers: {
-                        },
                         url: 'http://192.168.1.12:888/member/login',
                         data: form
                     }).then((re) => {
-                        console.log('r', re)
                         if (re.data.code === 0) {
                             this.$message({
                                 message: '登录成功',
                                 type: 'success'
                             });
-                            this.$data.userInfo = re.data.content
-                            sessionStorage.setItem('userInfo', JSON.stringify(re.data.content))
-                            location.href = ("index.html")
+                            this.$data.userInfo = re.data.content.member
+                            sessionStorage.setItem('userInfo', JSON.stringify(re.data.content.member))
+                            sessionStorage.setItem('token',JSON.stringify(re.data.content.token))
+                            location.href = ('index.html')
                         }else{
                             this.$message.error(re.data.content);
 

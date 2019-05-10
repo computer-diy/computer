@@ -191,6 +191,7 @@
                     data: data,
                     headers: {
                         'Content-Type': 'application/json',
+                        'token': sessionStorage.getItem('token')
                     },
                     url: 'http://192.168.1.12:888/invitation/add',
                 }).then((re) => {
