@@ -11,7 +11,6 @@
     <script src="assets/js/axios.js"></script>
     <!-- 引入样式 -->
     <!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
-    <link rel="stylesheet" href="assets/css/element.css">
 
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <!-- 引入组件库 -->
@@ -21,15 +20,20 @@
 
 
     <link rel="stylesheet" href="assets/css/owl.carousel.css">
+
     <link rel="stylesheet" href="assets/css/barfiller.css">
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/slicknav.css">
     <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/mycss.css">
+    <link rel="stylesheet" href="assets/css/element.css">
+
 </head>
 
 <body>
+
     <div id="app">
         <div class="preloader">
             <span class="preloader-spin"></span>
@@ -71,8 +75,9 @@
                                         </ul>
                                     </li>
                                     <li v-if="userInfo.name" class="has-child">
-                                        <a href="mine.html"><img :src="userInfo.headImg" style="width:30px;height:30px;border-radius:50%" alt="">
-                                        {{userInfo.name}}</a>
+                                        <a href="mine.html"><img :src="userInfo.headImg"
+                                                style="width:30px;height:30px;border-radius:50%" alt="">
+                                            {{userInfo.name}}</a>
                                         <ul class="sub-menu" style="z-index: 1000">
                                             <li><a @click="logout">注销</a></li>
                                             <li><a @click="dialogFormVisible = true">修改密码</a></li>
@@ -85,26 +90,34 @@
                     </div>
                 </div>
             </header>
-            <div class="container text-center">
-                    <el-breadcrumb separator-class="el-icon-arrow-right" style="margin:30px;">
-                            <el-breadcrumb-item><a href="index.html">首页</a></el-breadcrumb-item>
-                            <el-breadcrumb-item><a href="#"></a>板块</el-breadcrumb-item>
-                            <el-breadcrumb-item><a href="#"></a>正文</el-breadcrumb-item>
-                        </el-breadcrumb>
+            <!-- test_outer -->
+            <div class="container text-center" style="width:80%;margin: 0 auto">
+
+                <el-breadcrumb separator-class="el-icon-arrow-right" style="margin:30px;">
+                    <el-breadcrumb-item><a href="index.html">首页</a></el-breadcrumb-item>
+                    <el-breadcrumb-item><a @click="toModule">板块</a></el-breadcrumb-item>
+                    <el-breadcrumb-item><a href="#"></a>正文</el-breadcrumb-item>
+                </el-breadcrumb>
                 <el-row :gutter="20">
                     <el-col :span="16">
                         <el-card style="">
                             <el-row :gutter="20">
                                 <div class="grid-content bg-purple" style="float:left;text-align:right;">
-                                    <img style="width:100px;border-radius:50%;text-align:right;" :src="content.head_img"
+                                    <img @click="toUserDetail(content.member_id)"
+                                        style="width:100px;border-radius:50%;text-align:right;" :src="content.head_img"
                                         alt="">
                                     <br>
                                 </div>
                                 <el-col :span="20" style="text-align:left" class="box-card-span">
                                     <p>{{content.title}}</p>
-                                    <p style="color:#363636">{{content.name}} <el-tag color="#96cbfc" size="mini"
-                                            style="color:#fff">{{content.lv}}</el-tag>
-                                        <el-tag size="mini">{{content.lvName}}</el-tag>
+                                    <p style="color:#363636">
+                                        <el-link type="primary" style="color:#409EFF"
+                                            @click="toUserDetail(content.member_id)">
+                                            {{content.name}}</el-link>
+
+                                        <el-tag color="#96cbfc" size="mini" style="color:#fff">{{content.level}}
+                                        </el-tag>
+                                        <el-tag size="mini">{{content.levelName}}</el-tag>
 
                                         <span style="float:right">
                                             <el-tag>楼主</el-tag>
@@ -130,7 +143,7 @@
 
                             </div>
                             <div style="float:right;margin:10px">
-                                <a style="color:#e58434" href="#" type="warning">回复</a>
+                                <a style="color:#e58434" href="#fb" type="warning">回复</a>
                                 <a style="color:#e58434" href="#" type="warning">评分</a>
                                 <a style="color:#e58434" href="#" type="warning">举报</a>
                             </div>
@@ -143,84 +156,105 @@
                                 <img style="width:80px;height:80px;float:left" :src="o.head_img" alt="">
                                 <el-col :span="20" style="text-align:left;padding-left:10px">
                                     <p>
-                                        {{o.name}} <el-tag size="mini">{{o.lv}}</el-tag> <span
-                                            style="color:#989898">{{o.publish_time}}</span>
+                                        {{o.name}} <el-tag size="mini">{{o.level}}</el-tag>
+                                        <el-tag size="mini">{{o.levelName}}</el-tag>
+                                        <span style="color:#989898">{{o.publish_time}}</span>
                                         <el-tag style="float:right" size="mini">{{index+1}}楼</el-tag>
                                     </p>
+                                    <p v-html="o.content">
+                                    </p>
                                     <p>
-                                        {{o.content}}
                                         <div style="float:right;margin:10px">
-                                            <a style="color:#989898" href="#" type="warning">回复</a>
-                                            <a style="color:#989898" href="#" type="warning">评分</a>
                                             <a style="color:#989898" href="#" type="warning">举报</a>
                                         </div>
                                         <br>
                                         <div v-if="o.signature" style="color:#989898">
                                             <el-divider content-position="left"><i class="el-icon-edit"></i>签名档
                                             </el-divider>
-                                            <p style="margin:10px">{{o.signature}}</p>
+                                            <p style="margin:10px;max-height: 300px;overflow: hidden"
+                                                v-html="o.signature"></p>
                                         </div>
                                     </p>
                                 </el-col>
                             </el-row>
                         </el-card>
+                        <el-card style="margin-top:5px">
+                            <el-pagination background layout="prev, pager, next" :total="total" :page-size="pageSize"
+                                @current-change="handleCurrentChange" :current-page.sync="currentPage"
+                                :hide-on-single-page="true">
+                            </el-pagination>
+                        </el-card>
                         <!-- 评论区 -->
                         <br>
-                        <div class="editor">
-                            <div ref="toolbar" style="width:100%;margin:0px auto" class="toolbar">
+                        <a name="fb"></a>
+                        <el-card style="padding:10px;text-align: left">
+                            <h5 style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;color:#989898">
+                                ☕️发表你的看法：</h5>
+                            <div class="editor">
+                                <div ref="toolbar" style="width:100%;margin:0px auto" class="toolbar">
+                                </div>
+                                <div ref="editor"
+                                    style="text-align:left;min-width:690px;margin:0px auto;border:1px solid #bbb;height:280px"
+                                    class="text">
+                                </div>
                             </div>
-                            <div ref="editor" style="text-align:left;:690px;margin:0px auto;border:1px solid #bbb;height:280px"
-                                class="text">
+                            <div style="float:right;margin:40px 0 40px 0;">
+                                <el-button type="success" @click="publish(content.id?content.id:-1)"
+                                    style="float:right;background: #e2761c">发表
+                                </el-button>
                             </div>
-                        </div>
+                        </el-card>
 
-                        <div style="float:right;margin:40px 0 40px 0;">
-                            <el-button type="success" @click="publish(content.id)"
-                                style="float:right;background: #e2761c">发表
-                            </el-button>
-                        </div>
+
                     </el-col>
                     <el-col :span="8">
-                        <el-card style="height:110px;text-align:left">
-                            <el-dropdown split-button type="primary">
-                                <a style="color:#fff" href="publish.html">发表新帖</a>
-                                <el-dropdown-menu slot="dropdown">
-                                    <el-dropdown-item><a href="publish.html">发起主题</a></el-dropdown-item>
-                                    <el-dropdown-item><a href="publish.html">发起活动</a></el-dropdown-item>
-                                </el-dropdown-menu>
-                            </el-dropdown>
-                            <el-button type="primary" style="float:right;margin-left:10px" icon="el-icon-star-off"
-                                circle></el-button>
-                            <el-button type="primary" style="float:right" icon="el-icon-edit" circle></el-button>
-                        </el-card>
-                        <el-card style="height:220px;margin-top:20px;text-align: left">
-                            <p>
-                                <span style="color:#e58434;font-size:16px">Ta的帖子 </span>
-                                <a href="#" style="float:right">更多>></a>
-                                <el-divider></el-divider>
-                                <ul style="list-style:none;">
-                                    <li class="text-control" v-for="o in list">
+                        <div id="control">
+                            <el-card style="height:80px;text-align:left;">
+                                <el-dropdown split-button type="primary">
+                                    <a style="color:#fff" href="publish.html">发表新帖</a>
+                                    <el-dropdown-menu slot="dropdown">
+                                        <el-dropdown-item><a href="publish.html">发起主题</a></el-dropdown-item>
+                                        <el-dropdown-item><a href="publish.html">发起活动</a></el-dropdown-item>
+                                    </el-dropdown-menu>
+                                </el-dropdown>
+                                <el-button type="primary" style="float:right;margin-left:10px" icon="el-icon-star-off"
+                                    circle></el-button>
+                                <el-button type="primary" style="float:right" icon="el-icon-edit" circle></el-button>
+                            </el-card>
+                            <el-card id="ta" style="height:220px;margin-top:20px;text-align: left;">
+                                <p>
+                                    <!-- 260 -->
+                                    <span style="color:#e58434;font-size:16px;">Ta的帖子 </span>
+                                    <a href="#" style="float:right">更多>></a>
+                                    <ul style="list-style:none;">
+                                        <li class="text-control" v-for="o in selfList">
+                                            <a href="#" @click="toDetail(o.id,o.module_id)"> {{o.title}}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </p>
+                            </el-card>
+                            <el-card style="height:330px;margin-top:20px;text-align: left;">
+                                <!-- 500 -->
+                                <span style="color:#e58434;font-size:16px">推荐阅读 </span>
+                                <el-carousel indicator-position="none" height="150px">
+                                    <el-carousel-item v-for="item in introImgs">
+                                        <img :src="item.url" alt="" style="width:100%;float:left;height:150px">
+                                        <div class="card-text-attach">{{item.name}}</div>
+                                    </el-carousel-item>
+                                </el-carousel>
+                                <ul style="list-style:none;" style="margin:20px">
+                                    <li class="text-control" v-for="o in introList">
                                         <a href="#"> {{o.name}}
                                         </a>
                                     </li>
                                 </ul>
-                            </p>
-                        </el-card>
-                        <el-card style="height:330px;margin-top:20px;text-align: left">
-                            <span style="color:#e58434;font-size:16px">推荐阅读 </span>
-                            <el-carousel indicator-position="none" height="150px">
-                                <el-carousel-item v-for="item in introImgs" :key="item">
-                                    <img :src="item.url" alt="" style="width:100%;float:left;height:150px">
-                                    <div class="card-text-attach">{{item.name}}</div>
-                                </el-carousel-item>
-                            </el-carousel>
-                            <ul style="list-style:none;" style="margin:20px">
-                                <li class="text-control" v-for="o in introList">
-                                    <a href="#"> {{o.name}}
-                                    </a>
-                                </li>
-                            </ul>
-                        </el-card>
+                            </el-card>
+                            <el-button type="danger" id="btnTop" style="display: none;z-index: 100;width:360px"
+                                @click="toTop" icon="el-icon-top">
+                                回到顶部
+                            </el-button>
+                        </div>
                     </el-col>
                 </el-row>
             </div>
@@ -310,40 +344,21 @@
         var app = new Vue({
             el: '#app',
             data: {
+                currentPage: 1,
+                pageSize: 4,
                 seen: true,
-                imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/24/c19/144112747_1556100405099.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/01/c11/140114944_1554093874677.jpg'],
+                param: '',
+                mid: '',
+                total: 0,
+                imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'http://img.poppur.com/1470911860.jpg'],
                 userInfo: {},
                 formLabelWidth: '140px',
                 dialogFormVisible: false,
                 seen: true,
                 editor: null,
                 commentList: [
-                    {
-                        username: "李四",
-                        lv: "LV2",
-                        time: "2019-05-08 00:58",
-                        content: "那时最疯狂最快通关的好像在7个小时以内吧，前提是必须省略过场片段以及次要情节",
-                        signature: "办公兼修图兼剪辑：ThreadRipper 2950X +太极X399 +超白金Vega 64 +DDR4 3200 32G +M9PeG 512G X2 +Win10 Pro 64位 游戏及影视及网购：i7 3930K@4.2G +X79-UP4 +冰龙1070 +DDR3 2133 16G +MP961 256G PCIE转M.2 +Win10 Pro 64位"
-                    }, {
-                        username: "张三",
-                        lv: "LV5",
-                        time: "2019-05-02 14:53",
-                        content: "支线任务太费时了，以前玩古墓丽影系列都是顺着路线玩，不会刻意完成每个任务，太累人了。我是玩游戏，不是游戏玩我啊"
-                    },
                 ],
                 list: [
-                    {
-                        name: "刚下载了个老游戏，问下谁通关过？要多长时间啊"
-                    },
-                    {
-                        name: "感觉WINDOWS10自带的任务管理器显示频率不对，你们也是这样的吗？"
-                    },
-                    {
-                        name: "AMD比INTEL厚道多了，看1级2级3级缓存，特别是32MB的3级缓存"
-                    },
-                    {
-                        name: "感觉ZIP比RAR压缩效率高些，有个问题请高人解答"
-                    }
                 ],
                 introList: [
                     {
@@ -360,6 +375,7 @@
 
                     }
                 ],
+                selfList: [],
                 introImgs: [
                     {
                         name: "入门游戏新机综合搭配",
@@ -371,7 +387,7 @@
 
                     }, {
                         name: "从奔腾4到G4560，一台老爷机的复活记",
-                        url: "ttps://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/01/c11/140114944_1554093874677.jpg"
+                        url: "https://s2.ax1x.com/2019/05/06/EBRZqK.jpg"
 
                     }, {
                         name: "用NAS备份数据，可以无惧比特币勒索！",
@@ -380,7 +396,7 @@
                     }
                 ],
                 content: {},
-                imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/24/c19/144112747_1556100405099.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/01/c11/140114944_1554093874677.jpg'],
+                imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'http://img.poppur.com/1470911860.jpg'],
                 userInfo: {},
                 formLabelWidth: '100px',
                 form: {
@@ -390,57 +406,104 @@
 
             },
             methods: {
-                publish(id) {
-                    this.content = this.editor.$textElem['0'].innerHTML
-                    if (this.moduleId === '') {
-                        this.$message.error('请选择模块')
-                        return;
-                    }
-                    if (this.content === '') {
-                        this.$message.error('请输入要发布的内容')
-                        return;
-                    }
-               
+                toUserDetail(id) {
+                    location.href = (`info.html?id=${id}`)
+                },
+                handleCurrentChange(e) {
+                    let _this = this
+                    _this.$data.currentPage = e
+                    const loading = this.$loading({
+                        lock: true,
+                        text: 'Loading',
+                        spinner: 'el-icon-loading',
+                        background: 'rgba(0, 0, 0, 0.7)'
+                    });
                     axios({
-                        method: 'POST',
-                        data: {
-                            content: this.content,
-                            invitationId: id,
-                            memberId: JSON.parse(sessionStorage.getItem('userInfo')).id
-                        },
+                        method: 'get',
                         headers: {
-                            'Content-Type': 'application/json',
+                            'token': sessionStorage.getItem('token'),
+                            'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: 'http://0.0.0.0:888/reply/add',
+                        url: `http://0.0.0.0:888/reply/list1?invitationId=${this.$data.param.id}&current=${e}&size=${_this.$data.pageSize}`,
                     }).then((re) => {
-                        console.log('re', re)
+                        console.log(re)
                         if (re.data.code === 0) {
-                            this.$message({
-                                message: '发布成功',
-                                type: 'success'
-                            });
-                            setTimeout('location.href=("mine.html")', 1500)
+                            this.$data.commentList = re.data.content.records
+                            loading.close();
+                            // 显示增强 回到顶部
 
                         }
                     })
                 },
-                he() {
-                    console.log('ss')
+                toModule() {
+                    location.href = (`list.html?id=${this.$data.mid ? this.$data.mid : 1}`)
                 },
-                toDetail() {
-                    location.href = ('detail.html')
+                publish(id) {
+                    if (id != -1) {
+                        this.content = this.editor.$textElem['0'].innerHTML
+                        if (this.moduleId === '') {
+                            this.$message.error('请选择模块')
+                            return;
+                        }
+                        if (this.content === '') {
+                            this.$message.error('请输入要发布的内容')
+                            return;
+                        }
+                        axios({
+                            method: 'POST',
+                            data: {
+                                content: this.content,
+                                invitationId: id,
+                                memberId: JSON.parse(sessionStorage.getItem('userInfo')).id
+                            },
+                            headers: {
+                                'token': sessionStorage.getItem('token'),
+                                'Content-Type': 'application/json',
+                            },
+                            url: 'http://0.0.0.0:888/reply/add',
+                        }).then((re) => {
+                            console.log('re', re)
+                            if (re.data.code === 0) {
+                                this.$message({
+                                    message: '发布成功',
+                                    type: 'success'
+                                });
+                                this.editor.$textElem['0'].innerHTML = ''
+                                this.getList(this.$data.param)
+
+
+                            }
+                        })
+                    } else {
+                        this.$message.error('未登录，需要先登录')
+                        $('body').css('overflow', 'hidden');//浮层出现时窗口不能滚动设置
+
+
+
+                    }
+
+                },
+                toDetail(id, mid) {
+                    location.href = (`detail.html?id=${id}&mid=${mid}`)
                 },
                 logout() {
                     axios({
                         method: 'get',
                         headers: {
+                            'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: 'http://0.0.0.0:888/module/list',
+                        url: 'http://0.0.0.0:888/member/out',
                     }).then((re) => {
-                        console.log(re)
+                        console.log('re', re)
                         if (re.data.code === 0) {
-                            this.$data.list = re.data.content
+                            this.$message({
+                                message: '注销成功',
+                                type: 'success'
+                            });
+                            sessionStorage.removeItem('userInfo')
+                            setTimeout('location.href=("index.html")', 500)
+
                         }
                     })
                 },
@@ -455,8 +518,53 @@
                         }
                     }
                     return theRequest;
-                }
+                },
+                toTop() {
+                    let timer = null;
+                    cancelAnimationFrame(timer);
+                    timer = requestAnimationFrame(function fn() {
+                        let oTop = document.body.scrollTop || document.documentElement.scrollTop;
+                        if (oTop > 0) {
+                            document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+                            timer = requestAnimationFrame(fn);
+                        } else {
+                            cancelAnimationFrame(timer);
+                        }
+                    });
+                },
+                getList(param) {
+                    let _this = this
+                    axios.defaults.headers.post['Content-Type'] = "application/x-www-form-urlencoded"
+                    axios.defaults.headers.token = sessionStorage.getItem('token')
+
+                    axios.all([
+                        axios.get(`http://0.0.0.0:888/invitation/${param.id ? param.id : 20}`),
+                        axios.get(`http://0.0.0.0:888/reply/list1?invitationId=${param.id ? param.id : 20}&current=${_this.$data.currentPage}&size=${_this.$data.pageSize}`),
+                        axios.get(`http://0.0.0.0:888/invitation/self`)
+                    ]).then(axios.spread(function (ires, cres, sres) {
+                        console.log('User', ires.data);
+                        console.log('Repositories', cres.data);
+                        console.log('self', sres.data);
+                        if (ires.data.code === 0) {
+                            _this.$data.content = ires.data.content
+                        }
+                        if (cres.data.code === 0) {
+                            _this.$data.commentList = cres.data.content.records
+                            _this.$data.total = cres.data.content.total
+                        }
+                        if (sres.data.code === 0) {
+                            let i = sres.data.content.records.length - 1 > 4 ? 4 : sres.data.content.records.length - 1
+                            while (i-- > 0) {
+                                _this.$data.selfList[i] = sres.data.content.records[i]
+                            }
+                        }
+
+                    }));
+
+                },
             },
+
+
             mounted() {
                 this.editor = new E(this.$refs.toolbar, this.$refs.editor)
                 this.editor.customConfig.uploadImgShowBase64 = true // base 64 存储图片
@@ -485,38 +593,34 @@
                 ]
                 this.editor.create()
             },
+
             created: function () {
+                window.onscroll = function () {
+                    scrollFunction()
+                };
+
+                function scrollFunction() {
+
+                    if (document.body.scrollTop > 150 || document.documentElement.scrollTop > 150) {
+                        document.getElementById("control").className = "control";
+                        document.getElementById("btnTop").style.display = "block";
+                        document.getElementById("ta").style.display = "none";
+                    } else {
+                        document.getElementById("control").className = "";
+                        document.getElementById("ta").style.display = "block"; document.getElementById("btnTop").style.display = "none";
+                    }
+                }
                 let _this = this
                 let param = _this.GetRequest()
+                _this.$data.param = param
+                _this.$data.mid = param.mid
                 let userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
                 console.log('user', userInfo)
                 if (userInfo != null) {
                     _this.$data.userInfo = userInfo
                 }
-                axios({
-                    method: 'get',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    url: `http://0.0.0.0:888/invitation/${param.id ? param.id : 20}`,
-                }).then((res) => {
-                    console.log('res', res)
-                    if (res.data.code === 0) {
-                        _this.$data.content = res.data.content
-                    }
-                })
-                axios({
-                    method: 'get',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    url: `http://localhost:888/reply/list1?invitationId=${param.id ? param.id : 20}`,
-                }).then((res) => {
-                    console.log('resss', res)
-                    if (res.data.code === 0) {
-                        _this.$data.commentList = res.data.content.records
-                    }
-                })
+                // axios.defaults.baseURL = 'http://0.0.0.0:888/';
+                _this.getList(param)
 
             }
         })

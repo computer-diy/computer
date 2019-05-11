@@ -68,7 +68,7 @@
                                         </ul>
                                     </li>
                                     <li v-if="userInfo.name" class="has-child">
-                                        <a href="mine.html"><img :src="userInfo.headImg"
+                                        <a href="mine.html"><img :src="content.head_img"
                                                 style="width:30px;height:30px;border-radius:50%" alt="">
                                             {{userInfo.name}}</a>
                                         <ul class="sub-menu" style="z-index: 1000">
@@ -90,47 +90,44 @@
                         <el-col :span="3">
                             <div class="grid-content bg-purple" style="float:left;">
                                 <img style="width:100px;border-radius:50%;float:left;display: block"
-                                    :src="userInfo.headImg" alt="">
+                                    :src="content.head_img" alt="">
                                 <br>
-                                <el-button type="danger" @click="dialogFormVisible = true"
-                                    style="float:left;margin-top: 10px" round>修改资料</el-button>
+                                <!-- <el-button type="danger" @click="dialogFormVisible = true"
+                                    style="float:left;margin-top: 10px" round>修改资料</el-button> -->
                             </div>
                         </el-col>
                         <el-col :span="18" style="text-align:left">
                             <el-row>
-                                <el-col :span="8">
-                                    <p>昵称：{{userInfo.name}}</p>
+                                <el-col :span="12">
+                                    <p>昵称：{{content.name?content.name:'未填写'}}</p>
                                 </el-col>
-                                <el-col :span="8">
-                                    <p>性别：{{userInfo.sex}}</p>
-                                </el-col>
-                            </el-row>
-                            <el-row>
-                                <el-col :span="8">
-                                    <p>手机号：{{userInfo.phone}}</p>
-                                </el-col>
-                                <el-col :span="8">
-                                    <p>邮箱：{{userInfo.mail}}</p>
+                                <el-col :span="12">
+                                    <p>性别：{{content.sex?content.sex:'未填写'}}</p>
                                 </el-col>
                             </el-row>
                             <el-row>
-                                <el-col :span="8">
-                                    <p>地址：{{userInfo.phone}}</p>
+                                <el-col :span="12">
+                                    <p>手机号：{{content.phone?content.phone:'未填写'}}</p>
+                                </el-col>
+                                <el-col :span="12">
+                                    <p>邮箱：{{content.mail?content.mail:'未填写'}}</p>
+                                </el-col>
+                            </el-row>
+                            <el-row>
+                                <el-col :span="12">
+                                    <p>地址：{{content.phone?content.phone:'未填写'}}</p>
                                 </el-col>
 
 
                             </el-row>
                             <el-divider></el-divider>
                             <el-col :span="12">
-                                签名：<p style="max-height:150px;overflow: hidden;" v-html="userInfo.signature"></p>
+                                签名：<p style="max-height:150px;overflow: hidden;" v-html="content.signature"></p>
                             </el-col>
                         </el-col>
 
                     </el-row>
-                    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="">
-                        <el-menu-item index="1">动态</el-menu-item>
-                        <el-menu-item index="4">评论</el-menu-item>
-                    </el-menu>
+
 
                 </el-card>
 
@@ -143,17 +140,17 @@
                             <!-- <el-tab-pane label="动态">
 
                             </el-tab-pane> -->
-                            <el-tab-pane label="我的帖子">
+                            <el-tab-pane label="Ta的帖子">
                                 <div v-for="o in list" style="text-align:left;width:100%;padding:2px;border-radius:5px"
                                     class="divhover">
                                     <p>
                                         <b @click="toDetail(o.id,o.module_id)">{{o.title}}</b>
-                                        <span style="float:right">
+                                        <!-- <span style="float:right">
                                             <el-button @click="modify(o.id)" type="warning" size="mini">
                                                 修改
                                             </el-button>
 
-                                        </span>
+                                        </span> -->
                                     </p>
                                     <p>
                                         <span>时间：{{o.publish_time}}
@@ -175,7 +172,7 @@
                                 </el-card>
                             </el-tab-pane>
 
-                            <el-tab-pane label="我的评论">
+                            <!-- <el-tab-pane label="Ta的评论">
 
                                 <el-table formatter resizable :data="myCommentList" style="width: 100%">
                                     <el-table-column prop="content" label="评论内容" width="380">
@@ -194,12 +191,12 @@
                                         :hide-on-single-page="true">
                                     </el-pagination>
                                 </el-card>
-                            </el-tab-pane>
+                            </el-tab-pane> -->
                             <el-tab-pane label="设备">设备</el-tab-pane>
                         </el-tabs>
                     </el-col>
                     <el-col :span="8">
-                        <el-card style="height:200px;margin-bottom: 20px">
+                        <!-- <el-card style="height:200px;margin-bottom: 20px">
                             <el-tabs v-model="activeName3" @tab-click="handleClick">
                                 <el-tab-pane label="关注(0)" name="0">
                                     <img style="width:30%" src="" alt="">
@@ -209,13 +206,10 @@
 
                                 </el-tab-pane>
                             </el-tabs>
-                        </el-card>
-                        <el-card style="height:200px;margin-bottom: 20px">
-                            <p style="text-align:left">谁看过我</p>
+                        </el-card> -->
+                        <el-card style="height:240px;margin-bottom: 20px">
+                            <p style="text-align:left">Ta的访客</p>
                             <hr>
-                            <span v-if="guestList.length==0" style="color:#ccc">
-                                空空如也 ~
-                            </span>
                             <span @click="toUserDetail(o.accessId)"
                                 style="float:left;width: 60px;height:70px;cursor:pointer" v-for="o in guestList">
                                 <img style="width:60px;height:60px;margin:1px;border-radius:50%" :src="o.accessImg"
@@ -235,41 +229,7 @@
 
 
             </div>
-            <el-dialog title="修改个人信息" :visible.sync="dialogFormVisible">
-                <el-form :model="form" style="text-align: left;">
-                    <el-form-item label="昵称：" :label-width="formLabelWidth">
-                        <el-input v-model="form.name" autocomplete="off" v-value='2'></el-input>
-                    </el-form-item>
-                    <el-form-item label="手机号：" :label-width="formLabelWidth">
-                        <el-input v-model="form.phone" autocomplete="off"></el-input>
-                    </el-form-item>
-                    <el-form-item label="性别：" :label-width="formLabelWidth">
-                        <el-select v-model="form.sex" placeholder="请选择性别">
-                            <el-option label="男" value="男"></el-option>
-                            <el-option label="女" value="女"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="邮箱：" :label-width="formLabelWidth">
-                        <el-input v-model="form.mail" autocomplete="off"></el-input>
-                    </el-form-item>
-                    <el-form-item label="头像：" :label-width="formLabelWidth">
-                        <el-upload v-model="form.headImg" action="http://0.0.0.0:888/file/img" class="avatar-uploader"
-                            :show-file-list="false" :on-success="change" :before-upload="beforeAvatarUpload">
-                            <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                        </el-upload>
-                    </el-form-item>
-                    <el-form-item label="签名：" :label-width="formLabelWidth">
-                        <el-input contentEditable="true" type="textarea" :rows="3" v-model="form.signature"
-                            autocomplete="off"></el-input>
-                    </el-form-item>
 
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                    <el-button @click="dialogFormVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="update">确 定</el-button>
-                </div>
-            </el-dialog>
             <footer>
                 <div class="footer-top">
                     <div class="container">
@@ -343,8 +303,10 @@
             data: {
                 imageUrl: '',
                 seen: true,
+                content: {},
                 total: 0,
                 currentPage: 1,
+                id: 0,
                 list: [],
                 dialogFormVisible: false,
                 activeIndex: '1',
@@ -357,25 +319,17 @@
                 myCommentList: [],
                 guestList: [],
                 imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://s2.ax1x.com/2019/05/06/EBRZqK.jpg'],
-                form: {
-                    name: '',
-                    phone: '',
-                    sex: '',
-                    mail: '',
-                    headImg: '',
-                    signature: ''
-                }
 
             },
             methods: {
-                guest() {
+                guest(id) {
                     axios({
                         method: 'get',
                         headers: {
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: `http://0.0.0.0:888/access/list`,
+                        url: `http://0.0.0.0:888/access/list?userId=${id}`,
                     }).then((re) => {
                         console.log(re)
                         if (re.data.code === 0) {
@@ -385,7 +339,6 @@
                         }
                     })
                 },
-
                 handleAvatarSuccess(res, file) {
 
                 },
@@ -456,17 +409,18 @@
                         }
                     })
                 },
-                change(res, file) {
-                    console.log('resfi', res)
-                    console.log('file', file)
 
-                    this.imageUrl = URL.createObjectURL(file.raw);
-                    this.form.headImg = res.content
-                    // this.$data.userInfo.headImg = res.content
-                    console.log(res)
-                },
                 toDetail(id, mid) {
                     location.href = (`detail.html?id=${id}&mid=${mid}`)
+                },
+                toUserDetail(id) {
+                    let _this = this
+                    console.log(id,_this.userInfo.id)
+                    if (id == _this.userInfo.id) {
+                        location.href = (`mine.html`)
+                    } else {
+                        location.href = (`info.html?id=${id}`)
+                    }
                 },
                 update() {
 
@@ -496,22 +450,10 @@
                     })
                 },
                 modify(id) {
-                    location.href = (`publish.html?id=${id}`)
+                    location.href = (`publish.html ? id = ${id} `)
                 },
                 handleClick(e) {
                     this.$data.activeName3 = e.name
-                },
-                GetRequest() {
-                    var url = location.search; //获取url中"?"符后的字串  
-                    var theRequest = new Object();
-                    if (url.indexOf("?") != -1) {
-                        var str = url.substr(1);
-                        strs = str.split("&");
-                        for (var i = 0; i < strs.length; i++) {
-                            theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
-                        }
-                    }
-                    return theRequest;
                 },
                 logout() {
                     axios({
@@ -534,6 +476,18 @@
                         }
                     })
                 },
+                GetRequest() {
+                    var url = location.search; //获取url中"?"符后的字串  
+                    var theRequest = new Object();
+                    if (url.indexOf("?") != -1) {
+                        var str = url.substr(1);
+                        strs = str.split("&");
+                        for (var i = 0; i < strs.length; i++) {
+                            theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                        }
+                    }
+                    return theRequest;
+                },
                 toTop() {
                     let timer = null;
                     cancelAnimationFrame(timer);
@@ -547,7 +501,7 @@
                         }
                     });
                 },
-                getList() {
+                getList(id) {
                     let _this = this
                     axios.defaults.headers.post['Content-Type'] = "application/x-www-form-urlencoded"
                     axios.defaults.headers.token = sessionStorage.getItem('token')
@@ -559,8 +513,9 @@
                     });
                     axios.all([
                         axios.get(`http://0.0.0.0:888/reply/my_list`),
-                        axios.get(`http://0.0.0.0:888/invitation/page?memberId=${this.$data.userInfo.id}`)
-                    ]).then(axios.spread(function (ires, sres) {
+                        axios.get(`http://0.0.0.0:888/invitation/page?memberId=${id}`),
+                        axios.get(`http://0.0.0.0:888/member/info?userId=${id}`)
+                    ]).then(axios.spread(function (ires, sres, mres) {
                         if (ires.data.code === 0) {
                             _this.$data.list = sres.data.content.records
                             _this.$data.total = sres.data.content.total
@@ -582,18 +537,31 @@
                             sessionStorage.removeItem('userInfo')
                             setTimeout("location.href=('index.html')", 800)
                         }
+
+
+                        if (mres.data.code === 0) {
+                            _this.$data.content = mres.data.content
+
+                        }
+                        if (mres.data.code !== 0) {
+                            _this.$message.error("登录超时")
+                            sessionStorage.removeItem('userInfo')
+                            setTimeout("location.href=('index.html')", 800)
+                        }
                         console.log('User', ires.data);
                         console.log('self', sres.data);
+
+                        console.log('content', _this.$data.content);
                     }));
 
                 }
 
             },
             created: function () {
-
                 window.onscroll = function () {
                     scrollFunction()
                 };
+
 
                 function scrollFunction() {
                     if (document.body.scrollTop > 320 || document.documentElement.scrollTop > 320) {
@@ -604,15 +572,19 @@
                 }
                 let _this = this
                 let param = _this.GetRequest()
-
                 let userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
+                console.log('user', userInfo)
                 if (userInfo != null) {
                     _this.$data.userInfo = userInfo
-                    _this.$data.form = userInfo
                 }
-                console.log('user', userInfo)
-                _this.getList()
-                _this.guest()
+                if (param.id != undefined && param.id != "") {
+                    _this.$data.id = param.id
+
+                    _this.getList(_this.$data.id)
+                    _this.guest(_this.$data.id)
+                }
+
+
             }
         })
 

@@ -17,6 +17,8 @@
 
 
     <link rel="stylesheet" href="assets/css/owl.carousel.css">
+    <link rel="stylesheet" href="assets/css/mycss.css">
+
     <link rel="stylesheet" href="assets/css/barfiller.css">
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
@@ -67,8 +69,9 @@
                                         </ul>
                                     </li>
                                     <li v-if="userInfo.name" class="has-child">
-                                        <a href="mine.html"><img :src="userInfo.headImg" style="width:30px;height:30px;border-radius:50%" alt="">
-                                        {{userInfo.name}}</a>
+                                        <a href="mine.html"><img :src="userInfo.headImg"
+                                                style="width:30px;height:30px;border-radius:50%" alt="">
+                                            {{userInfo.name}}</a>
                                         <ul class="sub-menu" style="z-index: 1000">
                                             <li><a @click="logout">注销</a></li>
                                             <li><a @click="dialogFormVisible = true">修改密码</a></li>
@@ -85,7 +88,7 @@
         <h1 style="text-align:center;margin:20px">话题贴发布</h1>
         <el-card style="width:90%;padding:20px;text-align:center;margin:0 auto;z-index: 10;">
             <div style="float:left;margin-top:40px;z-index: 100;">
-                <el-input v-model="title" placeholder="请输入标题" style="float:left;margin-top:10px"></el-input>
+                <el-input v-model="title" placeholder="请输入标题" style="float:left;margin-top:10px"> </el-input>
                 <el-select v-model="moduleId" placeholder="请选择发布版块" style="float:left;margin:10px 0 10px 0;">
                     <el-option v-for="item in options" :key="item.moduleId" :label="item.NAME" :value="item.moduleId">
                     </el-option>
@@ -101,10 +104,17 @@
                 <div ref="editor" style="width:100%;margin:0px auto;border:1px solid #bbb;height:500px" class="text">
                 </div>
             </div>
-            <el-button type="success" @click="aaaa()" style="float:right;width: 70px;height: 70px;position: fixed;bottom: 40px;right:40px"
+            <el-button v-if="param.id==undefined" type="success" @click="publish(1)"
+                style="float:right;width: 70px;height: 70px;position: fixed;bottom: 40px;right:40px"
                 icon="el-icon-position" circle>
                 发布
             </el-button>
+            <el-button v-if="param.id" type="warning" @click="publish(2)"
+                style="float:right;width: 70px;height: 70px;position: fixed;bottom: 40px;right:40px"
+                icon="el-icon-position" circle>
+                修改
+            </el-button>
+
         </el-card>
 
     </div>
@@ -131,8 +141,9 @@
     var app = new Vue({
         el: '#app',
         data: {
-            message: 'Hello Vue!',
+            contenter: {},
             moduleId: '',
+            param: null,
             title: '',
             content: '',
             options: [],
@@ -140,9 +151,30 @@
             editor: null
         },
         methods: {
-            aaaa() {
+            logout() {
+                axios({
+                    method: 'get',
+                    headers: {
+                        'token': sessionStorage.getItem('token'),
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    url: 'http://0.0.0.0:888/member/out',
+                }).then((re) => {
+                    console.log('re', re)
+                    if (re.data.code === 0) {
+                        this.$message({
+                            message: '注销成功',
+                            type: 'success'
+                        });
+                        sessionStorage.removeItem('userInfo')
+                        setTimeout('location.href=("index.html")', 500)
+
+                    }
+                })
+            },
+            publish(key) {
                 this.content = this.editor.$textElem['0'].innerHTML
-                console.log('ff',this.content)
+
                 if (this.title === '') {
                     this.$message.error('请输入标题')
                     return;
@@ -157,24 +189,67 @@
                 }
 
                 let data = { "content": this.content, "title": this.title, "moduleId": this.moduleId }
-                axios({
-                    method: 'POST',
-                    data: data,
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    url: 'http://0.0.0.0:888/invitation/add',
-                }).then((re) => {
-                    if (re.data.code === 0) {
-                        this.$message({
-                            message: '发布成功 可以到我的个人信息查看',
-                            type: 'success'
-                        });
-                        setTimeout('location.href=("mine.html")', 1500)
+                if (key == 1) {
+                    axios({
+                        method: 'POST',
+                        data: data,
+                        headers: {
+                            'token': sessionStorage.getItem('token'),
+                            'Content-Type': 'application/json',
+                        },
+                        url: 'http://0.0.0.0:888/invitation/add',
+                    }).then((re) => {
+                        if (re.data.code === 0) {
+                            this.$message({
+                                message: '发布成功 可以到我的个人信息查看',
+                                type: 'success'
+                            });
+                            setTimeout('location.href=("mine.html")', 1500)
 
+                        }
+                    })
+                }
+                if (key == 2) {
+                    let _this = this 
+                    delete data.moduleId
+                    data.id = parseInt(this.$data.param.id)
+                    console.log('data', _this.$data.content)
+                    axios({
+                        method: 'PUT',
+                        data: data,
+                        headers: {
+                            'token': sessionStorage.getItem('token'),
+                            'Content-Type': 'application/json',
+                        },
+                        url: 'http://0.0.0.0:888/invitation/invitation',
+                    }).then((re) => {
+                        console.log('re',re)
+                        if (re.data.code === 0) {
+                            this.$message({
+                                message: '修改成功',
+                                type: 'success'
+                            });
+                            setTimeout(`location.href=("detail.html?id=${this.$data.contenter.id}&mid=${this.$data.contenter.module_id}")`, 900)
+
+                        }
+                    })
+                }
+
+
+
+            },
+            GetRequest() {
+                var url = location.search; //获取url中"?"符后的字串  
+                var theRequest = new Object();
+                if (url.indexOf("?") != -1) {
+                    var str = url.substr(1);
+                    strs = str.split("&");
+                    for (var i = 0; i < strs.length; i++) {
+                        theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
                     }
-                })
-            }
+                }
+                return theRequest;
+            },
         },
         mounted() {
             this.editor = new E(this.$refs.toolbar, this.$refs.editor)
@@ -207,6 +282,7 @@
             axios({
                 method: 'get',
                 headers: {
+                    'token': sessionStorage.getItem('token'),
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 url: 'http://0.0.0.0:888/module/list',
@@ -217,6 +293,39 @@
                 }
             })
         },
+        created() {
+            let _this = this
+            let param = _this.GetRequest()
+            let userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
+            console.log('user', userInfo)
+            
+            if (userInfo != null) {
+                this.$data.userInfo = userInfo
+            }
+            _this.$data.param = param
+            if (param.id != undefined && param.id != "") {
+                axios({
+                    method: "GET",
+                    headers: {
+                        'token': sessionStorage.getItem('token'),
+                    },
+                    url: `http://0.0.0.0:888/invitation/${param.id}`,
+                }).then((res) => {
+                    console.log('res,', res)
+                    if (res.data.code === 0) {
+                        _this.$data.contenter = res.data.content
+                        _this.$data.title = res.data.content.title
+                        _this.$data.moduleId = res.data.content.module_id
+                        this.editor.$textElem['0'].innerHTML = res.data.content.content
+                    } else {
+                        _this.$message.error(res)
+                        setTimeout("location.href=('mine.html')", 700)
+                    }
+                })
+            }
+
+            // http://0.0.0.0:888/invitation/${param.id ? param.id : 20}
+        }
     })
 
 </script>

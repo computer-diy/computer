@@ -18,6 +18,7 @@
 
 
     <link rel="stylesheet" href="assets/css/owl.carousel.css">
+    <link rel="stylesheet" href="assets/css/mycss.css">
     <link rel="stylesheet" href="assets/css/barfiller.css">
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
@@ -28,6 +29,8 @@
 
 <body>
     <div id="app">
+
+
         <div class="preloader">
             <span class="preloader-spin"></span>
         </div>
@@ -85,7 +88,7 @@
                 </div>
             </header>
             <el-carousel :interval="4000" type="card" height="400px" style="width:90%;margin:0 auto">
-                <el-carousel-item v-for="img in imgs" :key="item">
+                <el-carousel-item v-for="img in imgs">
                     <el-row>
                         <el-col :span="16">
                             <img :src="img" style="width:100%;height:400px;" alt="portfolio-image">
@@ -93,19 +96,23 @@
                         </el-col>
                         <el-col :span="8">
                             <el-col :span="24" style="height:200px;padding: 0 5px 5px 5px">
-                                <img style="width:100%;height: 100%" src="https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1903/27/c15/139446165_1553665581876_1024x1024.jpg" alt=""> 
-                                <div class="card-text-attach" >#问鼎非凡 vivo NEX世界杯决赛狂欢夜#官方回顾</div>
+                                <img style="width:100%;height: 100%"
+                                    src="https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1903/27/c15/139446165_1553665581876_1024x1024.jpg"
+                                    alt="">
+                                <div class="card-text-attach">#问鼎非凡 vivo NEX世界杯决赛狂欢夜#官方回顾</div>
                             </el-col>
                             <el-col :span="24" style="height:200px;padding: 0 5px 0 5px">
-                                <img style="width:100%;height:100%" src="https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1903/27/c15/139446194_1553665584245_1024x1024.jpg" alt="">
-                                <div class="card-text-attach"  >记忆森林</div>
+                                <img style="width:100%;height:100%"
+                                    src="https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1903/27/c15/139446194_1553665584245_1024x1024.jpg"
+                                    alt="">
+                                <div class="card-text-attach">记忆森林</div>
 
                             </el-col>
                         </el-col>
                     </el-row>
 
 
-            
+
 
                 </el-carousel-item>
             </el-carousel>
@@ -115,31 +122,27 @@
                     <div class="container">
                         <div class="row">
                             <ul class="isotope-menu">
-                                <li data-filter="*" class="active">显示全部</li>
-                                <li data-filter=".ceramics">CPU、内存、主板</li>
-                                <!-- <li data-filter=".branding">显卡及游戏玩家</li>
-                                <li data-filter=".design">机箱、电源、散热</li>
-                                <li data-filter=".photography">键鼠外设</li> -->
+                                <li data-filter="*" class="active"><h1>站长良心推荐</h1></li>
                             </ul>
                         </div>
-                        <div class="row portfolio-isotope">
+                        <div class="row portfolio-isotope" style="background:#fff">
 
                             <!-- CPU、内存、主板  -->
-                            <div v-for="img in imgs" class="single-portfolio col-md-4 ceramics">
+                            <div v-for="o in otherList" class="single-portfolio col-md-4 ceramics">
                                 <div class="inner">
                                     <div class="portfolio-img">
-                                        <img :src="img" style="width:100%;height:220px;" alt="portfolio-image">
+                                        <img :src="o.img" style="width:100%;height:220px;" alt="portfolio-image">
                                         <div class="hover-content">
                                             <div>
-                                                <a href="#" class="button">查看详情</a>
+                                                <a :href="o.hrefto" class="button">查看详情</a>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="portfolio-content">
                                         <a href="#">
-                                            <h3>The Back Chiropractor</h3>
+                                            <h3>{{o.price}}</h3>
                                         </a>
-                                        <span>Ceramics, Design</span>
+                                        <span>{{o.title}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -316,6 +319,7 @@
             data: {
                 seen: true,
                 list: [],
+                otherList: [],
                 imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1807/17/c19/97712070_1531817630825_1024x1024.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/photoblog/1706/04/c1/48918899_1496520194383_mthumb.jpg'],
                 userInfo: {},
                 formLabelWidth: '140px',
@@ -336,6 +340,7 @@
                     axios({
                         method: 'PUT',
                         headers: {
+                            'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
                         url: 'http://0.0.0.0:888/member/password',
@@ -361,6 +366,7 @@
                     axios({
                         method: 'get',
                         headers: {
+                            'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
                         url: 'http://0.0.0.0:888/member/out',
@@ -376,29 +382,36 @@
 
                         }
                     })
-                }
+                },
+                getList(param) {
+                    let _this = this
+                    axios.defaults.headers.post['Content-Type'] = "application/x-www-form-urlencoded"
+                    axios.defaults.headers.token = sessionStorage.getItem('token')
+
+                    axios.all([
+                        axios.get(`http://0.0.0.0:888/module/list`),
+                        axios.get(`http://0.0.0.0:888/other/list`)
+                    ]).then(axios.spread(function (ires, cres) {
+                        if (ires.data.code === 0) {
+                            _this.$data.list = ires.data.content
+                        }
+                        if (cres.data.code === 0) {
+                            _this.$data.otherList = cres.data.content
+                        }
+                    }));
+
+                },
             },
 
             created: function (p) {
-                console.log('p', this)
                 let _this = this
                 let userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
                 console.log('user', userInfo)
                 if (userInfo != null) {
                     this.$data.userInfo = userInfo
                 }
-                axios({
-                    method: 'get',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    url: 'http://0.0.0.0:888/module/list',
-                }).then((re) => {
-                    console.log(re)
-                    if (re.data.code === 0) {
-                        this.$data.list = re.data.content
-                    }
-                })
+                _this.getList()
+
             }
         })
 
