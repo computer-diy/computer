@@ -122,10 +122,11 @@
                     <div class="container">
                         <div class="row">
                             <ul class="isotope-menu">
-                                <li data-filter="*" class="active"><h1>站长良心推荐</h1></li>
+                                
+                                <li data-filter="*" class="active"> <h2>站长良心推荐</h2></li>
                             </ul>
                         </div>
-                        <div class="row portfolio-isotope" style="background:#fff">
+                        <div class="row portfolio-isotop" style="background:#fff">
 
                             <!-- CPU、内存、主板  -->
                             <div v-for="o in otherList" class="single-portfolio col-md-4 ceramics">
@@ -140,9 +141,9 @@
                                     </div>
                                     <div class="portfolio-content">
                                         <a href="#">
-                                            <h3>{{o.price}}</h3>
+                                            <h3>{{o.title}}</h3>
                                         </a>
-                                        <span>{{o.title}}</span>
+                                        <span>{{o.price}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -319,7 +320,7 @@
             data: {
                 seen: true,
                 list: [],
-                otherList: [],
+                otherList:[],
                 imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1807/17/c19/97712070_1531817630825_1024x1024.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/photoblog/1706/04/c1/48918899_1496520194383_mthumb.jpg'],
                 userInfo: {},
                 formLabelWidth: '140px',
@@ -411,7 +412,7 @@
                     this.$data.userInfo = userInfo
                 }
                 _this.getList()
-
+                
             }
         })
 
