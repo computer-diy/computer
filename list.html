@@ -174,23 +174,26 @@
                             <el-tabs v-model="activeName" type="card">
                                 <el-tab-pane label="论坛热帖" name="first">
                                     <el-row>
-                                        <el-col v-for="o in hotlist" :span="8">
-                                            <a href="#">{{o.name}}</a>
+                                        <el-col v-for="o in hotkeys" :span="8">
+                                            <a class="text-control" style="color:#669cfc;cursor:pointer"
+                                                @click="toDetail(o.id,o.module_id)">{{o.title}}</a>
                                         </el-col>
                                     </el-row>
 
                                 </el-tab-pane>
-                                <el-tab-pane label="最新热帖" name="second">配置管理</el-tab-pane>
+                                <el-tab-pane label="最新热帖" name="second">
+
+                                    <el-row>
+                                        <el-col v-for="o in hotkeys" :span="8">
+                                            <a v-if="o.assess_times>30" style="color:#669cfc;cursor:pointer"
+                                                class="text-control" @click="toDetail(o.id,o.module_id)">{{o.title}}</a>
+                                        </el-col>
+                                    </el-row>
+                                </el-tab-pane>
+
                             </el-tabs>
                         </el-card>
-                        <br>
-                        <el-card>
-                            论坛热词
-                            <span v-for="o in hotkeys">
-                                <a href="#">{{o.name}}</a>
 
-                            </span>
-                        </el-card>
                         <br>
                     </el-col>
                     <el-col :span="8">
@@ -208,7 +211,7 @@
                                 <el-button type="primary" style="float:right" icon="el-icon-edit" circle></el-button>
                             </el-card>
 
-                            <el-card style="height:220px;margin-top:20px;text-align:left">
+                            <!-- <el-card style="height:220px;margin-top:20px;text-align:left">
                                 <p>
                                     <span style="color:#e58434;font-size:16px">板块信息 </span>
                                     <el-divider></el-divider>
@@ -218,8 +221,8 @@
                                     <p><span style="color:#989898">版副：</span>sss bbb</p>
                                     <p><span style="color:#989898">嘉宾：</span>sss bbb</p>
                                 </div>
-                            </el-card>
-                            <el-card style="height:330px;margin-top:20px;text-align: left">
+                            </el-card> -->
+                            <el-card style="max-height:330px;margin-top:20px;text-align: left">
                                 <span style="color:#e58434;font-size:16px">推荐阅读 </span>
                                 <el-carousel indicator-position="none" height="150px">
                                     <el-carousel-item v-for="item in introImgs">
@@ -236,15 +239,15 @@
                                     </li>
                                 </ul>
                             </el-card>
-                            <el-card id="ta" style="height:220px;margin-top:20px;text-align: left;">
+                            <el-card id="ta" style="max-height:220px;margin-top:20px;text-align: left;">
                                 <p>
                                     <span style="color:#e58434;font-size:16px">DIV讨论区本周热帖 </span>
                                 </p>
                                 <ul style="margin: 10px">
-                                    <li class="text-control" v-for="(o,index) in list">
+                                    <li class="text-control" v-for="(o,index) in hotkeys">
 
-                                        <a v-if="index < 3" href="#" style="color:#e58434">{{index+1}} {{o.name}}</a>
-                                        <a v-else href="#">{{index+1}} {{o.name}}</a>
+                                        <a v-if="index < 3" href="#" style="color:#e58434">{{index+1}} {{o.title}}</a>
+                                        <a v-else href="#">{{index+1}} {{o.title}}</a>
                                     </li>
                                 </ul>
                             </el-card>
@@ -378,36 +381,10 @@
                         content: "支线任务太费时了，以前玩古墓丽影系列都是顺着路线玩，不会刻意完成每个任务，太累人了。我是玩游戏，不是游戏玩我啊"
                     },
                 ],
-                hotlist: [
-                    {
-                        name: "旗舰笔记本Spectre x360开箱小测"
-                    },
-                    {
-                        name: "用汽车CD机改造了个音响"
-                    },
-                    {
-                        name: "飞利浦空净双11狂欢送充值卡"
-                    },
-                    {
-                        name: "【图赏】进击的“能力者”OPPO R7s"
-                    },
-                ], hotkeys: [
-                    {
-                        name: "旗舰笔记本Spectre x360开箱小测"
-                    },
-                    {
-                        name: "用汽车CD机改造了个音响"
-                    },
-                    {
-                        name: "飞利浦空净双11狂欢送充值卡"
-                    },
-                    {
-                        name: "【图赏】进击的“能力者”OPPO R7s"
-                    },
-                ],
-                list: [
-
-                ],
+                WeekHots: [],
+                hotlist: [],
+                hotkeys: [],
+                list: [],
                 introList: [
                     {
                         name: "入门游戏新机综合搭配"
@@ -464,19 +441,21 @@
                     console.log('size', e)
                 },
                 handleCurrentChange(e) {
+                    let _this = this
                     const loading = this.$loading({
                         lock: true,
                         text: 'Loading',
                         spinner: 'el-icon-loading',
                         background: 'rgba(0, 0, 0, 0.7)'
                     });
+                    let _url = _this.$data.s == undefined ? `http://0.0.0.0:888/invitation/page?current=${e}` : `http://0.0.0.0:888/invitation/page?current=${e}&title=${_this.$data.s}`
                     axios({
                         method: 'get',
                         headers: {
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: `http://0.0.0.0:888/invitation/page?current=${e}`,
+                        url: _url,
                     }).then((re) => {
                         console.log(re)
                         if (re.data.code === 0) {
@@ -545,8 +524,40 @@
                         message: '已反馈',
                         type: 'success'
                     })
-                }
+                },
+                getList(param) {
+
+                    const loading = this.$loading({
+                        lock: true,
+                        text: 'Loading',
+                        spinner: 'el-icon-loading',
+                        background: 'rgba(0, 0, 0, 0.7)'
+                    });
+                    let _this = this
+                    axios.defaults.headers.post['Content-Type'] = "application/x-www-form-urlencoded"
+                    axios.defaults.headers.token = sessionStorage.getItem('token')
+
+                    axios.all([
+                        axios.get(`http://0.0.0.0:888/invitation/page?moduleId=${param}`),
+                        axios.get(`http://0.0.0.0:888/invitation/page?moduleId=${param}&assessTimes=11`),
+                    ]).then(axios.spread(function (ires, cres) {
+                        console.log('User', ires.data);
+                        console.log('self', cres.data);
+                        if (ires.data.code === 0) {
+                            _this.$data.list = ires.data.content.records
+                            _this.$data.total = ires.data.content.total
+                            loading.close()
+                        }
+                        if (cres.data.code === 0) {
+                            _this.$data.hotkeys = cres.data.content.records
+                        }
+
+
+                    }));
+
+                },
             },
+
             created: function () {
 
 
@@ -564,36 +575,47 @@
                         document.getElementById("ta").style.display = "block"; document.getElementById("btnTop").style.display = "none";
                     }
                 }
-                let mid = this.GetRequest().id
+                let param = this.GetRequest()
+                let mid = param.id
+                let s = param.s
                 let _this = this
-                this.$data.mid = mid
+                _this.$data.mid = mid
+                _this.$data.s = s
                 let userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
                 console.log('user', userInfo)
                 if (userInfo != null) {
-                    this.$data.userInfo = userInfo
+                    _this.$data.userInfo = userInfo
                 }
+
                 const loading = this.$loading({
                     lock: true,
                     text: 'Loading',
                     spinner: 'el-icon-loading',
                     background: 'rgba(0, 0, 0, 0.7)'
                 });
-                axios({
-                    method: 'get',
-                    headers: {
-                        'token': sessionStorage.getItem('token'),
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    url: `http://0.0.0.0:888/invitation/page?moduleId=${mid}`,
-                }).then((res) => {
-                    console.log('res', res)
-                    if (res.data.code === 0) {
-                        this.$data.list = res.data.content.records
-                        this.$data.total = res.data.content.total
-                        loading.close()
+                if (s != undefined) {
+                    axios({
+                        method: 'get',
+                        headers: {
+                            'token': sessionStorage.getItem('token'),
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        url: `http://0.0.0.0:888/invitation/page?title=${s}`,
+                    }).then((ires) => {
+                        console.log('re', ires)
+                        if (ires.data.code === 0) {
+                            _this.$data.list = ires.data.content.records
+                            _this.$data.total = ires.data.content.total
+                            loading.close()
 
-                    }
-                })
+                        }
+                    })
+
+                } else {
+
+                    _this.getList(_this.$data.mid)
+                }
+
             }
         })
     </script>

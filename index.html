@@ -46,8 +46,8 @@
                         <div class="col-6 col-sm-9 nav-column clearfix">
                             <div class="right-nav">
                                 <span class="search-icon fa fa-search"></span>
-                                <form action="#" class="search-form">
-                                    <input type="search" placeholder="search now">
+                                <form action="" class="search-form" @submit.prevent="checkForm">
+                                    <input v-model="s" type="search" placeholder="search now">
                                     <button type="submit"><i class="fa fa-search"></i></button>
                                 </form>
                             </div>
@@ -122,8 +122,10 @@
                     <div class="container">
                         <div class="row">
                             <ul class="isotope-menu">
-                                
-                                <li data-filter="*" class="active"> <h2>站长良心推荐</h2></li>
+
+                                <li data-filter="*" class="active">
+                                    <h2>站长良心推荐</h2>
+                                </li>
                             </ul>
                         </div>
                         <div class="row portfolio-isotop" style="background:#fff">
@@ -320,17 +322,22 @@
             data: {
                 seen: true,
                 list: [],
-                otherList:[],
+                otherList: [],
                 imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1807/17/c19/97712070_1531817630825_1024x1024.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/photoblog/1706/04/c1/48918899_1496520194383_mthumb.jpg'],
                 userInfo: {},
                 formLabelWidth: '140px',
                 form: {
                     password: ''
                 },
+                s: '',
                 dialogFormVisible: false,
 
             },
             methods: {
+                checkForm(param) {
+                    let _this = this
+                    location.href = (`list.html?s=${_this.$data.s}`)
+                },
                 toDetail() {
                     location.href = ('detail.html')
                 },
@@ -412,7 +419,7 @@
                     this.$data.userInfo = userInfo
                 }
                 _this.getList()
-                
+
             }
         })
 

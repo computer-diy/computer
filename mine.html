@@ -104,6 +104,10 @@
                                 <el-col :span="8">
                                     <p>性别：{{userInfo.sex}}</p>
                                 </el-col>
+                                <el-col :span="8">
+                                    <p>等级：<el-tag size="medium">{{userInfo.level}}</el-tag>
+                                    </p>
+                                </el-col>
                             </el-row>
                             <el-row>
                                 <el-col :span="8">
@@ -111,6 +115,13 @@
                                 </el-col>
                                 <el-col :span="8">
                                     <p>邮箱：{{userInfo.mail}}</p>
+                                </el-col>
+                                <el-col :span="8">
+                                    <p>
+                                        <el-progress :text-inside="true" :stroke-width="18"
+                                            :percentage="userInfo.experience%100" color="rgba(142, 113, 199, 0.7)">
+                                        </el-progress>
+                                    </p>
                                 </el-col>
                             </el-row>
                             <el-row>
@@ -178,14 +189,17 @@
                             <el-tab-pane label="我的评论">
 
                                 <el-table formatter resizable :data="myCommentList" style="width: 100%">
-                                    <el-table-column prop="content" label="评论内容" width="380">
+                                    <el-table-column prop="content" label="帖子" width="320">
                                         <template slot-scope="scope">
-
-                                            <div v-html="scope.row.content"></div>
-
+                                            <div class="text-control" @click="toDetail(scope.row.invitation_id,3)" v-html="scope.row.title"></div>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column prop="reply_time" label="评论时间" width="180">
+                                    <el-table-column prop="content" label="评论内容" width="200">
+                                        <template slot-scope="scope">
+                                            <div class="text-control" v-html="scope.row.content"></div>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column  prop="reply_time" label="评论时间" width="180">
                                     </el-table-column>
                                 </el-table>
                                 <el-card style="margin-top:5px">
