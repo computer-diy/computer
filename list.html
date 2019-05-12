@@ -46,7 +46,9 @@
                                 <span class="search-icon fa fa-search"></span>
                                 <form action="#" class="search-form">
                                     <input type="search" placeholder="search now">
-                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                    <button type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
                                 </form>
                             </div>
                             <nav id="menu" class="d-none d-lg-block">
@@ -54,30 +56,48 @@
                                     <li class="current-menu-item has-child">
                                         <a href="index.html">产品库</a>
                                         <ul class="sub-menu" style="z-index: 1000">
-                                            <li><a href="#">硬件</a></li>
-                                            <li><a href="#">软件</a></li>
+                                            <li>
+                                                <a href="#">硬件</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">软件</a>
+                                            </li>
                                         </ul>
                                     </li>
-                                    <li><a href="about.html">关于</a></li>
+                                    <li>
+                                        <a href="about.html">关于</a>
+                                    </li>
 
                                     <li class="has-child">
                                         <a href="#">建议</a>
                                         <ul class="sub-menu" style="z-index: 1000">
-                                            <li><a href="#">留言</a></li>
-                                            <li><a href="#">反馈建议</a></li>
-                                            <li><a href="#">联系我们</a></li>
+                                            <li>
+                                                <a href="#">留言</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">反馈建议</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">联系我们</a>
+                                            </li>
                                         </ul>
                                     </li>
                                     <li v-if="userInfo.name" class="has-child">
-                                        <a href="mine.html"><img :src="userInfo.headImg"
-                                                style="width:30px;height:30px;border-radius:50%" alt="">
-                                            {{userInfo.name}}</a>
+                                        <a href="mine.html">
+                                            <img :src="userInfo.headImg" style="width:30px;height:30px;border-radius:50%" alt=""> {{userInfo.name}}
+                                        </a>
                                         <ul class="sub-menu" style="z-index: 1000">
-                                            <li><a @click="logout">注销</a></li>
-                                            <li><a @click="dialogFormVisible = true">修改密码</a></li>
+                                            <li>
+                                                <a @click="logout">注销</a>
+                                            </li>
+                                            <li>
+                                                <a @click="dialogFormVisible = true">修改密码</a>
+                                            </li>
                                         </ul>
                                     </li>
-                                    <li v-else><a href="login.html">登录</a></li>
+                                    <li v-else>
+                                        <a href="login.html">登录</a>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>
@@ -90,8 +110,12 @@
 
             <div class="container text-center" style="width:80%;margin: 0 auto">
                 <el-breadcrumb separator-class="el-icon-arrow-right" style="margin:30px;">
-                    <el-breadcrumb-item><a href="index.html">首页</a></el-breadcrumb-item>
-                    <el-breadcrumb-item><a href="#">板块</a></el-breadcrumb-item>
+                    <el-breadcrumb-item>
+                        <a href="index.html">首页</a>
+                    </el-breadcrumb-item>
+                    <el-breadcrumb-item>
+                        <a href="#">板块</a>
+                    </el-breadcrumb-item>
                 </el-breadcrumb>
                 <el-row :gutter="20">
                     <el-col :span="16">
@@ -113,13 +137,11 @@
                             </el-row>
                             <el-row>
                                 <el-col :span="22">
-                                    <el-input class="textarea" style="height:50px" type="textarea" :rows="2"
-                                        placeholder="吐槽 ..." v-model="textarea">
+                                    <el-input class="textarea" style="height:50px" type="textarea" :rows="2" placeholder="吐槽 ..." v-model="textarea">
                                     </el-input>
                                 </el-col>
                                 <el-col :span="2">
-                                    <el-button type="primary" @click="send"
-                                        style="width:50px;height:50px;margin-left: 10px" icon="el-icon-edit" circle>
+                                    <el-button type="primary" @click="send" style="width:50px;height:50px;margin-left: 10px" icon="el-icon-edit" circle>
                                     </el-button>
 
                                 </el-col>
@@ -135,7 +157,8 @@
                                 <div @click="toDetial(o.id)">
                                     <img style=" width:80px;height:80px;float:left;" :src="o.img" alt="">
                                     <div style="text-align:left;margin-left:20px;float: left">
-                                        <p><span @click="toDetial(o.id)" style="color:#989898">
+                                        <p>
+                                            <span @click="toDetial(o.id)" style="color:#989898">
                                                 <b>
 
                                                     <span v-if="o.is_top>0">
@@ -146,16 +169,22 @@
                                                     </span>
                                                     {{o.topic}}{{o.title}}
 
-                                                </b></span>
+                                                </b>
+                                            </span>
                                             <!-- <span v-if="" style="float:right">
                                                     <el-button></el-button>
                                                 </span> -->
                                         </p>
                                         <p class="tz">
-                                            <span> <b><i class="el-icon-user-solid"></i>&nbsp{{o.name}}</b></span>
+                                            <span>
+                                                <b>
+                                                    <i class="el-icon-user-solid"></i>&nbsp{{o.name}}</b>
+                                            </span>
                                             <span style="color:#989898">{{o.publish_time}}</span>
-                                            <span><i class="el-icon-chat-line-square"></i>&nbsp{{o.replyNum}}</span>
-                                            <span><i class="el-icon-view"></i>&nbsp {{o.access_times}}</span>
+                                            <span>
+                                                <i class="el-icon-chat-line-square"></i>&nbsp{{o.replyNum}}</span>
+                                            <span>
+                                                <i class="el-icon-view"></i>&nbsp {{o.access_times}}</span>
                                             <span>最后回复：{{o.lastReplyName}}</span>
                                         </p>
                                     </div>
@@ -163,8 +192,7 @@
                             </el-row>
                         </el-card>
                         <el-card style="margin-top:5px">
-                            <el-pagination background layout="prev, pager, next" :total="total"
-                                @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                            <el-pagination background layout="prev, pager, next" :total="total" @size-change="handleSizeChange" @current-change="handleCurrentChange"
                                 :current-page.sync="currentPage" :hide-on-single-page="true">
                             </el-pagination>
                         </el-card>
@@ -175,8 +203,7 @@
                                 <el-tab-pane label="论坛热帖" name="first">
                                     <el-row>
                                         <el-col v-for="o in hotkeys" :span="8">
-                                            <a class="text-control" style="color:#669cfc;cursor:pointer"
-                                                @click="toDetail(o.id,o.module_id)">{{o.title}}</a>
+                                            <a class="text-control" style="color:#669cfc;cursor:pointer" @click="toDetail(o.id,o.module_id)">{{o.title}}</a>
                                         </el-col>
                                     </el-row>
 
@@ -185,8 +212,7 @@
 
                                     <el-row>
                                         <el-col v-for="o in hotkeys" :span="8">
-                                            <a v-if="o.assess_times>30" style="color:#669cfc;cursor:pointer"
-                                                class="text-control" @click="toDetail(o.id,o.module_id)">{{o.title}}</a>
+                                            <a v-if="o.assess_times>30" style="color:#669cfc;cursor:pointer" class="text-control" @click="toDetail(o.id,o.module_id)">{{o.title}}</a>
                                         </el-col>
                                     </el-row>
                                 </el-tab-pane>
@@ -202,12 +228,15 @@
                                 <el-dropdown split-button type="primary">
                                     <a style="color:#fff" href="publish.html">发表新帖</a>
                                     <el-dropdown-menu slot="dropdown">
-                                        <el-dropdown-item><a href="#">发起主题</a></el-dropdown-item>
-                                        <el-dropdown-item><a href="#">发起活动</a></el-dropdown-item>
+                                        <el-dropdown-item>
+                                            <a href="#">发起主题</a>
+                                        </el-dropdown-item>
+                                        <el-dropdown-item>
+                                            <a href="#">发起活动</a>
+                                        </el-dropdown-item>
                                     </el-dropdown-menu>
                                 </el-dropdown>
-                                <el-button type="primary" style="float:right;margin-left:10px" icon="el-icon-star-off"
-                                    circle></el-button>
+                                <el-button type="primary" style="float:right;margin-left:10px" icon="el-icon-star-off" circle></el-button>
                                 <el-button type="primary" style="float:right" icon="el-icon-edit" circle></el-button>
                             </el-card>
 
@@ -251,8 +280,7 @@
                                     </li>
                                 </ul>
                             </el-card>
-                            <el-button type="danger" id="btnTop" style="display: none;z-index: 100;width:360px;"
-                                @click="toTop" icon="el-icon-top">
+                            <el-button type="danger" id="btnTop" style="display: none;z-index: 100;width:360px;" @click="toTop" icon="el-icon-top">
                                 回到顶部
                             </el-button>
                         </div>
@@ -268,23 +296,37 @@
                             <div class="col-md-6 col-lg-3 footer_widget">
                                 <div class="inner">
                                     <h4>About</h4>
-                                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
-                                        turpis egestas.</p>
-                                    <p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet,
-                                        antesenectus et netus et malesuada fames ac turpis egestas.</p>
+                                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
+                                        egestas.</p>
+                                    <p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, antesenectus
+                                        et netus et malesuada fames ac turpis egestas.</p>
                                 </div>
                             </div>
                             <div class="col-md-6 col-lg-3 footer_widget">
                                 <div class="inner">
                                     <h4>Company</h4>
                                     <ul>
-                                        <li><a href="#">Company Overview</a></li>
-                                        <li><a href="#">Meet The Team</a></li>
-                                        <li><a href="#">Our Awesome Partners</a></li>
-                                        <li><a href="#">Our Services</a></li>
-                                        <li><a href="#">Frequently Asked Questions</a></li>
-                                        <li><a href="#">Contact Us</a></li>
-                                        <li><a href="#">Terms of Use</a></li>
+                                        <li>
+                                            <a href="#">Company Overview</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Meet The Team</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Our Awesome Partners</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Our Services</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Frequently Asked Questions</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Contact Us</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Terms of Use</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -306,8 +348,8 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="copyright-txt">
-                                        Copyright &copy; 2019.Company name All rights reserved.<a target="_blank"
-                                            href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
+                                        Copyright &copy; 2019.Company name All rights reserved.
+                                        <a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 text-right">
@@ -338,194 +380,254 @@
                 </div>
             </el-dialog>
 
+            </div>
         </div>
-    </div>
-    <!-- 自定义组件模板 -->
-    <script src="assets/js/jquery-2.2.4.min.js"></script>
-    <script src="assets/js/vendor/popper.min.js"></script>
-    <script src="assets/js/vendor/bootstrap.min.js"></script>
-    <script src="assets/js/vendor/owl.carousel.min.js"></script>
-    <script src="assets/js/vendor/isotope.pkgd.min.js"></script>
-    <script src="assets/js/vendor/jquery.barfiller.js"></script>
-    <script src="assets/js/vendor/loopcounter.js"></script>
-    <script src="assets/js/vendor/slicknav.min.js"></script>
-    <script src="assets/js/active.js"></script>
-    <script>
+        <!-- 自定义组件模板 -->
+        <script src="assets/js/jquery-2.2.4.min.js"></script>
+        <script src="assets/js/vendor/popper.min.js"></script>
+        <script src="assets/js/vendor/bootstrap.min.js"></script>
+        <script src="assets/js/vendor/owl.carousel.min.js"></script>
+        <script src="assets/js/vendor/isotope.pkgd.min.js"></script>
+        <script src="assets/js/vendor/jquery.barfiller.js"></script>
+        <script src="assets/js/vendor/loopcounter.js"></script>
+        <script src="assets/js/vendor/slicknav.min.js"></script>
+        <script src="assets/js/active.js"></script>
+        <script>
 
 
-        var app = new Vue({
-            el: '#app',
-            data: {
-                link: '<a href="#" rel="external nofollow" >这是一个连接</a>',
-                seen: true,
-                items: [
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    link: '<a href="#" rel="external nofollow" >这是一个连接</a>',
+                    seen: true,
+                    items: [
 
-                ],
-                currentPage: 1,
-                userInfo: {},
-                total: 0,
-                mid: '',
-                activeName: 'first',
-                textarea: '',
-                commentList: [
-                    {
-                        username: "李四",
-                        lv: "LV2",
-                        time: "2019-05-08 00:58",
-                        content: "那时最疯狂最快通关的好像在7个小时以内吧，前提是必须省略过场片段以及次要情节",
-                        signature: "办公兼修图兼剪辑：ThreadRipper 2950X +太极X399 +超白金Vega 64 +DDR4 3200 32G +M9PeG 512G X2 +Win10 Pro 64位 游戏及影视及网购：i7 3930K@4.2G +X79-UP4 +冰龙1070 +DDR3 2133 16G +MP961 256G PCIE转M.2 +Win10 Pro 64位"
-                    }, {
-                        username: "张三",
-                        lv: "LV5",
-                        time: "2019-05-02 14:53",
-                        content: "支线任务太费时了，以前玩古墓丽影系列都是顺着路线玩，不会刻意完成每个任务，太累人了。我是玩游戏，不是游戏玩我啊"
-                    },
-                ],
-                WeekHots: [],
-                hotlist: [],
-                hotkeys: [],
-                list: [],
-                introList: [
-                    {
-                        name: "入门游戏新机综合搭配"
-
-                    }, {
-                        name: "全侧透光污染主机，微星Z270平台装机"
-
-                    }, {
-                        name: "从奔腾4到G4560，一台老爷机的复活记"
-
-                    }, {
-                        name: "用NAS备份数据，可以无惧比特币勒索！"
-
-                    }
-                ],
-                introImgs: [
-                    {
-                        name: "入门游戏新机综合搭配",
-                        url: "https://s2.ax1x.com/2019/05/06/EBRZqK.jpg"
-
-                    }, {
-                        name: "全侧透光污染主机，微星Z270平台装机",
-                        url: "https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/24/c19/144112747_1556100405099.jpg"
-
-                    }, {
-                        name: "从奔腾4到G4560，一台老爷机的复活记",
-                        url: "https://s2.ax1x.com/2019/05/06/EBRZqK.jpg"
-
-                    }, {
-                        name: "用NAS备份数据，可以无惧比特币勒索！",
-                        url: "https://s2.ax1x.com/2019/05/06/EBRZqK.jpg"
-
-                    }
-                ],
-                content: {},
-                imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://s2.ax1x.com/2019/05/06/EBRZqK.jpg'],
-                userInfo: {},
-                formLabelWidth: '100px',
-                form: {
-                    password: ''
-                },
-                dialogFormVisible: false,
-
-            },
-            methods: {
-                /**
-                   <el-pagination background layout="prev, pager, next" :total="1000"
-                            @size-change="handleSizeChange"
-                            @current-change="handleCurrentChange"
-                            :current-page.sync="currentPage1"
-                            >
-                            */
-                handleSizeChange(e) {
-                    console.log('size', e)
-                },
-                handleCurrentChange(e) {
-                    let _this = this
-                    const loading = this.$loading({
-                        lock: true,
-                        text: 'Loading',
-                        spinner: 'el-icon-loading',
-                        background: 'rgba(0, 0, 0, 0.7)'
-                    });
-                    let _url = _this.$data.s == undefined ? `http://0.0.0.0:888/invitation/page?current=${e}` : `http://0.0.0.0:888/invitation/page?current=${e}&title=${_this.$data.s}`
-                    axios({
-                        method: 'get',
-                        headers: {
-                            'token': sessionStorage.getItem('token'),
-                            'Content-Type': 'application/x-www-form-urlencoded',
+                    ],
+                    currentPage: 1,
+                    userInfo: {},
+                    total: 0,
+                    mid: '',
+                    activeName: 'first',
+                    textarea: '',
+                    commentList: [
+                        {
+                            username: "李四",
+                            lv: "LV2",
+                            time: "2019-05-08 00:58",
+                            content: "那时最疯狂最快通关的好像在7个小时以内吧，前提是必须省略过场片段以及次要情节",
+                            signature: "办公兼修图兼剪辑：ThreadRipper 2950X +太极X399 +超白金Vega 64 +DDR4 3200 32G +M9PeG 512G X2 +Win10 Pro 64位 游戏及影视及网购：i7 3930K@4.2G +X79-UP4 +冰龙1070 +DDR3 2133 16G +MP961 256G PCIE转M.2 +Win10 Pro 64位"
+                        }, {
+                            username: "张三",
+                            lv: "LV5",
+                            time: "2019-05-02 14:53",
+                            content: "支线任务太费时了，以前玩古墓丽影系列都是顺着路线玩，不会刻意完成每个任务，太累人了。我是玩游戏，不是游戏玩我啊"
                         },
-                        url: _url,
-                    }).then((re) => {
-                        console.log(re)
-                        if (re.data.code === 0) {
-                            this.$data.list = re.data.content.records
-                            loading.close();
-                            // 显示增强 回到顶部
-                            this.toTop();
+                    ],
+                    WeekHots: [],
+                    hotlist: [],
+                    hotkeys: [],
+                    list: [],
+                    introList: [
+                        {
+                            name: "入门游戏新机综合搭配"
+
+                        }, {
+                            name: "全侧透光污染主机，微星Z270平台装机"
+
+                        }, {
+                            name: "从奔腾4到G4560，一台老爷机的复活记"
+
+                        }, {
+                            name: "用NAS备份数据，可以无惧比特币勒索！"
 
                         }
-                    })
+                    ],
+                    introImgs: [
+                        {
+                            name: "入门游戏新机综合搭配",
+                            url: "https://s2.ax1x.com/2019/05/06/EBRZqK.jpg"
+
+                        }, {
+                            name: "全侧透光污染主机，微星Z270平台装机",
+                            url: "https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/24/c19/144112747_1556100405099.jpg"
+
+                        }, {
+                            name: "从奔腾4到G4560，一台老爷机的复活记",
+                            url: "https://s2.ax1x.com/2019/05/06/EBRZqK.jpg"
+
+                        }, {
+                            name: "用NAS备份数据，可以无惧比特币勒索！",
+                            url: "https://s2.ax1x.com/2019/05/06/EBRZqK.jpg"
+
+                        }
+                    ],
+                    content: {},
+                    imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://s2.ax1x.com/2019/05/06/EBRZqK.jpg'],
+                    userInfo: {},
+                    formLabelWidth: '100px',
+                    form: {
+                        password: ''
+                    },
+                    dialogFormVisible: false,
+
                 },
-                toTop() {
-                    let timer = null;
-                    cancelAnimationFrame(timer);
-                    timer = requestAnimationFrame(function fn() {
-                        let oTop = document.body.scrollTop || document.documentElement.scrollTop;
-                        if (oTop > 0) {
-                            document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
-                            timer = requestAnimationFrame(fn);
+                methods: {
+                    /**
+                       <el-pagination background layout="prev, pager, next" :total="1000"
+                                @size-change="handleSizeChange"
+                                @current-change="handleCurrentChange"
+                                :current-page.sync="currentPage1"
+                                >
+                                */
+                    handleSizeChange(e) {
+                        console.log('size', e)
+                    },
+                    handleCurrentChange(e) {
+                        let _this = this
+                        const loading = this.$loading({
+                            lock: true,
+                            text: 'Loading',
+                            spinner: 'el-icon-loading',
+                            background: 'rgba(0, 0, 0, 0.7)'
+                        });
+                        let _url = _this.$data.s == undefined ? `http://0.0.0.0:888/invitation/page?current=${e}` : `http://0.0.0.0:888/invitation/page?current=${e}&title=${_this.$data.s}`
+                        axios({
+                            method: 'get',
+                            headers: {
+                                'token': sessionStorage.getItem('token'),
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            url: _url,
+                        }).then((re) => {
+                            console.log(re)
+                            if (re.data.code === 0) {
+                                this.$data.list = re.data.content.records
+                                loading.close();
+                                // 显示增强 回到顶部
+                                this.toTop();
+
+                            }
+                        })
+                    },
+                    toTop() {
+                        let timer = null;
+                        cancelAnimationFrame(timer);
+                        timer = requestAnimationFrame(function fn() {
+                            let oTop = document.body.scrollTop || document.documentElement.scrollTop;
+                            if (oTop > 0) {
+                                document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+                                timer = requestAnimationFrame(fn);
+                            } else {
+                                cancelAnimationFrame(timer);
+                            }
+                        });
+                    },
+                    toDetail() {
+                        location.href = ('detail.html')
+                    },
+                    logout() {
+                        axios({
+                            method: 'get',
+                            headers: {
+                                'token': sessionStorage.getItem('token'),
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            url: 'http://127.0.0.1:888/member/out',
+                        }).then((re) => {
+                            console.log('re', re)
+                            if (re.data.code === 0) {
+                                this.$message({
+                                    message: '注销成功',
+                                    type: 'success'
+                                });
+                                sessionStorage.removeItem('userInfo')
+                                setTimeout('location.href=("index.html")', 500)
+
+                            }
+                        })
+                    },
+                    GetRequest() {
+                        var url = location.search; //获取url中"?"符后的字串  
+                        var theRequest = new Object();
+                        if (url.indexOf("?") != -1) {
+                            var str = url.substr(1);
+                            strs = str.split("&");
+                            for (var i = 0; i < strs.length; i++) {
+                                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                            }
+                        }
+                        return theRequest;
+                    },
+                    toDetial(id) {
+                        location.href = (`detail.html?id=${id}&mid=${this.$data.mid}`)
+                    },
+                    send() {
+                        this.$message({
+                            message: '已反馈',
+                            type: 'success'
+                        })
+                    },
+                    getList(param) {
+
+                        const loading = this.$loading({
+                            lock: true,
+                            text: 'Loading',
+                            spinner: 'el-icon-loading',
+                            background: 'rgba(0, 0, 0, 0.7)'
+                        });
+                        let _this = this
+                        axios.defaults.headers.post['Content-Type'] = "application/x-www-form-urlencoded"
+                        axios.defaults.headers.token = sessionStorage.getItem('token')
+
+                        axios.all([
+                            axios.get(`http://0.0.0.0:888/invitation/page?moduleId=${param}`),
+                            axios.get(`http://0.0.0.0:888/invitation/page?moduleId=${param}&assessTimes=11`),
+                        ]).then(axios.spread(function (ires, cres) {
+                            console.log('User', ires.data);
+                            console.log('self', cres.data);
+                            if (ires.data.code === 0) {
+                                _this.$data.list = ires.data.content.records
+                                _this.$data.total = ires.data.content.total
+                                loading.close()
+                            }
+                            if (cres.data.code === 0) {
+                                _this.$data.hotkeys = cres.data.content.records
+                            }
+
+
+                        }));
+
+                    },
+                },
+
+                created: function () {
+
+
+                    window.onscroll = function () {
+                        scrollFunction()
+                    };
+
+                    function scrollFunction() {
+                        if (document.body.scrollTop > 150 || document.documentElement.scrollTop > 150) {
+                            document.getElementById("control").className = "control";
+                            document.getElementById("btnTop").style.display = "block";
+                            document.getElementById("ta").style.display = "none";
                         } else {
-                            cancelAnimationFrame(timer);
-                        }
-                    });
-                },
-                toDetail() {
-                    location.href = ('detail.html')
-                },
-                logout() {
-                    axios({
-                        method: 'get',
-                        headers: {
-                            'token': sessionStorage.getItem('token'),
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        url: 'http://127.0.0.1:888/member/out',
-                    }).then((re) => {
-                        console.log('re', re)
-                        if (re.data.code === 0) {
-                            this.$message({
-                                message: '注销成功',
-                                type: 'success'
-                            });
-                            sessionStorage.removeItem('userInfo')
-                            setTimeout('location.href=("index.html")', 500)
-
-                        }
-                    })
-                },
-                GetRequest() {
-                    var url = location.search; //获取url中"?"符后的字串  
-                    var theRequest = new Object();
-                    if (url.indexOf("?") != -1) {
-                        var str = url.substr(1);
-                        strs = str.split("&");
-                        for (var i = 0; i < strs.length; i++) {
-                            theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                            document.getElementById("control").className = "";
+                            document.getElementById("ta").style.display = "block"; document.getElementById("btnTop").style.display = "none";
                         }
                     }
-                    return theRequest;
-                },
-                toDetial(id) {
-                    location.href = (`detail.html?id=${id}&mid=${this.$data.mid}`)
-                },
-                send() {
-                    this.$message({
-                        message: '已反馈',
-                        type: 'success'
-                    })
-                },
-                getList(param) {
+                    let param = this.GetRequest()
+                    let mid = param.id
+                    let s = param.s
+                    let _this = this
+                    _this.$data.mid = mid
+                    _this.$data.s = s
+                    let userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
+                    console.log('user', userInfo)
+                    if (userInfo != null) {
+                        _this.$data.userInfo = userInfo
+                    }
 
                     const loading = this.$loading({
                         lock: true,
@@ -533,108 +635,24 @@
                         spinner: 'el-icon-loading',
                         background: 'rgba(0, 0, 0, 0.7)'
                     });
-                    let _this = this
-                    axios.defaults.headers.post['Content-Type'] = "application/x-www-form-urlencoded"
-                    axios.defaults.headers.token = sessionStorage.getItem('token')
-
-                    axios.all([
-                        axios.get(`http://0.0.0.0:888/invitation/page?moduleId=${param}`),
-                        axios.get(`http://0.0.0.0:888/invitation/page?moduleId=${param}&assessTimes=11`),
-                    ]).then(axios.spread(function (ires, cres) {
-                        console.log('User', ires.data);
-                        console.log('self', cres.data);
-                        if (ires.data.code === 0) {
-                            _this.$data.list = ires.data.content.records
-                            _this.$data.total = ires.data.content.total
-                            loading.close()
-                        }
-                        if (cres.data.code === 0) {
-                            _this.$data.hotkeys = cres.data.content.records
-                        }
-
-
-                    }));
-
-                },
-            },
-
-            created: function () {
-
-
-                window.onscroll = function () {
-                    scrollFunction()
-                };
-
-                function scrollFunction() {
-                    if (document.body.scrollTop > 150 || document.documentElement.scrollTop > 150) {
-                        document.getElementById("control").className = "control";
-                        document.getElementById("btnTop").style.display = "block";
-                        document.getElementById("ta").style.display = "none";
-                    } else {
-                        document.getElementById("control").className = "";
-                        document.getElementById("ta").style.display = "block"; document.getElementById("btnTop").style.display = "none";
-                    }
-                }
-                let param = this.GetRequest()
-                let mid = param.id
-                let s = param.s
-                let _this = this
-                _this.$data.mid = mid
-                _this.$data.s = s
-                let userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
-                console.log('user', userInfo)
-                if (userInfo != null) {
-                    _this.$data.userInfo = userInfo
-                }
-
-                const loading = this.$loading({
-                    lock: true,
-                    text: 'Loading',
-                    spinner: 'el-icon-loading',
-                    background: 'rgba(0, 0, 0, 0.7)'
-                });
-<<<<<<< HEAD
-                if (s != undefined) {
                     axios({
                         method: 'get',
                         headers: {
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: `http://0.0.0.0:888/invitation/page?title=${s}`,
-                    }).then((ires) => {
-                        console.log('re', ires)
-                        if (ires.data.code === 0) {
-                            _this.$data.list = ires.data.content.records
-                            _this.$data.total = ires.data.content.total
+                        url: `http://127.0.0.1:888/invitation/page?moduleId=${mid}`,
+                    }).then((res) => {
+                        console.log('res', res)
+                        if (res.data.code === 0) {
+                            this.$data.list = res.data.content.records
+                            this.$data.total = res.data.content.total
                             loading.close()
 
                         }
                     })
-
-                } else {
-
-                    _this.getList(_this.$data.mid)
                 }
-=======
-                axios({
-                    method: 'get',
-                    headers: {
-                        'token': sessionStorage.getItem('token'),
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    url: `http://127.0.0.1:888/invitation/page?moduleId=${mid}`,
-                }).then((res) => {
-                    console.log('res', res)
-                    if (res.data.code === 0) {
-                        this.$data.list = res.data.content.records
-                        this.$data.total = res.data.content.total
-                        loading.close()
->>>>>>> 0e687f96e8740f3b411c67a626729d4a70d2a3f0
-
-            }
-        })
-    </script>
+        </script>
 </body>
 
 </html>
