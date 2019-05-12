@@ -1,0 +1,215 @@
+  /* 首页轮播图 */
+  .carousel-inner img {
+    width: 100%
+  }
+  .el-carousel__item h3 {
+    color: #475669;
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 200px;
+    margin: 0;
+  }
+  
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
+  
+  .el-carousel__item:nth-child(2n+1) {
+    background-color: #d3dce6;
+  }
+  
+  /* 卡片 */
+  .text {
+    font-size: 14px;
+  }
+  
+  .item {
+    margin-bottom: 18px;
+  }
+  
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
+  .clearfix:after {
+    clear: both
+  }
+  
+  .box-card {
+    width: 100%;
+    margin-top: 20px;
+  }
+  .box-card-little {
+    margin:5px;
+    height: 140px;
+    line-height:16px;
+    float: left;
+    text-align: left;
+    width: 100%;
+  }
+  .box-card-span{
+    line-height:16px;
+  
+  }
+  
+  /* 
+  下拉菜单
+  */
+  .el-dropdown {
+    vertical-align: top;
+  }
+  .el-dropdown + .el-dropdown {
+    margin-left: 15px;
+  }
+  .el-icon-arrow-down {
+    font-size: 12px;
+  }
+  
+  /* card-text-attach */
+  .card-text-attach{
+    z-index:100;
+    background:transparent;
+    position: relative;
+    bottom: 25px;
+    background-color:rgba(0,0,0,0.5);
+    width:100%;
+    float:left;
+    color: #fff;
+    text-align: center
+  }
+  /* 
+  
+  li text control*/
+  .text-control{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+  }
+  .tz span{
+    padding-right: 20px;
+  }
+  .container{
+    margin: 0 auto;
+    max-width: 1600px;
+    text-align: left;
+  }
+  /* elcard */
+  .elcard:hover{
+    z-index: 10;
+    -webkit-transform-origin:bottom left;
+    -webkit-transform:scale(1.04); 
+    background: #f2f2f2;
+    transition: 0.9s;
+    cursor:pointer
+  }
+  .divhover:hover{
+    background: #f2f2f2;
+    transition: 0.9s;
+    cursor:pointer
+  }
+  .control{
+    position:fixed;top:0;width: 360px;
+  }
+  /* 上传头像 */
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+
+  .trans {
+    /*transition*/
+    -webkit-transition: 0.3s ease;
+    -moz-transition: 0.3s ease;
+    -ms-transition: 0.3s ease;
+    -o-transition: 0.3s ease;
+    transition: 0.3s ease;
+}
+.test_outer {
+    position: relative;
+    overflow:hidden;/* 因为遮罩层肯定比实际区域大，所以遮罩层的限制层：overflow：hidden控制不出现滚动条 */
+}
+.test_cover {
+    z-index: 1;
+
+    /* 定义镂空区域宽高大小尺寸 */
+    width: 60px;
+    height: 60px;
+    border: 100vh solid rgba(0, 0, 0, .45);/* 使用元素的大border作为遮罩层的 */
+    position: absolute;
+}
+
+.test_cover_pos1 {
+    top: -100vh;
+}
+.test_cover_pos1:after {
+    content: '☺首先选择您所在的城市';
+    margin: 16px 0 0 -140px;
+}
+
+.test_cover_pos2 {
+    left: -547px;
+    top: -478px;
+}
+.test_cover_pos2:after {
+    width: 140px;
+    content: '☺全新推图订餐服务，给你不一样的体验！';
+    margin: 16px 0 0 60px;
+}
+
+.test_cover_pos3 {
+    left: -437px;
+    top: -158px;
+}
+.test_cover_pos3:after {
+    content: '☺随时拨打订餐！';
+    margin: -20px 0 0 -20px;
+    white-space: nowrap;
+}
+
+.test_cover_pos1:after, .test_cover_pos2:after, .test_cover_pos3:after {
+    color: #fff;
+    font-family: '微软雅黑';
+    text-shadow: 1px 1px rgba(0,0,0,.35);
+    position: absolute;
+}
+/* textarea */
+
+#editDiv{
+    width:1000px;
+    display: inline-block;
+    height: 800px;
+    background:#fff;
+    border-radius:10px;
+    line-height: 20px;
+    padding:10px;
+    font-size: 14px;
+    color:#666;
+    resize: none;
+    outline: none;
+    overflow-y: scroll;
+}
+#editDiv{
+    border:1px solid #333;
+    border-color:rgba(169,169,169,1);
+    text-align: left;
+}

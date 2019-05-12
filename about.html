@@ -17,6 +17,8 @@
 
 
                 <link rel="stylesheet" href="assets/css/owl.carousel.css">
+    <link rel="stylesheet" href="assets/css/mycss.css">
+
                 <link rel="stylesheet" href="assets/css/barfiller.css">
                 <link rel="stylesheet" href="assets/css/animate.css">
                 <link rel="stylesheet" href="assets/css/font-awesome.min.css">
@@ -434,7 +436,7 @@
                     link: '<a href="#" rel="external nofollow" >这是一个连接</a>',
                     seen: true,
                     list: [],
-                    imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/24/c19/144112747_1556100405099.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1904/01/c11/140114944_1554093874677.jpg']
+                    imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://s2.ax1x.com/2019/05/06/EBRZqK.jpg']
     
                 },
                 methods: {
@@ -447,7 +449,7 @@
                     let _this = this
                     axios({
                         method: 'get',
-                        headers: {
+                        headers: {  'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
                         url: 'http://0.0.0.0:888/module/list',
