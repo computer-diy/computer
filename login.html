@@ -299,7 +299,6 @@
                     location.href = ('detail.html')
                 },
                 login() {
-                    console.log('ee', this.$data.form)
                     let form = this.$data.form
                     axios({
                         method: 'POST',
@@ -309,7 +308,6 @@
                         url: 'http://0.0.0.0:888/member/login',
                         data: form
                     }).then((re) => {
-                        console.log('r', re)
                         if (re.data.code === 0) {
                             this.$message({
                                 message: '登录成功',

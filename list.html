@@ -490,7 +490,7 @@
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: 'http://0.0.0.0:888/member/out',
+                        url: 'http://127.0.0.1:888/member/out',
                     }).then((re) => {
                         console.log('re', re)
                         if (re.data.code === 0) {
@@ -593,6 +593,7 @@
                     spinner: 'el-icon-loading',
                     background: 'rgba(0, 0, 0, 0.7)'
                 });
+<<<<<<< HEAD
                 if (s != undefined) {
                     axios({
                         method: 'get',
@@ -615,6 +616,21 @@
 
                     _this.getList(_this.$data.mid)
                 }
+=======
+                axios({
+                    method: 'get',
+                    headers: {
+                        'token': sessionStorage.getItem('token'),
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    url: `http://127.0.0.1:888/invitation/page?moduleId=${mid}`,
+                }).then((res) => {
+                    console.log('res', res)
+                    if (res.data.code === 0) {
+                        this.$data.list = res.data.content.records
+                        this.$data.total = res.data.content.total
+                        loading.close()
+>>>>>>> 0e687f96e8740f3b411c67a626729d4a70d2a3f0
 
             }
         })

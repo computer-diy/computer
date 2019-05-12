@@ -424,7 +424,7 @@
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: `http://0.0.0.0:888/reply/list1?invitationId=${this.$data.param.id}&current=${e}&size=${_this.$data.pageSize}`,
+                        url: `http://127.0.0.1:888/reply/list1?invitationId=${this.$data.param.id}&current=${e}&size=${_this.$data.pageSize}`,
                     }).then((re) => {
                         console.log(re)
                         if (re.data.code === 0) {
@@ -460,7 +460,7 @@
                                 'token': sessionStorage.getItem('token'),
                                 'Content-Type': 'application/json',
                             },
-                            url: 'http://0.0.0.0:888/reply/add',
+                            url: 'http://127.0.0.1:888/reply/add',
                         }).then((re) => {
                             console.log('re', re)
                             if (re.data.code === 0) {
@@ -493,7 +493,7 @@
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: 'http://0.0.0.0:888/member/out',
+                        url: 'http://127.0.0.1:888/member/out',
                     }).then((re) => {
                         console.log('re', re)
                         if (re.data.code === 0) {
@@ -538,9 +538,9 @@
                     axios.defaults.headers.token = sessionStorage.getItem('token')
 
                     axios.all([
-                        axios.get(`http://0.0.0.0:888/invitation/${param.id ? param.id : 20}`),
-                        axios.get(`http://0.0.0.0:888/reply/list1?invitationId=${param.id ? param.id : 20}&current=${_this.$data.currentPage}&size=${_this.$data.pageSize}`),
-                        axios.get(`http://0.0.0.0:888/invitation/self`)
+                        axios.get(`http://127.0.0.1:888/invitation/${param.id ? param.id : 20}`),
+                        axios.get(`http://127.0.0.1:888/reply/list1?invitationId=${param.id ? param.id : 20}&current=${_this.$data.currentPage}&size=${_this.$data.pageSize}`),
+                        axios.get(`http://127.0.0.1:888/invitation/self`)
                     ]).then(axios.spread(function (ires, cres, sres) {
                         console.log('User', ires.data);
                         console.log('Repositories', cres.data);
@@ -619,7 +619,7 @@
                 if (userInfo != null) {
                     _this.$data.userInfo = userInfo
                 }
-                // axios.defaults.baseURL = 'http://0.0.0.0:888/';
+                // axios.defaults.baseURL = 'http://127.0.0.1:888/';
                 _this.getList(param)
 
             }

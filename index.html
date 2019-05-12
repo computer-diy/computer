@@ -351,7 +351,7 @@
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: 'http://0.0.0.0:888/member/password',
+                        url: 'http://127.0.0.1:888/member/password',
                         data: password
                     }).then((re) => {
                         console.log('re', re)
@@ -377,7 +377,7 @@
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: 'http://0.0.0.0:888/member/out',
+                        url: 'http://127.0.0.1:888/member/out',
                     }).then((re) => {
                         console.log('re', re)
                         if (re.data.code === 0) {
@@ -397,8 +397,8 @@
                     axios.defaults.headers.token = sessionStorage.getItem('token')
 
                     axios.all([
-                        axios.get(`http://0.0.0.0:888/module/list`),
-                        axios.get(`http://0.0.0.0:888/other/list`)
+                        axios.get(`http://127.0.0.1:888/module/list`),
+                        axios.get(`http://127.0.0.1:888/other/list`)
                     ]).then(axios.spread(function (ires, cres) {
                         if (ires.data.code === 0) {
                             _this.$data.list = ires.data.content
