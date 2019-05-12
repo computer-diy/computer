@@ -76,7 +76,7 @@
                                             <li><a @click="dialogFormVisible = true">修改密码</a></li>
                                         </ul>
                                     </li>
-                                    <li v-else><a href="login.html">登录</a></li>
+                                    <li v-else><a style="cursor:pointer;color:#acbbce" @click="toLogin">登录</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -98,11 +98,25 @@
                         </el-col>
                         <el-col :span="18" style="text-align:left">
                             <el-row>
-                                <el-col :span="12">
+                                <el-col :span="8">
                                     <p>昵称：{{content.name?content.name:'未填写'}}</p>
                                 </el-col>
-                                <el-col :span="12">
+                                <el-col :span="8">
                                     <p>性别：{{content.sex?content.sex:'未填写'}}</p>
+                                </el-col>
+                                <el-col :span="8">
+                                    <el-popover placement="bottom" width="200" trigger="click">
+                                        <div style="text-align: right; margin: 0">
+                                            <el-input v-model="reason" placeholder="请输入举报内容"></el-input>
+                                            <el-button size="mini" type="text" @click="visible2 = false">取消
+                                            </el-button>
+                                            <el-button type="primary" size="mini" @click="report(content.member_id)">确定
+                                            </el-button>
+                                        </div>
+                                        <el-link type="danger" slot="reference">
+                                            举报
+                                        </el-link>
+                                    </el-popover>
                                 </el-col>
                             </el-row>
                             <el-row>
@@ -231,57 +245,59 @@
             </div>
 
             <footer>
-                <div class="footer-top">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6 col-lg-3 footer_widget">
-                                <div class="inner">
-                                    <h4>About</h4>
-                                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
-                                        turpis egestas.</p>
-                                    <p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet,
-                                        antesenectus et netus et malesuada fames ac turpis egestas.</p>
+                    <div class="footer-top">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-3 footer_widget">
+                                    <div class="inner">
+                                        <h4>友情链接</h4>
+                                        <p>
+                                            <ul>
+                                                <li><a target="_blank"
+                                                        href="http://page.china.alibaba.com/buy/trade/7.html">阿里巴巴数码</a>
+                                                </li>
+                                                <li><a target="_blank" href="http://zone.it.sohu.com/">搜狐数码</a></li>
+                                                </li>
+                                                </li>
+                                                <li><a target="_blank" href="//bbs.pchouse.com.cn">太平洋家居网论坛</a></li>
+                                                <li><a target="_blank" href="http://fans.tcl.com/portal.php">铁粉社区(TCL)</a>
+                                                </li>
+                                                <li><a target="_blank" href="http://bbs.coocaa.com/">酷开社区</a></li>
+                                            </ul>
+                                        </p>
+    
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6 col-lg-3 footer_widget">
-                                <div class="inner">
-                                    <h4>Company</h4>
-                                    <ul>
-                                        <li><a href="#">Company Overview</a></li>
-                                        <li><a href="#">Meet The Team</a></li>
-                                        <li><a href="#">Our Awesome Partners</a></li>
-                                        <li><a href="#">Our Services</a></li>
-                                        <li><a href="#">Frequently Asked Questions</a></li>
-                                        <li><a href="#">Contact Us</a></li>
-                                        <li><a href="#">Terms of Use</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-bottom">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="copyright-txt">
-                                    Copyright &copy; 2019.Company name All rights reserved.<a target="_blank"
-                                        href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 text-right">
-                                <div class="footer-nav">
-                                    <a href="#">Home</a>
-                                    <a href="#">Portfolio</a>
-                                    <a href="#">Pages</a>
-                                    <a href="#">Shortcode</a>
-                                    <a href="#">Blog</a>
+                                <div class="col-md-6 col-lg-3 footer_widget">
+                                    <div class="inner">
+                                        <ul>
+                                            <li><a target="_blank" href="http://bbs.mumayi.com/">安卓论坛</a></li>
+                                            <li><a target="_blank" href="//product.pconline.com.cn/itbk/">IT百科</a></li>
+                                            <li><a target="_blank" href="//dl.pconline.com.cn/android/">太平洋手机软件</a></li>
+                                            <li><a target="_blank"
+                                                    href="https://product.pconline.com.cn/mobile/apple/1123572.html">iPhone
+                                                    XR</a>
+                                            </li>
+                                            <li><a target="_blank" href="http://bbs.yunos.com">云OS社区</a></li>
+                                            <li><a target="_blank" href="http://bbs.elecfans.com">电子技术论坛</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </footer>
+                    <div class="footer-bottom">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="copyright-txt">
+                                        Copyright &copy; 2019.郑州大学北校区 All rights reserved.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
 
 
         </div>
@@ -301,6 +317,7 @@
         var app = new Vue({
             el: '#app',
             data: {
+                reason: '',
                 imageUrl: '',
                 seen: true,
                 content: {},
@@ -322,6 +339,9 @@
 
             },
             methods: {
+toLogin() {
+                    location.href = (`login.html?backUrl=${escape(document.location.pathname + document.location.search)}`)
+                },
                 guest(id) {
                     axios({
                         method: 'get',
@@ -340,6 +360,36 @@
                     })
                 },
                 handleAvatarSuccess(res, file) {
+
+                },
+                report(id) {
+                    let _this = this
+                    if (_this.userInfo == '') {
+                        _this.$message.error('请先登录！')
+                        return false
+                    }
+                    axios({
+                        method: "post",
+                        headers: {
+                            'token': sessionStorage.getItem('token'),
+                            'Content-Type': 'application/json',
+                        },
+                        url: 'http://127.0.0.1:888/diss/add',
+                        data: {
+                            memberId: id,
+                            reason: _this.$data.reason
+                        }
+
+                    }).then((res) => {
+                        if (res.data.code == 0) {
+                            this.$message({
+                                message: "举报成功，我们将尽快处理您的反馈信息",
+                                type: "success"
+                            })
+                        } else {
+                            this.$message.error(res.data.content)
+                        }
+                    })
 
                 },
                 beforeAvatarUpload(file) {
@@ -415,7 +465,7 @@
                 },
                 toUserDetail(id) {
                     let _this = this
-                    console.log(id,_this.userInfo.id)
+                    console.log(id, _this.userInfo.id)
                     if (id == _this.userInfo.id) {
                         location.href = (`mine.html`)
                     } else {

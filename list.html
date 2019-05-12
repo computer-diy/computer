@@ -77,7 +77,7 @@
                                             <li><a @click="dialogFormVisible = true">修改密码</a></li>
                                         </ul>
                                     </li>
-                                    <li v-else><a href="login.html">登录</a></li>
+                                    <li v-else><a style="cursor:pointer;color:#acbbce" @click="toLogin">登录</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -96,16 +96,14 @@
                 <el-row :gutter="20">
                     <el-col :span="16">
                         <el-card>
-                            <el-row :gutter="20">
+                            <el-row v-for="o in adminList" :gutter="20">
                                 <el-col :span="24" style="text-align:left" class="box-card-span">
                                     <span style="color:#e58434;font-size:16px">
                                         <el-tag>今日话题</el-tag>
-                                        #【二手论坛新版规】2016.7.4总结重申，发帖必看，请严格遵守#
-                                        <a href="#"></a>
+                                        <a style="cursor:pointer" @click="toDetail(o.id,o.module_id)">{{o.title}}</a>
                                     </span>
                                     <p style="padding:10px;margin:10px">
-                                        版规置顶在此，被删贴或被封号的就来这里逐条对照版规，看看自己哪里违规，别再来问什么“”我为何被删帖子、为何被封号“”，一概不回复！版主不会没事吃饱撑着去封号！大条版规已经摆在这，偏不看！违规被封号了，再说什么“”无辜被封“”的，一律加倍...
-
+                                        {{o.content}}
                                     </p>
 
                                 </el-col>
@@ -174,8 +172,8 @@
                             <el-tabs v-model="activeName" type="card">
                                 <el-tab-pane label="论坛热帖" name="first">
                                     <el-row>
-                                        <el-col v-for="o in hotkeys" :span="8">
-                                            <a class="text-control" style="color:#669cfc;cursor:pointer"
+                                        <el-col class="text-control" v-for="o in hotkeys" :span="8">
+                                            <a style="color:#669cfc;cursor:pointer;padding:5px;"
                                                 @click="toDetail(o.id,o.module_id)">{{o.title}}</a>
                                         </el-col>
                                     </el-row>
@@ -184,8 +182,8 @@
                                 <el-tab-pane label="最新热帖" name="second">
 
                                     <el-row>
-                                        <el-col v-for="o in hotkeys" :span="8">
-                                            <a v-if="o.assess_times>30" style="color:#669cfc;cursor:pointer"
+                                        <el-col class="text-control" v-for="o in hotkeys" :span="8">
+                                            <a v-if="o.assess_times>30" style="color:#669cfc;cursor:pointer;padding:5px"
                                                 class="text-control" @click="toDetail(o.id,o.module_id)">{{o.title}}</a>
                                         </el-col>
                                     </el-row>
@@ -227,14 +225,14 @@
                                 <el-carousel indicator-position="none" height="150px">
                                     <el-carousel-item v-for="item in introImgs">
                                         <img :src="item.url" alt="" style="width:100%;float:left;height:150px">
-                                        <div class="card-text-attach">{{item.name}}</div>
+                                        <div class="card-text-attach">{{item. name}}</div>
                                     </el-carousel-item>
-
                                 </el-carousel>
+
                                 <ul style="list-style:none;" style="margin:20px">
                                     <li class="text-control" v-for="o in introList">
-                                        <a href="#"> {{o.name}}
-
+                                        <a style="color:#0575ff;cursor:pointer" @click="toDetail(o.id,o.module_id)">
+                                            {{o.title}}
                                         </a>
                                     </li>
                                 </ul>
@@ -262,67 +260,59 @@
 
             </div>
             <footer>
-                <div class="footer-top">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6 col-lg-3 footer_widget">
-                                <div class="inner">
-                                    <h4>About</h4>
-                                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
-                                        turpis egestas.</p>
-                                    <p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet,
-                                        antesenectus et netus et malesuada fames ac turpis egestas.</p>
+                    <div class="footer-top">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-3 footer_widget">
+                                    <div class="inner">
+                                        <h4>友情链接</h4>
+                                        <p>
+                                            <ul>
+                                                <li><a target="_blank"
+                                                        href="http://page.china.alibaba.com/buy/trade/7.html">阿里巴巴数码</a>
+                                                </li>
+                                                <li><a target="_blank" href="http://zone.it.sohu.com/">搜狐数码</a></li>
+                                                </li>
+                                                </li>
+                                                <li><a target="_blank" href="//bbs.pchouse.com.cn">太平洋家居网论坛</a></li>
+                                                <li><a target="_blank" href="http://fans.tcl.com/portal.php">铁粉社区(TCL)</a>
+                                                </li>
+                                                <li><a target="_blank" href="http://bbs.coocaa.com/">酷开社区</a></li>
+                                            </ul>
+                                        </p>
+    
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6 col-lg-3 footer_widget">
-                                <div class="inner">
-                                    <h4>Company</h4>
-                                    <ul>
-                                        <li><a href="#">Company Overview</a></li>
-                                        <li><a href="#">Meet The Team</a></li>
-                                        <li><a href="#">Our Awesome Partners</a></li>
-                                        <li><a href="#">Our Services</a></li>
-                                        <li><a href="#">Frequently Asked Questions</a></li>
-                                        <li><a href="#">Contact Us</a></li>
-                                        <li><a href="#">Terms of Use</a></li>
-                                    </ul>
+                                <div class="col-md-6 col-lg-3 footer_widget">
+                                    <div class="inner">
+                                        <ul>
+                                            <li><a target="_blank" href="http://bbs.mumayi.com/">安卓论坛</a></li>
+                                            <li><a target="_blank" href="//product.pconline.com.cn/itbk/">IT百科</a></li>
+                                            <li><a target="_blank" href="//dl.pconline.com.cn/android/">太平洋手机软件</a></li>
+                                            <li><a target="_blank"
+                                                    href="https://product.pconline.com.cn/mobile/apple/1123572.html">iPhone
+                                                    XR</a>
+                                            </li>
+                                            <li><a target="_blank" href="http://bbs.yunos.com">云OS社区</a></li>
+                                            <li><a target="_blank" href="http://bbs.elecfans.com">电子技术论坛</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <br />
-                    <!-- <div class="text item">
-                        <span style="color:green">
-                            <i class="el-icon-user-solid"></i>{{it.name}}</span>
-                        <span style="margin-left:10px;">
-                            <i class="el-icon-date"></i>{{it.publish_time}}</span>
-                            <span style="margin-left:10px;">
-                                <i class="el-icon-chat-dot-round"></i>{{it.replyNum}}</span>
-                                <span style="margin-left:10px;">浏览量{{it.assess_times}}</span>
-                        <span style="margin-left:10px;">最后回复{{it.lastReplyName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{it.lastReplyTime}}</span>
-                </div> -->
                     <div class="footer-bottom">
                         <div class="container">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="copyright-txt">
-                                        Copyright &copy; 2019.Company name All rights reserved.<a target="_blank"
-                                            href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 text-right">
-                                    <div class="footer-nav">
-                                        <a href="#">Home</a>
-                                        <a href="#">Portfolio</a>
-                                        <a href="#">Pages</a>
-                                        <a href="#">Shortcode</a>
-                                        <a href="#">Blog</a>
+                                        Copyright &copy; 2019.郑州大学北校区 All rights reserved.
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-            </footer>
+                </footer>
             <el-dialog title="修改密码" :visible.sync="dialogFormVisible">
                 <el-form :model="form" style="text-align: left;">
                     <el-form-item label="新密码" :label-width="formLabelWidth">
@@ -367,39 +357,11 @@
                 mid: '',
                 activeName: 'first',
                 textarea: '',
-                commentList: [
-                    {
-                        username: "李四",
-                        lv: "LV2",
-                        time: "2019-05-08 00:58",
-                        content: "那时最疯狂最快通关的好像在7个小时以内吧，前提是必须省略过场片段以及次要情节",
-                        signature: "办公兼修图兼剪辑：ThreadRipper 2950X +太极X399 +超白金Vega 64 +DDR4 3200 32G +M9PeG 512G X2 +Win10 Pro 64位 游戏及影视及网购：i7 3930K@4.2G +X79-UP4 +冰龙1070 +DDR3 2133 16G +MP961 256G PCIE转M.2 +Win10 Pro 64位"
-                    }, {
-                        username: "张三",
-                        lv: "LV5",
-                        time: "2019-05-02 14:53",
-                        content: "支线任务太费时了，以前玩古墓丽影系列都是顺着路线玩，不会刻意完成每个任务，太累人了。我是玩游戏，不是游戏玩我啊"
-                    },
-                ],
-                WeekHots: [],
-                hotlist: [],
+                commentList: [],
+                adminList: [],
                 hotkeys: [],
                 list: [],
-                introList: [
-                    {
-                        name: "入门游戏新机综合搭配"
-
-                    }, {
-                        name: "全侧透光污染主机，微星Z270平台装机"
-
-                    }, {
-                        name: "从奔腾4到G4560，一台老爷机的复活记"
-
-                    }, {
-                        name: "用NAS备份数据，可以无惧比特币勒索！"
-
-                    }
-                ],
+                introList: [],
                 introImgs: [
                     {
                         name: "入门游戏新机综合搭配",
@@ -430,6 +392,9 @@
 
             },
             methods: {
+toLogin() {
+                    location.href = (`login.html?backUrl=${escape(document.location.pathname + document.location.search)}`)
+                },
                 /**
                    <el-pagination background layout="prev, pager, next" :total="1000"
                             @size-change="handleSizeChange"
@@ -480,8 +445,8 @@
                         }
                     });
                 },
-                toDetail() {
-                    location.href = ('detail.html')
+                toDetail(id, mid) {
+                    location.href = (`detail.html?id=${id}&mid=${mid}`)
                 },
                 logout() {
                     axios({
@@ -517,7 +482,7 @@
                     return theRequest;
                 },
                 toDetial(id) {
-                    location.href = (`detail.html?id=${id}&mid=${this.$data.mid}`)
+                    location.href = (`detail.html?id=${id}&mid=${this.$data.mid ? this.$data.mid : 3}`)
                 },
                 send() {
                     this.$message({
@@ -536,20 +501,32 @@
                     let _this = this
                     axios.defaults.headers.post['Content-Type'] = "application/x-www-form-urlencoded"
                     axios.defaults.headers.token = sessionStorage.getItem('token')
-
+                    param = param == undefined ? 3 : param
                     axios.all([
                         axios.get(`http://0.0.0.0:888/invitation/page?moduleId=${param}`),
                         axios.get(`http://0.0.0.0:888/invitation/page?moduleId=${param}&assessTimes=11`),
-                    ]).then(axios.spread(function (ires, cres) {
+                        axios.get(`http://0.0.0.0:888/invitation/page?moduleId=-1`),
+                    ]).then(axios.spread(function (ires, cres, gres) {
                         console.log('User', ires.data);
                         console.log('self', cres.data);
                         if (ires.data.code === 0) {
                             _this.$data.list = ires.data.content.records
                             _this.$data.total = ires.data.content.total
                             loading.close()
+                            let i = ires.data.content.records.length - 1 > 4 ? 4 : ires.data.content.records.length - 1
+                            let m = ires.data.content.total > 10 ? 10 : ires.data.content.total
+                            while (i-- > 0) {
+                                _this.$data.introList[i] = ires.data.content.records[Math.floor(Math.random() * m)]
+                            }
+
+                            _this.$data.introList = Array.from(new Set(_this.$data.introList))
+
                         }
                         if (cres.data.code === 0) {
                             _this.$data.hotkeys = cres.data.content.records
+                        }
+                        if (gres.data.code === 0) {
+                            _this.$data.adminList = gres.data.content.records
                         }
 
 
@@ -593,7 +570,7 @@
                     spinner: 'el-icon-loading',
                     background: 'rgba(0, 0, 0, 0.7)'
                 });
-                console.error('s,',unescape(s))
+                console.error('s,', unescape(s))
                 if (s != undefined) {
                     axios({
                         method: 'get',

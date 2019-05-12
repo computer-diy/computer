@@ -8952,6 +8952,9 @@
       },
   
       methods: {
+toLogin() {
+                    location.href = (`login.html?backUrl=${escape(document.location.pathname + document.location.search)}`)
+                },
         hasMove: function hasMove (el, moveClass) {
           /* istanbul ignore if */
           if (!hasTransition) {

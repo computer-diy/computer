@@ -77,7 +77,7 @@
                                             <li><a @click="dialogFormVisible = true">修改密码</a></li>
                                         </ul>
                                     </li>
-                                    <li v-else><a href="login.html">登录</a></li>
+                                    <li v-else><a style="cursor:pointer;color:#acbbce" @click="toLogin">登录</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -150,6 +150,9 @@
             editor: null
         },
         methods: {
+toLogin() {
+                    location.href = (`login.html?backUrl=${escape(document.location.pathname + document.location.search)}`)
+                },
             logout() {
                 axios({
                     method: 'get',

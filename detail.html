@@ -20,6 +20,7 @@
 
 
     <link rel="stylesheet" href="assets/css/owl.carousel.css">
+    <link rel="stylesheet" href="assets/css/mycss.css">
 
     <link rel="stylesheet" href="assets/css/barfiller.css">
     <link rel="stylesheet" href="assets/css/animate.css">
@@ -27,7 +28,6 @@
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/slicknav.css">
     <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/mycss.css">
     <link rel="stylesheet" href="assets/css/element.css">
 
 </head>
@@ -83,7 +83,7 @@
                                             <li><a @click="dialogFormVisible = true">修改密码</a></li>
                                         </ul>
                                     </li>
-                                    <li v-else><a href="login.html">登录</a></li>
+                                    <li v-else><a style="cursor:pointer;color:#acbbce" @click="toLogin">登录</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -138,14 +138,11 @@
                             <div v-html="content.content">
                             </div>
                             <div style="margin:30px;text-align: center">
-                                <el-button type="primary" size="medium" icon="el-icon-s-flag">评分</el-button>
                                 <el-button type="primary" size="medium" icon="el-icon-share">分享</el-button>
 
                             </div>
                             <div style="float:right;margin:10px">
-                                <a style="color:#e58434" href="#fb" type="warning">回复</a>
-                                <a style="color:#e58434" href="#" type="warning">评分</a>
-                                <a style="color:#e58434" href="#" type="warning">举报</a>
+                                <el-link style="color:#e58434">回复</el-link>
                             </div>
                         </el-card>
                         <br>
@@ -164,9 +161,7 @@
                                     <p v-html="o.content">
                                     </p>
                                     <p>
-                                        <div style="float:right;margin:10px">
-                                            <a style="color:#989898" href="#" type="warning">举报</a>
-                                        </div>
+
                                         <br>
                                         <div v-if="o.signature" style="color:#989898">
                                             <el-divider content-position="left"><i class="el-icon-edit"></i>签名档
@@ -178,7 +173,7 @@
                                 </el-col>
                             </el-row>
                         </el-card>
-                        <el-card style="margin-top:5px">
+                        <el-card v-if="commentList.size>0" style="margin-top:5px">
                             <el-pagination background layout="prev, pager, next" :total="total" :page-size="pageSize"
                                 @current-change="handleCurrentChange" :current-page.sync="currentPage"
                                 :hide-on-single-page="true">
@@ -264,24 +259,36 @@
                         <div class="row">
                             <div class="col-md-6 col-lg-3 footer_widget">
                                 <div class="inner">
-                                    <h4>About</h4>
-                                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
-                                        turpis egestas.</p>
-                                    <p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet,
-                                        antesenectus et netus et malesuada fames ac turpis egestas.</p>
+                                    <h4>友情链接</h4>
+                                    <p>
+                                        <ul>
+                                            <li><a target="_blank"
+                                                    href="http://page.china.alibaba.com/buy/trade/7.html">阿里巴巴数码</a>
+                                            </li>
+                                            <li><a target="_blank" href="http://zone.it.sohu.com/">搜狐数码</a></li>
+                                            </li>
+                                            </li>
+                                            <li><a target="_blank" href="//bbs.pchouse.com.cn">太平洋家居网论坛</a></li>
+                                            <li><a target="_blank" href="http://fans.tcl.com/portal.php">铁粉社区(TCL)</a>
+                                            </li>
+                                            <li><a target="_blank" href="http://bbs.coocaa.com/">酷开社区</a></li>
+                                        </ul>
+                                    </p>
+
                                 </div>
                             </div>
                             <div class="col-md-6 col-lg-3 footer_widget">
                                 <div class="inner">
-                                    <h4>Company</h4>
                                     <ul>
-                                        <li><a href="#">Company Overview</a></li>
-                                        <li><a href="#">Meet The Team</a></li>
-                                        <li><a href="#">Our Awesome Partners</a></li>
-                                        <li><a href="#">Our Services</a></li>
-                                        <li><a href="#">Frequently Asked Questions</a></li>
-                                        <li><a href="#">Contact Us</a></li>
-                                        <li><a href="#">Terms of Use</a></li>
+                                        <li><a target="_blank" href="http://bbs.mumayi.com/">安卓论坛</a></li>
+                                        <li><a target="_blank" href="//product.pconline.com.cn/itbk/">IT百科</a></li>
+                                        <li><a target="_blank" href="//dl.pconline.com.cn/android/">太平洋手机软件</a></li>
+                                        <li><a target="_blank"
+                                                href="https://product.pconline.com.cn/mobile/apple/1123572.html">iPhone
+                                                XR</a>
+                                        </li>
+                                        <li><a target="_blank" href="http://bbs.yunos.com">云OS社区</a></li>
+                                        <li><a target="_blank" href="http://bbs.elecfans.com">电子技术论坛</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -293,17 +300,7 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="copyright-txt">
-                                    Copyright &copy; 2019.Company name All rights reserved.<a target="_blank"
-                                        href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 text-right">
-                                <div class="footer-nav">
-                                    <a href="#">Home</a>
-                                    <a href="#">Portfolio</a>
-                                    <a href="#">Pages</a>
-                                    <a href="#">Shortcode</a>
-                                    <a href="#">Blog</a>
+                                    Copyright &copy; 2019.郑州大学北校区 All rights reserved.
                                 </div>
                             </div>
                         </div>
@@ -345,7 +342,9 @@
             el: '#app',
             data: {
                 currentPage: 1,
+                reason: '',
                 pageSize: 4,
+                feedbackUrl: document.URL,
                 seen: true,
                 param: '',
                 mid: '',
@@ -397,7 +396,7 @@
                 ],
                 content: {},
                 imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'http://img.poppur.com/1470911860.jpg'],
-                userInfo: {},
+                userInfo: '',
                 formLabelWidth: '100px',
                 form: {
                     password: ''
@@ -406,6 +405,9 @@
 
             },
             methods: {
+                toLogin() {
+                    location.href = (`login.html?backUrl=${escape(document.location.pathname + document.location.search)}`)
+                },
                 toUserDetail(id) {
                     location.href = (`info.html?id=${id}`)
                 },
@@ -434,6 +436,36 @@
 
                         }
                     })
+                },
+                report(id) {
+                    let _this = this
+                    if (_this.userInfo == '') {
+                        _this.$message.error('请先登录！')
+                        return false
+                    }
+                    axios({
+                        method: "post",
+                        headers: {
+                            'token': sessionStorage.getItem('token'),
+                            'Content-Type': 'application/json',
+                        },
+                        url: 'http://127.0.0.1:888/diss/add',
+                        data: {
+                            memberId: id,
+                            reason: _this.$data.reason
+                        }
+
+                    }).then((res) => {
+                        if (res.data.code == 0) {
+                            this.$message({
+                                message: "举报成功，我们将尽快处理您的反馈信息",
+                                type: "success"
+                            })
+                        } else {
+                            this.$message.error(res.data.content)
+                        }
+                    })
+
                 },
                 toModule() {
                     location.href = (`list.html?id=${this.$data.mid ? this.$data.mid : 1}`)
