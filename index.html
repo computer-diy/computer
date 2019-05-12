@@ -336,7 +336,9 @@
             methods: {
                 checkForm(param) {
                     let _this = this
-                    location.href = (`list.html?s=${_this.$data.s}`)
+                    let searchUrl = encodeURI(`list.html?s=${_this.$data.s}`);   //使用encodeURI编码
+                    let code = escape(_this.$data.s)
+                    location.href = (`list.html?s=${code}`)
                 },
                 toDetail() {
                     location.href = ('detail.html')

@@ -297,7 +297,8 @@
                                 <div class="inner">
                                     <h4>About</h4>
                                     <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
-                                        egestas.</p>
+                                        egestas.
+                                    </p>
                                     <p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, antesenectus
                                         et netus et malesuada fames ac turpis egestas.</p>
                                 </div>
@@ -490,7 +491,7 @@
                             spinner: 'el-icon-loading',
                             background: 'rgba(0, 0, 0, 0.7)'
                         });
-                        let _url = _this.$data.s == undefined ? `http://0.0.0.0:888/invitation/page?current=${e}` : `http://0.0.0.0:888/invitation/page?current=${e}&title=${_this.$data.s}`
+                        let _url = _this.$data.s == undefined ? `http://127.0.0.1:888/invitation/page?current=${e}` : `http://127.0.0.1:888/invitation/page?current=${e}&title=${_this.$data.s}`
                         axios({
                             method: 'get',
                             headers: {
@@ -580,8 +581,8 @@
                         axios.defaults.headers.token = sessionStorage.getItem('token')
 
                         axios.all([
-                            axios.get(`http://0.0.0.0:888/invitation/page?moduleId=${param}`),
-                            axios.get(`http://0.0.0.0:888/invitation/page?moduleId=${param}&assessTimes=11`),
+                            axios.get(`http://127.0.0.1:888/invitation/page?moduleId=${param}`),
+                            axios.get(`http://127.0.0.1:888/invitation/page?moduleId=${param}&assessTimes=11`),
                         ]).then(axios.spread(function (ires, cres) {
                             console.log('User', ires.data);
                             console.log('self', cres.data);
@@ -601,64 +602,66 @@
                 },
 
                 created: function () {
-
-
-                    window.onscroll = function () {
-                        scrollFunction()
-                    };
-
-                    function scrollFunction() {
-                        if (document.body.scrollTop > 150 || document.documentElement.scrollTop > 150) {
-                            document.getElementById("control").className = "control";
-                            document.getElementById("btnTop").style.display = "block";
-                            document.getElementById("ta").style.display = "none";
-                        } else {
-                            document.getElementById("control").className = "";
-                            document.getElementById("ta").style.display = "block"; document.getElementById("btnTop").style.display = "none";
-                        }
-                    }
-                    let param = this.GetRequest()
-                    let mid = param.id
-                    let s = param.s
-                    let _this = this
-                    _this.$data.mid = mid
-                    _this.$data.s = s
-                    let userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
-                    console.log('user', userInfo)
-                    if (userInfo != null) {
-                        _this.$data.userInfo = userInfo
-                    }
-
-                    const loading = this.$loading({
-                        lock: true,
-                        text: 'Loading',
-                        spinner: 'el-icon-loading',
-                        background: 'rgba(0, 0, 0, 0.7)'
-                    });
-                    if (s != undefined) {
-                        axios({
-                            method: 'get',
-                            headers: {
-                                'token': sessionStorage.getItem('token'),
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            url: `http://0.0.0.0:888/invitation/page?title=${s}`,
-                        }).then((ires) => {
-                            console.log('re', ires)
-                            if (ires.data.code === 0) {
-                                _this.$data.list = ires.data.content.records
-                                _this.$data.total = ires.data.content.total
-                                loading.close()
-
-                            }
-                        })
-
-                    } else {
-
-                        _this.getList(_this.$data.mid)
-                    }
-
-                }
+                    
+                    
+                                    window.onscroll = function () {
+                                        scrollFunction()
+                                    };
+                    
+                                    function scrollFunction() {
+                                        if (document.body.scrollTop > 150 || document.documentElement.scrollTop > 150) {
+                                            document.getElementById("control").className = "control";
+                                            document.getElementById("btnTop").style.display = "block";
+                                            document.getElementById("ta").style.display = "none";
+                                        } else {
+                                            document.getElementById("control").className = "";
+                                            document.getElementById("ta").style.display = "block"; document.getElementById("btnTop").style.display = "none";
+                                        }
+                                    }
+                                    let param = this.GetRequest()
+                                    let mid = param.id
+                                    let s = param.s
+                                    let _this = this
+                                    _this.$data.mid = mid
+                                    _this.$data.s = s
+                                    let userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
+                                    console.log('user', userInfo)
+                                    if (userInfo != null) {
+                                        _this.$data.userInfo = userInfo
+                                    }
+                    
+                                    const loading = this.$loading({
+                                        lock: true,
+                                        text: 'Loading',
+                                        spinner: 'el-icon-loading',
+                                        background: 'rgba(0, 0, 0, 0.7)'
+                                    });
+                                    console.error('s,',unescape(s))
+                                    if (s != undefined) {
+                                        axios({
+                                            method: 'get',
+                                            headers: {
+                                                'token': sessionStorage.getItem('token'),
+                                                'Content-Type': 'application/x-www-form-urlencoded',
+                                            },
+                                            url: `http://127.0.0.1:888/invitation/page?title=${s}`,
+                                        }).then((ires) => {
+                                            console.log('re', ires)
+                                            if (ires.data.code === 0) {
+                                                _this.$data.list = ires.data.content.records
+                                                _this.$data.total = ires.data.content.total
+                                                loading.close()
+                    
+                                            }
+                                        })
+                    
+                                    } else {
+                    
+                                        _this.getList(_this.$data.mid)
+                                    }
+                    
+                                }
+                    
             })
         </script>
 </body>
