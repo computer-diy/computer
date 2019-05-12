@@ -476,7 +476,7 @@
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: `http://0.0.0.0:888/invitation/page?current=${e}`,
+                        url: `http://127.0.0.1:888/invitation/page?current=${e}`,
                     }).then((re) => {
                         console.log(re)
                         if (re.data.code === 0) {
@@ -511,7 +511,7 @@
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: 'http://0.0.0.0:888/member/out',
+                        url: 'http://127.0.0.1:888/member/out',
                     }).then((re) => {
                         console.log('re', re)
                         if (re.data.code === 0) {
@@ -584,7 +584,7 @@
                         'token': sessionStorage.getItem('token'),
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    url: `http://0.0.0.0:888/invitation/page?moduleId=${mid}`,
+                    url: `http://127.0.0.1:888/invitation/page?moduleId=${mid}`,
                 }).then((res) => {
                     console.log('res', res)
                     if (res.data.code === 0) {

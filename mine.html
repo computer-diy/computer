@@ -253,7 +253,7 @@
                         <el-input v-model="form.mail" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="头像：" :label-width="formLabelWidth">
-                        <el-upload v-model="form.headImg" action="http://0.0.0.0:888/file/img" class="avatar-uploader"
+                        <el-upload v-model="form.headImg" action="http://127.0.0.1:888/file/img" class="avatar-uploader"
                             :show-file-list="false" :on-success="change" :before-upload="beforeAvatarUpload">
                             <img v-if="imageUrl" :src="imageUrl" class="avatar">
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -375,7 +375,7 @@
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: `http://0.0.0.0:888/access/list`,
+                        url: `http://127.0.0.1:888/access/list`,
                     }).then((re) => {
                         console.log(re)
                         if (re.data.code === 0) {
@@ -419,7 +419,7 @@
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: `http://0.0.0.0:888/reply/my_list?current=${e}`,
+                        url: `http://127.0.0.1:888/reply/my_list?current=${e}`,
                     }).then((re) => {
                         console.log(re)
                         if (re.data.code === 0) {
@@ -444,7 +444,7 @@
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: `http://0.0.0.0:888/invitation/page?memberId=${this.$data.userInfo.id}&current=${e}`,
+                        url: `http://127.0.0.1:888/invitation/page?memberId=${this.$data.userInfo.id}&current=${e}`,
                     }).then((re) => {
                         console.log(re)
                         if (re.data.code === 0) {
@@ -476,7 +476,7 @@
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/json',
                         },
-                        url: 'http://0.0.0.0:888/member/new',
+                        url: 'http://127.0.0.1:888/member/new',
                         data: this.$data.form
                     }).then((re) => {
                         console.log('re', re)
@@ -520,7 +520,7 @@
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: 'http://0.0.0.0:888/member/out',
+                        url: 'http://127.0.0.1:888/member/out',
                     }).then((re) => {
                         console.log('re', re)
                         if (re.data.code === 0) {
@@ -558,8 +558,8 @@
                         background: 'rgba(0, 0, 0, 0.7)'
                     });
                     axios.all([
-                        axios.get(`http://0.0.0.0:888/reply/my_list`),
-                        axios.get(`http://0.0.0.0:888/invitation/page?memberId=${this.$data.userInfo.id}`)
+                        axios.get(`http://127.0.0.1:888/reply/my_list`),
+                        axios.get(`http://127.0.0.1:888/invitation/page?memberId=${this.$data.userInfo.id}`)
                     ]).then(axios.spread(function (ires, sres) {
                         if (ires.data.code === 0) {
                             _this.$data.list = sres.data.content.records

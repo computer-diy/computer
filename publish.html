@@ -157,7 +157,7 @@
                         'token': sessionStorage.getItem('token'),
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    url: 'http://0.0.0.0:888/member/out',
+                    url: 'http://127.0.0.1:888/member/out',
                 }).then((re) => {
                     console.log('re', re)
                     if (re.data.code === 0) {
@@ -188,23 +188,6 @@
                 }
 
                 let data = { "content": this.content, "title": this.title, "moduleId": this.moduleId }
-<<<<<<< HEAD
-                axios({
-                    method: 'POST',
-                    data: data,
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'token': sessionStorage.getItem('token')
-                    },
-                    url: 'http://0.0.0.0:888/invitation/add',
-                }).then((re) => {
-                    if (re.data.code === 0) {
-                        this.$message({
-                            message: '发布成功 可以到我的个人信息查看',
-                            type: 'success'
-                        });
-                        setTimeout('location.href=("mine.html")', 1500)
-=======
                 if (key == 1) {
                     axios({
                         method: 'POST',
@@ -213,7 +196,7 @@
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/json',
                         },
-                        url: 'http://0.0.0.0:888/invitation/add',
+                        url: 'http://127.0.0.1:888/invitation/add',
                     }).then((re) => {
                         if (re.data.code === 0) {
                             this.$message({
@@ -237,7 +220,7 @@
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/json',
                         },
-                        url: 'http://0.0.0.0:888/invitation/invitation',
+                        url: 'http://127.0.0.1:888/invitation/invitation',
                     }).then((re) => {
                         console.log('re',re)
                         if (re.data.code === 0) {
@@ -246,7 +229,6 @@
                                 type: 'success'
                             });
                             setTimeout(`location.href=("detail.html?id=${this.$data.contenter.id}&mid=${this.$data.contenter.module_id}")`, 900)
->>>>>>> ccd5ed5919a0530a4dde9bf2f9b6131eb009ad3d
 
                         }
                     })
@@ -302,7 +284,7 @@
                     'token': sessionStorage.getItem('token'),
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                url: 'http://0.0.0.0:888/module/list',
+                url: 'http://127.0.0.1:888/module/list',
             }).then((re) => {
                 if (re.data.code === 0) {
                     console.log(re.data)
@@ -326,7 +308,7 @@
                     headers: {
                         'token': sessionStorage.getItem('token'),
                     },
-                    url: `http://0.0.0.0:888/invitation/${param.id}`,
+                    url: `http://127.0.0.1:888/invitation/${param.id}`,
                 }).then((res) => {
                     console.log('res,', res)
                     if (res.data.code === 0) {
@@ -341,7 +323,7 @@
                 })
             }
 
-            // http://0.0.0.0:888/invitation/${param.id ? param.id : 20}
+            // http://127.0.0.1:888/invitation/${param.id ? param.id : 20}
         }
     })
 
