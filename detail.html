@@ -162,7 +162,7 @@
                                 </el-col>
                             </el-row>
                         </el-card>
-                        <el-card v-if="commentList.size>0" style="margin-top:5px">
+                        <el-card v-if="total>4" style="margin-top:5px">
                             <el-pagination background layout="prev, pager, next" :total="total" :page-size="pageSize"
                                 @current-change="handleCurrentChange" :current-page.sync="currentPage"
                                 :hide-on-single-page="true">
@@ -663,7 +663,6 @@ checkForm(param) {
                         }
                         if (re.data.code === 0) {
                             _this.$data.list = re.data.content.records
-                            _this.$data.total = re.data.content.total
                             let i = re.data.content.records.length - 1 > 4 ? 4 : re.data.content.records.length - 1
                             let m = re.data.content.total > 10 ? 10 : re.data.content.total
                             while (i-- > 0) {
