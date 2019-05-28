@@ -12,7 +12,7 @@
     <!-- 引入样式 -->
     <!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
 
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <!-- <script src="https://unpkg.com/element-ui/lib/index.js"></script> -->
     <!-- 引入组件库 -->
     <script src="assets/js/element.js"></script>
     <!-- Required CSS files -->
@@ -43,39 +43,25 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-6 col-sm-3 logo-column">
-                            <a href="index.html" class="logo">
-                                <img src="assets/img/logo.png" alt="logo">
+                            <a href="index.html" class="logo" style="color:#fff;font-size:22px">
+                                <img src="assets/img/logo.png" alt="logo">&nbsp电脑DIY技术分享
                             </a>
                         </div>
                         <div class="col-6 col-sm-9 nav-column clearfix">
                             <div class="right-nav">
                                 <span class="search-icon fa fa-search"></span>
-                                <form action="#" class="search-form">
-                                    <input type="search" placeholder="search now">
+                                <form action="" class="search-form" @submit.prevent="checkForm">
+                                    <input v-model="s" type="search" placeholder="请输入关键字">
                                     <button type="submit"><i class="fa fa-search"></i></button>
                                 </form>
                             </div>
                             <nav id="menu" class="d-none d-lg-block">
                                 <ul>
-                                    <li class="current-menu-item has-child">
-                                        <a href="index.html">产品库</a>
-                                        <ul class="sub-menu" style="z-index: 1000">
-                                            <li><a href="#">硬件</a></li>
-                                            <li><a href="#">软件</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="about.html">关于</a></li>
+                                    <li><a style="cursor:pointer;color:#acbbce" @click="pub">发帖</a></li>
 
-                                    <li class="has-child">
-                                        <a href="#">建议</a>
-                                        <ul class="sub-menu" style="z-index: 1000">
-                                            <li><a href="#">留言</a></li>
-                                            <li><a href="#">反馈建议</a></li>
-                                            <li><a href="#">联系我们</a></li>
-                                        </ul>
-                                    </li>
                                     <li v-if="userInfo.name" class="has-child">
-                                        <a href="mine.html"><img :src="userInfo.headImg"
+                                        <a href="mine.html">
+                                            <img :src="userInfo.headImg"
                                                 style="width:30px;height:30px;border-radius:50%" alt="">
                                             {{userInfo.name}}</a>
                                         <ul class="sub-menu" style="z-index: 1000">
@@ -137,10 +123,10 @@
                                  -->
                             <div v-html="content.content">
                             </div>
-                            <div style="margin:30px;text-align: center">
+                            <!-- <div style="margin:30px;text-align: center">
                                 <el-button type="primary" size="medium" icon="el-icon-share">分享</el-button>
 
-                            </div>
+                            </div> -->
                             <div style="float:right;margin:10px">
                                 <el-link style="color:#e58434">回复</el-link>
                             </div>
@@ -153,7 +139,10 @@
                                 <img style="width:80px;height:80px;float:left" :src="o.head_img" alt="">
                                 <el-col :span="20" style="text-align:left;padding-left:10px">
                                     <p>
-                                        {{o.name}} <el-tag size="mini">{{o.level}}</el-tag>
+                                        <el-link type="primary" style="color:#409EFF"
+                                            @click="toUserDetail(content.member_id)">
+                                            {{o.name}}</el-link>
+                                        <el-tag size="mini">{{o.level}}</el-tag>
                                         <el-tag size="mini">{{o.levelName}}</el-tag>
                                         <span style="color:#989898">{{o.publish_time}}</span>
                                         <el-tag style="float:right" size="mini">{{index+1}}楼</el-tag>
@@ -212,38 +201,58 @@
                                         <el-dropdown-item><a href="publish.html">发起活动</a></el-dropdown-item>
                                     </el-dropdown-menu>
                                 </el-dropdown>
-                                <el-button type="primary" style="float:right;margin-left:10px" icon="el-icon-star-off"
-                                    circle></el-button>
-                                <el-button type="primary" style="float:right" icon="el-icon-edit" circle></el-button>
+                                <el-button type="primary" onclick="location.href=('publish.html')" style="float:right"
+                                    icon="el-icon-edit" circle></el-button>
                             </el-card>
-                            <el-card id="ta" style="height:220px;margin-top:20px;text-align: left;">
+                            <el-card id="ta" style="max-height:220px;margin-top:20px;text-align: left;">
                                 <p>
                                     <!-- 260 -->
                                     <span style="color:#e58434;font-size:16px;">Ta的帖子 </span>
-                                    <a href="#" style="float:right">更多>></a>
+                                    <el-link type="primary" style="color:#409EFF;float:right"
+                                        @click="toUserDetail(content.member_id)">
+                                        更多>></el-link>
                                     <ul style="list-style:none;">
-                                        <li class="text-control" v-for="o in selfList">
+                                        <li class="text-control" v-for="o in ss">
                                             <a href="#" @click="toDetail(o.id,o.module_id)"> {{o.title}}
                                             </a>
                                         </li>
+                                        <span v-if="selfList.length==0" style="color:#ccc">
+                                            <img style="width:30%"
+                                                src="data:image/jpeg;base64,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dWqNzrgwVtkOf7zf4VjySPK5eRizHqTQAO7SOzucsxyTTaKuafYNeS5IIiU/M39BQBo6JbFImuGHL8L9P8/yorVVQihVGFAwAKKAFo6jBoooAyrvRkkJe3IRv7p6H/CsiazuLc/vImA9cZH511lFAHGUV17W8DnLQxt9VBpv2O1/59of++BQByVFdb9jtf8An2h/74FH2O1/59of++BQByVFdb9jtf8An2h/74FH2O1/59of++BQByVFdb9jtf8An2h/74FH2O1/59of++BQByVFdb9jtf8An2h/74FH2O1/59of++BQByVFdb9jtf8An2h/74FH2O1/59of++BQByVFdb9jtf8An2h/74FH2O1/59of++BQByVFdb9jtf8An2h/74FH2O1/59of++BQByVFdb9jtf8An2h/74FH2O1/59of++BQByVPjiklbEaMx9hmuqFpbA5FvEP+ACpQAowAAPQUAYlporsQ1ydq/wBwHk1tRxpEgRFCqOgFOooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiig8igAppkQdXUfjUT227+Mn681GbQ9itAE5niH/LRaabqEfx/oah+yt6LSfZn/uj86AJvtkP94/kaT7bF/tflUP2dh/DSGEj+GgCb7dF6P+VJ9vi/uv8AlUPl+1JsHpQBP9vj/uSfkP8AGj7fH/ck/If41BsHpRtHpQBP9vj/ALkn5D/Gj7fH/ck/IVBtHpRsHpQBY+3Rf3X/ACo+2xejflUHl+1HlH0oAsfbIfU/lThdwn+P9DVbyGP8NO+zOf4f1oAsC5hP8YpwljPSRfzqr9lf0H504Wjf7NAFoEHoQaWqwtMfxfkKnRNgxuJ+tADqKKKACiiigD//2Q=="
+                                                alt="">
+
+                                            空空如也 ~{{selfList}}
+                                        </span>
                                     </ul>
                                 </p>
                             </el-card>
-                            <el-card style="height:330px;margin-top:20px;text-align: left;">
+
+
+
+                            <el-card style="max-height:330px;margin-top:20px;text-align: left;">
                                 <!-- 500 -->
                                 <span style="color:#e58434;font-size:16px">推荐阅读 </span>
                                 <el-carousel indicator-position="none" height="150px">
                                     <el-carousel-item v-for="item in introImgs">
                                         <img :src="item.url" alt="" style="width:100%;float:left;height:150px">
-                                        <div class="card-text-attach">{{item.name}}</div>
+                                        <div class="card-text-attach">{{item. name}}</div>
                                     </el-carousel-item>
                                 </el-carousel>
+
                                 <ul style="list-style:none;" style="margin:20px">
                                     <li class="text-control" v-for="o in introList">
-                                        <a href="#"> {{o.name}}
+                                        <a style="color:#0575ff;cursor:pointer" @click="toDetail(o.id,o.module_id)">
+                                            {{o.title}}
                                         </a>
                                     </li>
                                 </ul>
+                                <span v-if="introList.length==0" style="color:#ccc">
+                                    <img style="width:30%"
+                                        src="data:image/jpeg;base64,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dWqNzrgwVtkOf7zf4VjySPK5eRizHqTQAO7SOzucsxyTTaKuafYNeS5IIiU/M39BQBo6JbFImuGHL8L9P8/yorVVQihVGFAwAKKAFo6jBoooAyrvRkkJe3IRv7p6H/CsiazuLc/vImA9cZH511lFAHGUV17W8DnLQxt9VBpv2O1/59of++BQByVFdb9jtf8An2h/74FH2O1/59of++BQByVFdb9jtf8An2h/74FH2O1/59of++BQByVFdb9jtf8An2h/74FH2O1/59of++BQByVFdb9jtf8An2h/74FH2O1/59of++BQByVFdb9jtf8An2h/74FH2O1/59of++BQByVFdb9jtf8An2h/74FH2O1/59of++BQByVFdb9jtf8An2h/74FH2O1/59of++BQByVFdb9jtf8An2h/74FH2O1/59of++BQByVPjiklbEaMx9hmuqFpbA5FvEP+ACpQAowAAPQUAYlporsQ1ydq/wBwHk1tRxpEgRFCqOgFOooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiig8igAppkQdXUfjUT227+Mn681GbQ9itAE5niH/LRaabqEfx/oah+yt6LSfZn/uj86AJvtkP94/kaT7bF/tflUP2dh/DSGEj+GgCb7dF6P+VJ9vi/uv8AlUPl+1JsHpQBP9vj/uSfkP8AGj7fH/ck/If41BsHpRtHpQBP9vj/ALkn5D/Gj7fH/ck/IVBtHpRsHpQBY+3Rf3X/ACo+2xejflUHl+1HlH0oAsfbIfU/lThdwn+P9DVbyGP8NO+zOf4f1oAsC5hP8YpwljPSRfzqr9lf0H504Wjf7NAFoEHoQaWqwtMfxfkKnRNgxuJ+tADqKKKACiiigD//2Q=="
+                                        alt="">
+
+                                    空空如也 ~
+                                </span>
                             </el-card>
                             <el-button type="danger" id="btnTop" style="display: none;z-index: 100;width:360px"
                                 @click="toTop" icon="el-icon-top">
@@ -313,7 +322,7 @@
                         <el-input v-model="form.password" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="再次输入新密码" :label-width="formLabelWidth">
-                        <el-input autocomplete="off"></el-input>
+                        <el-input autocomplete="off" v-model="rePassword"></el-input>
                     </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
@@ -341,6 +350,7 @@
         var app = new Vue({
             el: '#app',
             data: {
+                s: '',
                 currentPage: 1,
                 reason: '',
                 pageSize: 4,
@@ -348,17 +358,24 @@
                 seen: true,
                 param: '',
                 mid: '',
+                s: '',
                 total: 0,
                 imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'http://img.poppur.com/1470911860.jpg'],
-                userInfo: {},
+                userInfo: '',
                 formLabelWidth: '140px',
                 dialogFormVisible: false,
                 seen: true,
                 editor: null,
                 commentList: [
                 ],
+                form: {
+                    password: ''
+                },
+                dialogFormVisible: false,
+                rePassword: '',
                 list: [
                 ],
+                ss: [],
                 introList: [
                     {
                         name: "入门游戏新机综合搭配"
@@ -397,14 +414,59 @@
                 content: {},
                 imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'http://img.poppur.com/1470911860.jpg'],
                 userInfo: '',
-                formLabelWidth: '100px',
+                formLabelWidth: '140px',
                 form: {
                     password: ''
                 },
                 dialogFormVisible: false,
 
             },
-            methods: {
+             methods: {
+                pub() {
+                    let _this = this
+
+                    if (_this.$data.userInfo == '') {
+                        _this.$message.error("请先登录！")
+                        return false
+                    }
+                    location.href = ("publish.html")
+
+                },
+checkForm(param) {
+                    let _this = this
+                    let searchUrl = encodeURI(`list.html?s=${_this.$data.s}`);   //使用encodeURI编码
+                    let code = escape(_this.$data.s)
+                    location.href = (`list.html?s=${code}&id=3`)
+                },
+                modify() {
+                    if(this.form.password!=this.rePassword){
+                        this.$message.error('两次输入的密码不一致，请重新输入')
+                        return false
+                    }
+                    axios({
+                        method: 'PUT',
+                        headers: {
+                            'token': sessionStorage.getItem('token'),
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        url: `http://127.0.0.1:888/member/password?password=${this.form.password}`,
+                    }).then((re) => {
+                        console.log('re', re)
+                        if (re.data.code === 2) {
+                            this.$message({
+                                message: '修改成功，请重新登录',
+                                type: 'success'
+                            });
+                            setTimeout('location.href=("login.html")', 1000)
+
+                        }
+                        else if (re.data.code === 1) {
+                            this.$message.error('登录超时')
+                        } else {
+                            this.$message.error(re.data.content)
+                        }
+                    })
+                },
                 toLogin() {
                     location.href = (`login.html?backUrl=${escape(document.location.pathname + document.location.search)}`)
                 },
@@ -471,6 +533,11 @@
                     location.href = (`list.html?id=${this.$data.mid ? this.$data.mid : 1}`)
                 },
                 publish(id) {
+                    let _this = this
+                    if (_this.$data.userInfo == '') {
+                        _this.$message.error("请先登录后再评论")
+                        return false;
+                    }
                     if (id != -1) {
                         this.content = this.editor.$textElem['0'].innerHTML
                         if (this.moduleId === '') {
@@ -486,7 +553,7 @@
                             data: {
                                 content: this.content,
                                 invitationId: id,
-                                memberId: JSON.parse(sessionStorage.getItem('userInfo')).id
+                                memberId: _this.$data.userInfo.id
                             },
                             headers: {
                                 'token': sessionStorage.getItem('token'),
@@ -568,28 +635,44 @@
                     let _this = this
                     axios.defaults.headers.post['Content-Type'] = "application/x-www-form-urlencoded"
                     axios.defaults.headers.token = sessionStorage.getItem('token')
-
                     axios.all([
-                        axios.get(`http://127.0.0.1:888/invitation/${param.id ? param.id : 20}`),
+                        axios.get(`http://127.0.0.1:888/invitation/detail/${param.id ? param.id : 20}`),
                         axios.get(`http://127.0.0.1:888/reply/list1?invitationId=${param.id ? param.id : 20}&current=${_this.$data.currentPage}&size=${_this.$data.pageSize}`),
-                        axios.get(`http://127.0.0.1:888/invitation/self`)
-                    ]).then(axios.spread(function (ires, cres, sres) {
+                        axios.get(`http://127.0.0.1:888/invitation/page?moduleId=${param.mid}`),
+                    ]).then(axios.spread(function (ires, cres, re) {
                         console.log('User', ires.data);
                         console.log('Repositories', cres.data);
-                        console.log('self', sres.data);
                         if (ires.data.code === 0) {
                             _this.$data.content = ires.data.content
+                            axios.get(`http://127.0.0.1:888/invitation/page?memberId=${ires.data.content.member_id}`).then((ress) => {
+                                if (ress.data.code === 0) {
+                                    let i = ress.data.content.records.length - 1 > 4 ? 4 : ress.data.content.records.length - 1
+                                    while (i-- > 0) {
+                                        _this.$data.selfList[i] = ress.data.content.records[i]
+                                    }
+                                    console.log('selfList', _this.$data.selfList)
+                                    _this.$data.ss = _this.$data.selfList
+                                } else {
+                                    _this.message.error(ress.data.content)
+                                }
+                            })
                         }
                         if (cres.data.code === 0) {
                             _this.$data.commentList = cres.data.content.records
                             _this.$data.total = cres.data.content.total
                         }
-                        if (sres.data.code === 0) {
-                            let i = sres.data.content.records.length - 1 > 4 ? 4 : sres.data.content.records.length - 1
+                        if (re.data.code === 0) {
+                            _this.$data.list = re.data.content.records
+                            _this.$data.total = re.data.content.total
+                            let i = re.data.content.records.length - 1 > 4 ? 4 : re.data.content.records.length - 1
+                            let m = re.data.content.total > 10 ? 10 : re.data.content.total
                             while (i-- > 0) {
-                                _this.$data.selfList[i] = sres.data.content.records[i]
+                                _this.$data.introList[i] = re.data.content.records[Math.floor(Math.random() * m)]
                             }
+                            _this.$data.introList = Array.from(new Set(_this.$data.introList))
+
                         }
+
 
                     }));
 
@@ -646,9 +729,11 @@
                 let param = _this.GetRequest()
                 _this.$data.param = param
                 _this.$data.mid = param.mid
+                _this.$data.id = param.id
                 let userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
-                console.log('user', userInfo)
+                // console.log('user', userInfo)
                 if (userInfo != null) {
+
                     _this.$data.userInfo = userInfo
                 }
                 // axios.defaults.baseURL = 'http://127.0.0.1:888/';

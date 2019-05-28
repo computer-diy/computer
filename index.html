@@ -29,8 +29,20 @@
 
 <body>
     <div id="app">
-
-
+                <el-dialog title="修改密码" :visible.sync="dialogFormVisible">
+            <el-form :model="form" style="text-align: left;">
+                <el-form-item label="新密码：" :label-width="formLabelWidth">
+                    <el-input v-model="form.password" type="password" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="再次输入新密码：" :label-width="formLabelWidth">
+                    <el-input v-model="rePassword" type="password" autocomplete="off"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="modify()">确 定</el-button>
+            </div>
+        </el-dialog>
         <div class="preloader">
             <span class="preloader-spin"></span>
         </div>
@@ -39,37 +51,22 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-6 col-sm-3 logo-column">
-                            <a href="index.html" class="logo">
-                                <img src="assets/img/logo.png" alt="logo">
+                            <a href="index.html" class="logo" style="color:#fff;font-size:22px">
+                                <img src="assets/img/logo.png" alt="logo">&nbsp电脑DIY技术分享
                             </a>
                         </div>
                         <div class="col-6 col-sm-9 nav-column clearfix">
                             <div class="right-nav">
                                 <span class="search-icon fa fa-search"></span>
                                 <form action="" class="search-form" @submit.prevent="checkForm">
-                                    <input v-model="s" type="search" placeholder="search now">
+                                    <input v-model="s" type="search" placeholder="请输入关键字">
                                     <button type="submit"><i class="fa fa-search"></i></button>
                                 </form>
                             </div>
                             <nav id="menu" class="d-none d-lg-block">
                                 <ul>
-                                    <li class="current-menu-item has-child">
-                                        <a href="index.html">产品库</a>
-                                        <ul class="sub-menu" style="z-index: 1000">
-                                            <li><a href="#">硬件</a></li>
-                                            <li><a href="#">软件</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="about.html">关于</a></li>
+                                    <li><a style="cursor:pointer;color:#acbbce" @click="pub">发帖</a></li>
 
-                                    <li class="has-child">
-                                        <a href="#">建议</a>
-                                        <ul class="sub-menu" style="z-index: 1000">
-                                            <li><a href="#">留言</a></li>
-                                            <li><a href="#">反馈建议</a></li>
-                                            <li><a href="#">联系我们</a></li>
-                                        </ul>
-                                    </li>
                                     <li v-if="userInfo.name" class="has-child">
                                         <a href="mine.html">
                                             <img :src="userInfo.headImg"
@@ -88,24 +85,27 @@
                 </div>
             </header>
             <el-carousel :interval="4000" type="card" height="400px" style="width:90%;margin:0 auto">
-                <el-carousel-item v-for="img in imgs">
+                <el-carousel-item v-for="img in imgList">
                     <el-row>
                         <el-col :span="16">
-                            <img :src="img" style="width:100%;height:400px;" alt="portfolio-image">
-                            <div class="card-text-attach">甜点的三度进化，讯景RX 590 8G 黑狼版开箱拆解&试玩体验</div>
+                            <div @click="toDetail(img[0].src)">
+                                <img :src="img[0].configValue" style="width:100%;height:400px;" alt="portfolio-image">
+                                <div class="card-text-attach text-control">{{img[0].description}}</div>
+                            </div>
                         </el-col>
                         <el-col :span="8">
                             <el-col :span="24" style="height:200px;padding: 0 5px 5px 5px">
-                                <img style="width:100%;height: 100%"
-                                    src="https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1903/27/c15/139446165_1553665581876_1024x1024.jpg"
-                                    alt="">
-                                <div class="card-text-attach">#问鼎非凡 vivo NEX世界杯决赛狂欢夜#官方回顾</div>
+                                <div @click="toDetail(img[1].src)">
+
+                                    <img style="width:100%;height: 200px" :src="img[1].configValue" alt="">
+                                    <div class="card-text-attach text-control">{{img[1].description}}</div>
+                                </div>
                             </el-col>
                             <el-col :span="24" style="height:200px;padding: 0 5px 0 5px">
-                                <img style="width:100%;height:100%"
-                                    src="https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1903/27/c15/139446194_1553665584245_1024x1024.jpg"
-                                    alt="">
-                                <div class="card-text-attach">记忆森林</div>
+                                <div @click="toDetail(img[2].src)">
+                                    <img style="width:100%;height:200px" :src="img[2].configValue" alt="">
+                                    <div class="card-text-attach text-control">{{img[2].description}}</div>
+                                </div>
 
                             </el-col>
                         </el-col>
@@ -120,8 +120,6 @@
 
                 <div class="portfolio-area sp">
                     <div class="container">
-
-
                         <el-divider></el-divider>
                         <!-- 板块部分 -->
                         <el-card class="box-card">
@@ -131,7 +129,7 @@
                             <div class="text item ">
                                 <el-row class="row-bg" justify="space-between">
                                     <el-col :span="8" v-for="o in list" :key="o.moduleId">
-                                        <div class="grid-content bg-purple">
+                                        <div class="grid-content bg-purple" v-if="o.parent_id==1">
                                             <el-card class="box-card-little elcard">
                                                 <el-row>
                                                     <div @click="toModel(o.moduleId)">
@@ -144,25 +142,96 @@
                                                             <div style="float:left;padding-left: 10px">
                                                                 <p><a @click="toModel(o.moduleId)">{{o.NAME}}</a> </p>
                                                                 <p>主题数：{{o.num}}&nbsp帖子数：{{o.num}}</p>
-                                                                <p>最新发表：<a href="detail.html">{{o.newest.title}}</a>
+                                                                <p class="text-control">最新发表：<a style="cursor:pointer" @click="toIdetail(o.newest[0].id,o.moduleId)" >{{o.newest[0].title}}</a>
                                                                 </p>
                                                             </div>
                                                     </div>
-
-
+                                                </el-row>
+                                            </el-card>
+                                        </div>
                                     </el-col>
                                 </el-row>
+                            </div>
                         </el-card>
                     </div>
-                    </el-col>
-
-                    </el-row>
                 </div>
-                </el-card>
+
+                <div class="portfolio-area sp">
+                    <div class="container">
+                        <el-divider></el-divider>
+                        <!-- 板块部分 -->
+                        <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                                <span style="float:left;font-size:22px;color:#e2761c"><b>技术交流区</b></span>
+                            </div>
+                            <div class="text item ">
+                                <el-row class="row-bg" justify="space-between">
+                                    <el-col :span="8" v-for="o in list" :key="o.moduleId">
+                                        <div class="grid-content bg-purple" v-if="o.parent_id==2">
+                                            <el-card class="box-card-little elcard">
+                                                <el-row>
+                                                    <div @click="toModel(o.moduleId)">
+                                                        <el-col :span="7">
+                                                            <img :src="o.img" @click="toModel(o.moduleId)"
+                                                                style="border-radius:10px;width:200px;height:100px;float:left"
+                                                                alt="">
+                                                        </el-col>
+                                                        <el-col :span="17">
+                                                            <div style="float:left;padding-left: 10px">
+                                                                <p><a @click="toModel(o.moduleId)">{{o.NAME}}</a> </p>
+                                                                <p>主题数：{{o.num}}&nbsp帖子数：{{o.num}}</p>
+                                                                <p class="text-control">最新发表：<a style="cursor:pointer" @click="toIdetail(o.newest[0].id,o.moduleId)" >{{o.newest[0].title}}</a>
+                                                                </p>
+                                                            </div>
+                                                    </div>
+                                                </el-row>
+                                            </el-card>
+                                        </div>
+                                    </el-col>
+                                </el-row>
+                            </div>
+                        </el-card>
+                    </div>
+                </div>
+
+                <el-divider></el-divider>
+                <div class="row">
+                    <ul class="isotope-menu">
+
+                        <li data-filter="*" class="active">
+                            <h2>站长良心推荐</h2>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row portfolio-isotop" style="background:#fff">
+
+                    <!-- CPU、内存、主板  -->
+                    <div v-for="o in otherList" class="single-portfolio col-md-4 ceramics">
+                        <div class="inner">
+                            <div class="portfolio-img">
+                                <img :src="o.img" style="width:100%;height:220px;" alt="portfolio-image">
+                                <div class="hover-content">
+                                    <div>
+                                        <a :href="o.hrefto" class="button">查看详情</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="portfolio-content">
+                                <a href="#">
+                                    <h3>{{o.price}}</h3>
+                                </a>
+                                <span>{{o.title}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- CPU、内存、主板  end-->
+
+
+                </div>
                 <!-- 板块部分 -->
 
                 <!-- 板块部分 -->
-                <el-card class="box-card">
+                <!-- <el-card class="box-card">
                     <div slot="header" class="clearfix">
                         <span style="float:left;font-size:22px;color:#e2761c"><b>产品技术讨论区</b></span>
                     </div>
@@ -173,7 +242,6 @@
                                     <el-card class="box-card-little elcard">
                                         <el-row>
                                             <div @click="toModel(o.moduleId)">
-
                                                 <el-col :span="7">
                                                     <img :src="o.img"
                                                         style="border-radius:10px;width:200px;height:100px;float:left"
@@ -186,51 +254,21 @@
                                                         <p>最新发表：{{o.newest.title}}</p>
                                                     </div>
                                             </div>
+                                        </el-row>
+                                    </el-card>
+                                </div>
                             </el-col>
                         </el-row>
-                </el-card>
+                </el-card> -->
             </div>
-            </el-col>
 
-            </el-row>
         </div>
         </el-card>
         <!-- 板块部分 -->
 
-        <el-divider></el-divider>
-        <div class="row">
-            <ul class="isotope-menu">
-
-                <li data-filter="*" class="active">
-                    <h2>站长良心推荐</h2>
-                </li>
-            </ul>
-        </div>
-        <div class="row portfolio-isotop" style="background:#fff">
-
-            <!-- CPU、内存、主板  -->
-            <div v-for="o in otherList" class="single-portfolio col-md-4 ceramics">
-                <div class="inner">
-                    <div class="portfolio-img">
-                        <img :src="o.img" style="width:100%;height:220px;" alt="portfolio-image">
-                        <div class="hover-content">
-                            <div>
-                                <a :href="o.hrefto" class="button">查看详情</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="portfolio-content">
-                        <a href="#">
-                            <h3>{{o.price}}</h3>
-                        </a>
-                        <span>{{o.title}}</span>
-                    </div>
-                </div>
-            </div>
-            <!-- CPU、内存、主板  end-->
 
 
-        </div>
+   
     </div>
     </div>
 
@@ -292,20 +330,6 @@
         </div>
     </footer>
 
-    <el-dialog title="修改密码" :visible.sync="dialogFormVisible">
-        <el-form :model="form" style="text-align: left;">
-            <el-form-item label="新密码：" :label-width="formLabelWidth">
-                <el-input v-model="form.password" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="再次输入新密码：" :label-width="formLabelWidth">
-                <el-input autocomplete="off"></el-input>
-            </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-        </div>
-    </el-dialog>
     </div>
     </div>
 
@@ -323,47 +347,40 @@
         var app = new Vue({
             el: '#app',
             data: {
+                s: '',
                 seen: true,
                 list: [],
                 otherList: [],
+                imgList: [],
                 imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/itbbs/1807/17/c19/97712070_1531817630825_1024x1024.jpg', 'https://img.pconline.com.cn/images/upload/upc/tx/photoblog/1706/04/c1/48918899_1496520194383_mthumb.jpg'],
-                userInfo: {},
+                userInfo: '',
                 formLabelWidth: '140px',
                 form: {
                     password: ''
                 },
-                s: '',
                 dialogFormVisible: false,
+                rePassword: '',
 
             },
             methods: {
-                toLogin() {
-                    location.href = (`login.html?backUrl=${escape(document.location.pathname + document.location.search)}`)
-                },
-                checkForm(param) {
-                    let _this = this
-                    let searchUrl = encodeURI(`list.html?s=${_this.$data.s}`);   //使用encodeURI编码
-                    let code = escape(_this.$data.s)
-                    location.href = (`list.html?s=${code}`)
-                },
-                toDetail() {
-                    location.href = ('detail.html')
-                },
-                toModel(id) {
-                    location.href = (`list.html?id=${id}`)
+                toIdetail(id,mid){
+                    location.href=(`detail.html?id=${id}&mid=${mid}`)
                 },
                 modify() {
+                    if(this.form.password!=this.rePassword){
+                        this.$message.error('两次输入的密码不一致，请重新输入')
+                        return false
+                    }
                     axios({
                         method: 'PUT',
                         headers: {
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: 'http://127.0.0.1:888/member/password',
-                        data: password
+                        url: `http://127.0.0.1:888/member/password?password=${this.form.password}`,
                     }).then((re) => {
                         console.log('re', re)
-                        if (re.data.code === 0) {
+                        if (re.data.code === 2) {
                             this.$message({
                                 message: '修改成功，请重新登录',
                                 type: 'success'
@@ -371,13 +388,46 @@
                             setTimeout('location.href=("login.html")', 1000)
 
                         }
-                        if (re.data.code === 1) {
+                        else if (re.data.code === 1) {
                             this.$message.error('登录超时')
                         } else {
                             this.$message.error(re.data.content)
                         }
                     })
                 },
+                pub() {
+                    
+                    let _this = this
+                    console.log('userInfo',_this.$data.userInfo,_this.$data.userInfo=='')
+                    if (_this.$data.userInfo == '') {
+                        _this.$message.error("请先登录！")
+                        return false
+                    }
+                    location.href = ("publish.html")
+
+                },
+                checkForm(param) {
+                    let _this = this
+                    let searchUrl = encodeURI(`list.html?s=${_this.$data.s}`);   //使用encodeURI编码
+                    let code = escape(_this.$data.s)
+                    location.href = (`list.html?s=${code}&id=3`)
+                },
+                toLogin() {
+                    location.href = (`login.html?backUrl=${escape(document.location.pathname + document.location.search)}`)
+                },
+                checkForm(param) {
+                    let _this = this
+                    let searchUrl = encodeURI(`list.html?s=${_this.$data.s}`);   //使用encodeURI编码
+                    let code = escape(_this.$data.s)
+                    location.href = (`list.html?s=${code}&id=3`)
+                },
+                toDetail(src) {
+                    location.href = (`${src}`)
+                },
+                toModel(id) {
+                    location.href = (`list.html?id=${id}`)
+                },
+          
                 logout() {
                     axios({
                         method: 'get',
@@ -409,16 +459,37 @@
                     let _this = this
                     axios.defaults.headers.post['Content-Type'] = "application/x-www-form-urlencoded"
                     axios.defaults.headers.token = sessionStorage.getItem('token')
-
                     axios.all([
                         axios.get(`http://127.0.0.1:888/module/list`),
-                        axios.get(`http://127.0.0.1:888/other/list`)
-                    ]).then(axios.spread(function (ires, cres) {
+                        axios.get(`http://127.0.0.1:888/other/list`),
+                        axios.get(`http://127.0.0.1:888/config/listIndexImg`)
+                    ]).then(axios.spread(function (ires, cres, jres) {
+                        console.log('ires', ires.data)
                         if (ires.data.code === 0) {
                             _this.$data.list = ires.data.content
                         }
                         if (cres.data.code === 0) {
                             _this.$data.otherList = cres.data.content
+                            loading.close()
+                        }
+                        if (jres.data.code === 0) {
+
+                            let item = []
+
+                            _this.$data.imgList = jres.data.content
+                            let _imgList = []
+                            let j = 0
+                            for (i in _this.$data.imgList) {
+                                if ((i + 1) % 3 == 0) {
+                                    for (j = i - 2; j <= i; j++) {
+                                        item.push(_this.$data.imgList[j])
+                                    }
+                                    _imgList.push(item)
+                                    item = []
+                                }
+                            }
+                            _this.$data.imgList = _imgList
+                            console.log('detail',_imgList)
                             loading.close()
                         }
                     }));

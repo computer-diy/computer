@@ -31,42 +31,42 @@
         <div class="preloader">
             <span class="preloader-spin"></span>
         </div>
+
+        <el-dialog title="修改密码" :visible.sync="dialogFormVisible">
+                <el-form :model="form" style="text-align: left;">
+                    <el-form-item label="新密码：" :label-width="formLabelWidth">
+                        <el-input v-model="form.password" type="password" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="再次输入新密码：" :label-width="formLabelWidth">
+                        <el-input v-model="rePassword" type="password" autocomplete="off"></el-input>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="modify()">确 定</el-button>
+                </div>
+            </el-dialog>
         <div class="site">
             <header>
                 <div class="container">
                     <div class="row">
                         <div class="col-6 col-sm-3 logo-column">
-                            <a href="index.html" class="logo">
-                                <img src="assets/img/logo.png" alt="logo">
+                            <a href="index.html" class="logo" style="color:#fff;font-size:22px">
+                                <img src="assets/img/logo.png" alt="logo">&nbsp电脑DIY技术分享
                             </a>
                         </div>
                         <div class="col-6 col-sm-9 nav-column clearfix">
                             <div class="right-nav">
                                 <span class="search-icon fa fa-search"></span>
-                                <form action="#" class="search-form">
-                                    <input type="search" placeholder="search now">
+                                <form action="" class="search-form" @submit.prevent="checkForm">
+                                    <input v-model="s" type="search" placeholder="请输入关键字">
                                     <button type="submit"><i class="fa fa-search"></i></button>
                                 </form>
                             </div>
                             <nav id="menu" class="d-none d-lg-block">
                                 <ul>
-                                    <li class="current-menu-item has-child">
-                                        <a href="index.html">产品库</a>
-                                        <ul class="sub-menu" style="z-index: 1000">
-                                            <li><a href="#">硬件</a></li>
-                                            <li><a href="#">软件</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="about.html">关于</a></li>
+                                    <li><a style="cursor:pointer;color:#acbbce" @click="pub">发帖</a></li>
 
-                                    <li class="has-child">
-                                        <a href="#">建议</a>
-                                        <ul class="sub-menu" style="z-index: 1000">
-                                            <li><a href="#">留言</a></li>
-                                            <li><a href="#">反馈建议</a></li>
-                                            <li><a href="#">联系我们</a></li>
-                                        </ul>
-                                    </li>
                                     <li v-if="userInfo.name" class="has-child">
                                         <a href="mine.html"><img :src="content.head_img"
                                                 style="width:30px;height:30px;border-radius:50%" alt="">
@@ -90,7 +90,7 @@
                         <el-col :span="3">
                             <div class="grid-content bg-purple" style="float:left;">
                                 <img style="width:100px;border-radius:50%;float:left;display: block"
-                                    :src="content.head_img" alt="">
+                                    :src="content.head_img?content.head_img:'https://i7.3conline.com/images/upload/upc/face/29/47/75/76/29477576_70x70'" alt="">
                                 <br>
                                 <!-- <el-button type="danger" @click="dialogFormVisible = true"
                                     style="float:left;margin-top: 10px" round>修改资料</el-button> -->
@@ -110,7 +110,7 @@
                                             <el-input v-model="reason" placeholder="请输入举报内容"></el-input>
                                             <el-button size="mini" type="text" @click="visible2 = false">取消
                                             </el-button>
-                                            <el-button type="primary" size="mini" @click="report(content.member_id)">确定
+                                            <el-button type="primary" size="mini" @click="report(content.id)">确定
                                             </el-button>
                                         </div>
                                         <el-link type="danger" slot="reference">
@@ -206,7 +206,6 @@
                                     </el-pagination>
                                 </el-card>
                             </el-tab-pane> -->
-                            <el-tab-pane label="设备">设备</el-tab-pane>
                         </el-tabs>
                     </el-col>
                     <el-col :span="8">
@@ -245,61 +244,61 @@
             </div>
 
             <footer>
-                    <div class="footer-top">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-6 col-lg-3 footer_widget">
-                                    <div class="inner">
-                                        <h4>友情链接</h4>
-                                        <p>
-                                            <ul>
-                                                <li><a target="_blank"
-                                                        href="http://page.china.alibaba.com/buy/trade/7.html">阿里巴巴数码</a>
-                                                </li>
-                                                <li><a target="_blank" href="http://zone.it.sohu.com/">搜狐数码</a></li>
-                                                </li>
-                                                </li>
-                                                <li><a target="_blank" href="//bbs.pchouse.com.cn">太平洋家居网论坛</a></li>
-                                                <li><a target="_blank" href="http://fans.tcl.com/portal.php">铁粉社区(TCL)</a>
-                                                </li>
-                                                <li><a target="_blank" href="http://bbs.coocaa.com/">酷开社区</a></li>
-                                            </ul>
-                                        </p>
-    
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-3 footer_widget">
-                                    <div class="inner">
+                <div class="footer-top">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-3 footer_widget">
+                                <div class="inner">
+                                    <h4>友情链接</h4>
+                                    <p>
                                         <ul>
-                                            <li><a target="_blank" href="http://bbs.mumayi.com/">安卓论坛</a></li>
-                                            <li><a target="_blank" href="//product.pconline.com.cn/itbk/">IT百科</a></li>
-                                            <li><a target="_blank" href="//dl.pconline.com.cn/android/">太平洋手机软件</a></li>
                                             <li><a target="_blank"
-                                                    href="https://product.pconline.com.cn/mobile/apple/1123572.html">iPhone
-                                                    XR</a>
+                                                    href="http://page.china.alibaba.com/buy/trade/7.html">阿里巴巴数码</a>
                                             </li>
-                                            <li><a target="_blank" href="http://bbs.yunos.com">云OS社区</a></li>
-                                            <li><a target="_blank" href="http://bbs.elecfans.com">电子技术论坛</a></li>
+                                            <li><a target="_blank" href="http://zone.it.sohu.com/">搜狐数码</a></li>
+                                            </li>
+                                            </li>
+                                            <li><a target="_blank" href="//bbs.pchouse.com.cn">太平洋家居网论坛</a></li>
+                                            <li><a target="_blank" href="http://fans.tcl.com/portal.php">铁粉社区(TCL)</a>
+                                            </li>
+                                            <li><a target="_blank" href="http://bbs.coocaa.com/">酷开社区</a></li>
                                         </ul>
-                                    </div>
+                                    </p>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3 footer_widget">
+                                <div class="inner">
+                                    <ul>
+                                        <li><a target="_blank" href="http://bbs.mumayi.com/">安卓论坛</a></li>
+                                        <li><a target="_blank" href="//product.pconline.com.cn/itbk/">IT百科</a></li>
+                                        <li><a target="_blank" href="//dl.pconline.com.cn/android/">太平洋手机软件</a></li>
+                                        <li><a target="_blank"
+                                                href="https://product.pconline.com.cn/mobile/apple/1123572.html">iPhone
+                                                XR</a>
+                                        </li>
+                                        <li><a target="_blank" href="http://bbs.yunos.com">云OS社区</a></li>
+                                        <li><a target="_blank" href="http://bbs.elecfans.com">电子技术论坛</a></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="footer-bottom">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="copyright-txt">
-                                        Copyright &copy; 2019.郑州大学北校区 All rights reserved.
-                                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="copyright-txt">
+                                    Copyright &copy; 2019.郑州大学北校区 All rights reserved.
                                 </div>
                             </div>
                         </div>
                     </div>
-                </footer>
+                </div>
+            </footer>
 
-
+   
         </div>
     </div>
 
@@ -317,6 +316,7 @@
         var app = new Vue({
             el: '#app',
             data: {
+                s: '',
                 reason: '',
                 imageUrl: '',
                 seen: true,
@@ -327,9 +327,14 @@
                 list: [],
                 dialogFormVisible: false,
                 activeIndex: '1',
-                userInfo: {},
+                userInfo: '',
                 activeIndex2: '1',
-                formLabelWidth: '100px',
+                formLabelWidth: '140px',
+                form: {
+                    password: ''
+                },
+                dialogFormVisible: false,
+                rePassword: '',
                 activeName3: '0',
                 commentTotal: 0,
                 commentCurrentPage: 1,
@@ -339,7 +344,52 @@
 
             },
             methods: {
-toLogin() {
+                pub() {
+                    let _this = this
+
+                    if (_this.$data.userInfo == '') {
+                        _this.$message.error("请先登录！")
+                        return false
+                    }
+                    location.href = ("publish.html")
+
+                },
+                modify() {
+                    if(this.form.password!=this.rePassword){
+                        this.$message.error('两次输入的密码不一致，请重新输入')
+                        return false
+                    }
+                    axios({
+                        method: 'PUT',
+                        headers: {
+                            'token': sessionStorage.getItem('token'),
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        url: `http://127.0.0.1:888/member/password?password=${this.form.password}`,
+                    }).then((re) => {
+                        console.log('re', re)
+                        if (re.data.code === 2) {
+                            this.$message({
+                                message: '修改成功，请重新登录',
+                                type: 'success'
+                            });
+                            setTimeout('location.href=("login.html")', 1000)
+
+                        }
+                        else if (re.data.code === 1) {
+                            this.$message.error('登录超时')
+                        } else {
+                            this.$message.error(re.data.content)
+                        }
+                    })
+                },
+                checkForm(param) {
+                    let _this = this
+                    let searchUrl = encodeURI(`list.html?s=${_this.$data.s}`);   //使用encodeURI编码
+                    let code = escape(_this.$data.s)
+                    location.href = (`list.html?s=${code}&id=3`)
+                },
+                toLogin() {
                     location.href = (`login.html?backUrl=${escape(document.location.pathname + document.location.search)}`)
                 },
                 guest(id) {
@@ -349,7 +399,7 @@ toLogin() {
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: `http://0.0.0.0:888/access/list?userId=${id}`,
+                        url: `http://127.0.0.1:888/access/list?userId=${id}`,
                     }).then((re) => {
                         console.log(re)
                         if (re.data.code === 0) {
@@ -363,6 +413,7 @@ toLogin() {
 
                 },
                 report(id) {
+                    console.log('iddd', id)
                     let _this = this
                     if (_this.userInfo == '') {
                         _this.$message.error('请先登录！')
@@ -422,7 +473,7 @@ toLogin() {
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: `http://0.0.0.0:888/reply/my_list?current=${e}`,
+                        url: `http://127.0.0.1:888/reply/my_list?current=${e}`,
                     }).then((re) => {
                         console.log(re)
                         if (re.data.code === 0) {
@@ -447,7 +498,7 @@ toLogin() {
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: `http://0.0.0.0:888/invitation/page?memberId=${this.$data.userInfo.id}&current=${e}`,
+                        url: `http://127.0.0.1:888/invitation/page?memberId=${this.$data.userInfo.id}&current=${e}`,
                     }).then((re) => {
                         console.log(re)
                         if (re.data.code === 0) {
@@ -480,7 +531,7 @@ toLogin() {
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/json',
                         },
-                        url: 'http://0.0.0.0:888/member/new',
+                        url: 'http://127.0.0.1:888/member/new',
                         data: this.$data.form
                     }).then((re) => {
                         console.log('re', re)
@@ -512,7 +563,7 @@ toLogin() {
                             'token': sessionStorage.getItem('token'),
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        url: 'http://0.0.0.0:888/member/out',
+                        url: 'http://127.0.0.1:888/member/out',
                     }).then((re) => {
                         console.log('re', re)
                         if (re.data.code === 0) {
@@ -562,9 +613,9 @@ toLogin() {
                         background: 'rgba(0, 0, 0, 0.7)'
                     });
                     axios.all([
-                        axios.get(`http://0.0.0.0:888/reply/my_list`),
-                        axios.get(`http://0.0.0.0:888/invitation/page?memberId=${id}`),
-                        axios.get(`http://0.0.0.0:888/member/info?userId=${id}`)
+                        axios.get(`http://127.0.0.1:888/reply/my_list`),
+                        axios.get(`http://127.0.0.1:888/invitation/page?memberId=${id}`),
+                        axios.get(`http://127.0.0.1:888/member/info?userId=${id}`)
                     ]).then(axios.spread(function (ires, sres, mres) {
                         if (ires.data.code === 0) {
                             _this.$data.list = sres.data.content.records
@@ -572,8 +623,8 @@ toLogin() {
                         }
                         if (ires.data.code !== 0) {
                             _this.$message.error("登录超时")
-                            sessionStorage.removeItem('userInfo')
-                            setTimeout("location.href=('index.html')", 800)
+                            // sessionStorage.removeItem('userInfo')
+                            // setTimeout("location.href=('index.html')", 800)
                         }
 
                         if (sres.data.code === 0) {
@@ -584,8 +635,8 @@ toLogin() {
                         }
                         if (sres.data.code !== 0) {
                             _this.$message.error("登录超时")
-                            sessionStorage.removeItem('userInfo')
-                            setTimeout("location.href=('index.html')", 800)
+                            // sessionStorage.removeItem('userInfo')
+                            // setTimeout("location.href=('index.html')", 800)
                         }
 
 
@@ -595,8 +646,8 @@ toLogin() {
                         }
                         if (mres.data.code !== 0) {
                             _this.$message.error("登录超时")
-                            sessionStorage.removeItem('userInfo')
-                            setTimeout("location.href=('index.html')", 800)
+                            // sessionStorage.removeItem('userInfo')
+                            // setTimeout("location.href=('index.html')", 800)
                         }
                         console.log('User', ires.data);
                         console.log('self', sres.data);
@@ -628,6 +679,9 @@ toLogin() {
                     _this.$data.userInfo = userInfo
                 }
                 if (param.id != undefined && param.id != "") {
+                    if (userInfo.id == param.id) {
+                        location.href=("mine.html")
+                    }
                     _this.$data.id = param.id
 
                     _this.getList(_this.$data.id)

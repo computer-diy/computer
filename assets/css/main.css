@@ -92,7 +92,8 @@ img {
 
 a,
 span {
-  display: inline-block; }
+  display: inline-block;
+ }
 
 .no-padding {
   padding: 0; }
@@ -107,8 +108,7 @@ span {
   background-color: #f3f6fa; }
 
 .sp {
-  padding-top: 90px;
-  padding-bottom: 90px; }
+ }
 
 .spt {
   padding-top: 90px; }

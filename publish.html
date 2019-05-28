@@ -29,6 +29,20 @@
 
 <body>
     <div id="app">
+        <el-dialog title="修改密码" :visible.sync="dialogFormVisible">
+            <el-form :model="form" style="text-align: left;">
+                <el-form-item label="新密码：" :label-width="formLabelWidth">
+                    <el-input v-model="form.password" type="password" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="再次输入新密码：" :label-width="formLabelWidth">
+                    <el-input v-model="rePassword" type="password" autocomplete="off"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="modify()">确 定</el-button>
+            </div>
+        </el-dialog>
         <div class="preloader">
             <span class="preloader-spin"></span>
         </div>
@@ -37,47 +51,38 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-6 col-sm-3 logo-column">
-                            <a href="index.html" class="logo">
-                                <img src="assets/img/logo.png" alt="logo">
+                            <a href="index.html" class="logo" style="color:#fff;font-size:22px">
+                                <img src="assets/img/logo.png" alt="logo">&nbsp电脑DIY技术分享
                             </a>
                         </div>
                         <div class="col-6 col-sm-9 nav-column clearfix">
                             <div class="right-nav">
                                 <span class="search-icon fa fa-search"></span>
-                                <form action="#" class="search-form">
-                                    <input type="search" placeholder="search now">
-                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                <form action="" class="search-form" @submit.prevent="checkForm">
+                                    <input v-model="s" type="search" placeholder="请输入关键字">
+                                    <button type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
                                 </form>
                             </div>
                             <nav id="menu" class="d-none d-lg-block">
                                 <ul>
-                                    <li class="current-menu-item has-child">
-                                        <a href="index.html">产品库</a>
-                                        <ul class="sub-menu" style="z-index: 1000">
-                                            <li><a href="#">硬件</a></li>
-                                            <li><a href="#">软件</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="about.html">关于</a></li>
-
-                                    <li class="has-child">
-                                        <a href="#">建议</a>
-                                        <ul class="sub-menu" style="z-index: 1000">
-                                            <li><a href="#">留言</a></li>
-                                            <li><a href="#">反馈建议</a></li>
-                                            <li><a href="#">联系我们</a></li>
-                                        </ul>
-                                    </li>
                                     <li v-if="userInfo.name" class="has-child">
-                                        <a href="mine.html"><img :src="userInfo.headImg"
-                                                style="width:30px;height:30px;border-radius:50%" alt="">
-                                            {{userInfo.name}}</a>
+                                        <a href="mine.html">
+                                            <img :src="userInfo.headImg" style="width:30px;height:30px;border-radius:50%" alt=""> {{userInfo.name}}
+                                        </a>
                                         <ul class="sub-menu" style="z-index: 1000">
-                                            <li><a @click="logout">注销</a></li>
-                                            <li><a @click="dialogFormVisible = true">修改密码</a></li>
+                                            <li>
+                                                <a @click="logout">注销</a>
+                                            </li>
+                                            <li>
+                                                <a @click="dialogFormVisible = true">修改密码</a>
+                                            </li>
                                         </ul>
                                     </li>
-                                    <li v-else><a style="cursor:pointer;color:#acbbce" @click="toLogin">登录</a></li>
+                                    <li v-else>
+                                        <a style="cursor:pointer;color:#acbbce" @click="toLogin">登录</a>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>
@@ -104,25 +109,24 @@
                 <div ref="editor" style="width:100%;margin:0px auto;border:1px solid #bbb;height:500px" class="text">
                 </div>
             </div>
-            <el-button v-if="param.id==undefined" type="success" @click="publish(1)"
-                style="float:right;width: 70px;height: 70px;position: fixed;bottom: 40px;right:40px"
+            <el-button v-if="param.id==undefined" type="success" @click="publish(1)" style="float:right;width: 70px;height: 70px;position: fixed;bottom: 40px;right:40px"
                 icon="el-icon-position" circle>
                 发布
             </el-button>
-            <el-button v-if="param.id" type="warning" @click="publish(2)"
-                style="float:right;width: 70px;height: 70px;position: fixed;bottom: 40px;right:40px"
+            <el-button v-if="param.id" type="warning" @click="publish(2)" style="float:right;width: 70px;height: 70px;position: fixed;bottom: 40px;right:40px"
                 icon="el-icon-position" circle>
                 修改
             </el-button>
 
         </el-card>
+
     </div>
     <!-- body container -->
 
 
 
     <script src="assets/js/editor.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
     <script src="assets/js/jquery-2.2.4.min.js"></script>
     <script src="assets/js/vendor/popper.min.js"></script>
     <script src="assets/js/vendor/bootstrap.min.js"></script>
@@ -140,19 +144,70 @@
     var app = new Vue({
         el: '#app',
         data: {
+            s: '',
             contenter: {},
             moduleId: '',
             param: null,
             title: '',
             content: '',
             options: [],
-            userInfo: {},
+            form: {
+                password: ''
+            },
+            dialogFormVisible: false,
+            rePassword: '',
+            userInfo: '',
             editor: null
         },
         methods: {
-toLogin() {
-                    location.href = (`login.html?backUrl=${escape(document.location.pathname + document.location.search)}`)
-                },
+            pub() {
+                let _this = this
+
+                if (_this.$data.userInfo == '') {
+                    _this.$message.error("请先登录！")
+                    return false
+                }
+                location.href = ("publish.html")
+
+            },
+            modify() {
+                if (this.form.password != this.rePassword) {
+                    this.$message.error('两次输入的密码不一致，请重新输入')
+                    return false
+                }
+                axios({
+                    method: 'PUT',
+                    headers: {
+                        'token': sessionStorage.getItem('token'),
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    url: `http://127.0.0.1:888/member/password?password=${this.form.password}`,
+                }).then((re) => {
+                    console.log('re', re)
+                    if (re.data.code === 2) {
+                        this.$message({
+                            message: '修改成功，请重新登录',
+                            type: 'success'
+                        });
+                        setTimeout('location.href=("login.html")', 1000)
+
+                    }
+                    else if (re.data.code === 1) {
+                        this.$message.error('登录超时')
+                    } else {
+                        this.$message.error(re.data.content)
+                    }
+                })
+            },
+            checkForm(param) {
+                let _this = this
+                let searchUrl = encodeURI(`list.html?s=${_this.$data.s}`);   //使用encodeURI编码
+                let code = escape(_this.$data.s)
+                location.href = (`list.html?s=${code}&id=3`)
+            },
+            toLogin() {
+                location.href = (`login.html?backUrl=${escape(document.location.pathname + document.location.search)}`)
+            },
             logout() {
                 axios({
                     method: 'get',
@@ -192,6 +247,7 @@ toLogin() {
 
                 let data = { "content": this.content, "title": this.title, "moduleId": this.moduleId }
                 if (key == 1) {
+                    console.log('s')
                     axios({
                         method: 'POST',
                         data: data,
@@ -201,6 +257,7 @@ toLogin() {
                         },
                         url: 'http://127.0.0.1:888/invitation/add',
                     }).then((re) => {
+                        console.log(';re', re)
                         if (re.data.code === 0) {
                             this.$message({
                                 message: '发布成功 可以到我的个人信息查看',
@@ -208,11 +265,13 @@ toLogin() {
                             });
                             setTimeout('location.href=("mine.html")', 1500)
 
+                        } else if (re.data.code === 1) {
+                            this.$message.error(re.data.content)
                         }
                     })
                 }
                 if (key == 2) {
-                    let _this = this 
+                    let _this = this
                     delete data.moduleId
                     data.id = parseInt(this.$data.param.id)
                     console.log('data', _this.$data.content)
@@ -225,7 +284,7 @@ toLogin() {
                         },
                         url: 'http://127.0.0.1:888/invitation/invitation',
                     }).then((re) => {
-                        console.log('re',re)
+                        console.log('re', re)
                         if (re.data.code === 0) {
                             this.$message({
                                 message: '修改成功',
@@ -300,7 +359,7 @@ toLogin() {
             let param = _this.GetRequest()
             let userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
             console.log('user', userInfo)
-            
+
             if (userInfo != null) {
                 this.$data.userInfo = userInfo
             }
@@ -311,7 +370,7 @@ toLogin() {
                     headers: {
                         'token': sessionStorage.getItem('token'),
                     },
-                    url: `http://127.0.0.1:888/invitation/${param.id}`,
+                    url: `http://127.0.0.1:888/invitation/detail/${param.id}`,
                 }).then((res) => {
                     console.log('res,', res)
                     if (res.data.code === 0) {
@@ -326,7 +385,7 @@ toLogin() {
                 })
             }
 
-            // http://127.0.0.1:888/invitation/${param.id ? param.id : 20}
+            // http://127.0.0.1:888/invitation/detail/${param.id ? param.id : 20}
         }
     })
 
