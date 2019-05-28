@@ -44,15 +44,15 @@
                         <div class="col-6 col-sm-9 nav-column clearfix">
                             <div class="right-nav">
                                 <span class="search-icon fa fa-search"></span>
-                                <form action="#" class="search-form">
-                                    <input type="search" placeholder="输入关键字">
+                                <form action="" class="search-form" @submit.prevent="checkForm">
+                                    <input v-model="s" type="search" placeholder="输入关键字">
                                     <button type="submit"><i class="fa fa-search"></i></button>
                                 </form>
                             </div>
                             <nav id="menu" class="d-none d-lg-block">
                                 <ul>
                                     <li><a style="cursor:pointer;color:#acbbce" @click="pub">发帖</a></li>
-                                    
+
                                     <li v-if="userInfo.name" class="has-child">
                                         <a href="mine.html"><img :src="userInfo.headImg"
                                                 style="width:30px;height:30px;border-radius:50%" alt="">
@@ -113,6 +113,8 @@
 
 
                         <el-divider></el-divider>
+                        <el-card v-if="list.length==0">还没有内容哦！</el-card>
+
                         <el-card class="elcard" v-for="o in list">
                             <el-row>
                                 <div @click="toDetial(o.id)">
@@ -130,6 +132,7 @@
                                                     {{o.topic}}{{o.title}}
 
                                                 </b></span>
+
                                             <!-- <span v-if="" style="float:right">
                                                     <el-button></el-button>
                                                 </span> -->
@@ -152,7 +155,7 @@
                             </el-pagination>
                         </el-card>
                         <br>
-                        <el-card>
+                        <el-card v-if="s==undefined">
 
                             <el-tabs v-model="activeName" type="card">
                                 <el-tab-pane label="论坛热帖" name="first">
@@ -189,9 +192,9 @@
                                         <el-dropdown-item><a href="#">发起活动</a></el-dropdown-item>
                                     </el-dropdown-menu>
                                 </el-dropdown>
-                            
+
                                 <el-button type="primary" onclick="location.href=('publish.html')" style="float:right"
-                                icon="el-icon-edit" circle></el-button>
+                                    icon="el-icon-edit" circle></el-button>
                             </el-card>
 
                             <!-- <el-card style="height:220px;margin-top:20px;text-align:left">
@@ -205,12 +208,13 @@
                                     <p><span style="color:#989898">嘉宾：</span>sss bbb</p>
                                 </div>
                             </el-card> -->
-                            <el-card style="max-height:330px;margin-top:20px;text-align: left">
+                            <el-card v-if="s==undefined" style="max-height:330px;margin-top:20px;text-align: left">
                                 <span style="color:#e58434;font-size:16px">推荐阅读 </span>
                                 <el-carousel indicator-position="none" height="150px">
-                                    <el-carousel-item v-for="item in introImgs">
-                                        <img :src="item.url" alt="" style="width:100%;float:left;height:150px">
-                                        <div class="card-text-attach">{{item. name}}</div>
+                                    <el-carousel-item v-for="o in introList">
+                                        <img :src="o.src" alt="" style="width:100%;float:left;height:150px"
+                                            @click="toDetail(o.id,o.module_id)">
+                                        <div class="card-text-attach">{{o.title}}</div>
                                     </el-carousel-item>
                                 </el-carousel>
 
@@ -222,7 +226,8 @@
                                     </li>
                                 </ul>
                             </el-card>
-                            <el-card v-if="hotkeys.length>0" id="ta" style="max-height:220px;margin-top:20px;text-align: left;">
+                            <el-card v-if="hotkeys.length>0" id="ta"
+                                style="max-height:220px;margin-top:20px;text-align: left;">
                                 <p>
                                     <span style="color:#e58434;font-size:16px">本周热帖 </span>
                                 </p>
@@ -299,19 +304,19 @@
                 </div>
             </footer>
             <el-dialog title="修改密码" :visible.sync="dialogFormVisible">
-            <el-form :model="form" style="text-align: left;">
-                <el-form-item label="新密码：" :label-width="formLabelWidth">
-                    <el-input v-model="form.password" type="password" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="再次输入新密码：" :label-width="formLabelWidth">
-                    <el-input v-model="rePassword" type="password" autocomplete="off"></el-input>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="modify()">确 定</el-button>
-            </div>
-        </el-dialog>
+                <el-form :model="form" style="text-align: left;">
+                    <el-form-item label="新密码：" :label-width="formLabelWidth">
+                        <el-input v-model="form.password" type="password" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="再次输入新密码：" :label-width="formLabelWidth">
+                        <el-input v-model="rePassword" type="password" autocomplete="off"></el-input>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="modify()">确 定</el-button>
+                </div>
+            </el-dialog>
 
         </div>
     </div>
@@ -331,7 +336,7 @@
         var app = new Vue({
             el: '#app',
             data: {
-s: '',
+                s: '',
                 link: '<a href="#" rel="external nofollow" >这是一个连接</a>',
                 seen: true,
                 items: [
@@ -368,18 +373,18 @@ s: '',
                     }
                 ],
                 content: {},
-                feedback:'',
+                feedback: '',
                 imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://s2.ax1x.com/2019/05/06/EBRZqK.jpg'],
                 userInfo: '',
                 formLabelWidth: '140px',
                 form: {
                     password: ''
                 },
-                rePassword:'',
+                rePassword: '',
                 dialogFormVisible: false,
 
             },
-             methods: {
+            methods: {
                 pub() {
                     let _this = this
 
@@ -391,7 +396,7 @@ s: '',
 
                 },
                 modify() {
-                    if(this.form.password!=this.rePassword){
+                    if (this.form.password != this.rePassword) {
                         this.$message.error('两次输入的密码不一致，请重新输入')
                         return false
                     }
@@ -420,7 +425,7 @@ s: '',
                     })
                 },
 
-checkForm(param) {
+                checkForm(param) {
                     let _this = this
                     let searchUrl = encodeURI(`list.html?s=${_this.$data.s}`);   //使用encodeURI编码
                     let code = escape(_this.$data.s)
@@ -551,8 +556,8 @@ checkForm(param) {
                                 this.$message({
                                     message: '发布成功',
                                     type: 'success'
-                                }); 
-                                this.textarea=""
+                                });
+                                this.textarea = ""
                                 this.getList(this.$data.param)
 
 
@@ -592,11 +597,17 @@ checkForm(param) {
                             loading.close()
                             let i = ires.data.content.records.length - 1 > 4 ? 4 : ires.data.content.records.length - 1
                             let m = ires.data.content.total > 10 ? 10 : ires.data.content.total
+                            let j = 0
+
                             while (i-- > 0) {
-                                _this.$data.introList[i] = ires.data.content.records[Math.floor(Math.random() * m)]
+                                let tmp = ires.data.content.records[Math.floor(Math.random() * m)]
+                                tmp.src = _this.$data.introImgs[i].url
+
+                                _this.$data.introList.push(tmp)
                             }
 
                             _this.$data.introList = Array.from(new Set(_this.$data.introList))
+                            console.log('_this.$data.introList', _this.$data.introList)
 
                         }
                         if (cres.data.code === 0) {
