@@ -75,7 +75,8 @@
                         <el-col :span="3">
                             <div class="grid-content bg-purple" style="float:left;">
                                 <img style="width:100px;height:100px;border-radius:50%;float:left;display: block"
-                                    :src="myInfo.headImg?myInfo.headImg:'https://i7.3conline.com/images/upload/upc/face/29/47/75/76/29477576_70x70'" alt="">
+                                    :src="myInfo.headImg?myInfo.headImg:'https://i7.3conline.com/images/upload/upc/face/29/47/75/76/29477576_70x70'"
+                                    alt="">
                                 <br>
                                 <el-button type="danger" @click="dialogFormVisible = true"
                                     style="float:left;margin-top: 10px" round>修改资料</el-button>
@@ -152,7 +153,6 @@
                                             <el-button @click="deletei(o.id)" type="danger" size="mini">
                                                 删除
                                             </el-button>
-
                                         </span>
                                     </p>
                                     <p>
@@ -182,7 +182,7 @@
                             <el-tab-pane label="我的评论">
 
                                 <el-table formatter resizable :data="myCommentList" style="width: 100%">
-                                    <el-table-column prop="content" label="帖子" width="320">
+                                    <el-table-column prop="content" label="帖子" width="220">
                                         <template slot-scope="scope">
                                             <div class="text-control" @click="toDetail(scope.row.invitation_id,3)"
                                                 v-html="scope.row.title"></div>
@@ -195,6 +195,19 @@
                                     </el-table-column>
                                     <el-table-column prop="reply_time" label="评论时间" width="180">
                                     </el-table-column>
+
+                                    <el-table-column label="操作" >
+                                        <template slot-scope="scope">
+                                            <span style="float:right">
+                                                <el-button @click="del(scope.row.id)" type="danger" size="mini">
+                                                    删除
+                                                </el-button>
+                                            </span>
+                                        </template>
+                                    </el-table-column>
+
+
+
                                 </el-table>
                                 <el-card style="margin-top:5px">
                                     <el-pagination background layout="prev, pager, next" :total="commentTotal"
@@ -362,7 +375,7 @@
             </el-dialog>
 
         </div>
-        
+
     </div>
 
     <!--Required JS files-->
@@ -380,7 +393,7 @@
             el: '#app',
             data: {
                 myInfo: {},
-                rePassword:'',
+                rePassword: '',
                 s: '',
                 imageUrl: '',
                 seen: true,
@@ -388,9 +401,9 @@
                 currentPage: 1,
                 list: [],
                 dialogFormVisible: false,
-                dialogFormVisible2:false,
-                form2:{
-                    password:''
+                dialogFormVisible2: false,
+                form2: {
+                    password: ''
                 },
                 activeIndex: '1',
                 userInfo: '',
@@ -401,7 +414,7 @@
                 commentCurrentPage: 1,
                 myCommentList: [],
                 guestList: [],
-                password:'',
+                password: '',
                 imgs: ['https://s2.ax1x.com/2019/05/06/EBRZqK.jpg', 'https://s2.ax1x.com/2019/05/06/EBRZqK.jpg'],
                 form: {
                     name: '',
@@ -410,7 +423,7 @@
                     mail: '',
                     headImg: '',
                     signature: '',
-                    address:''
+                    address: ''
                 }
 
             },
@@ -422,7 +435,7 @@
                     location.href = (`list.html?s=${code}&id=3`)
                 },
                 modify2() {
-                    if(this.form2.password!=this.rePassword){
+                    if (this.form2.password != this.rePassword) {
                         this.$message.error('两次输入的密码不一致，请重新输入')
                         return false
                     }
@@ -546,7 +559,26 @@
                 toDetail(id, mid) {
                     location.href = (`detail.html?id=${id}&mid=${mid}`)
                 },
-
+                del(i) {
+                    this.$confirm('此操作将永久删除您的评论, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        axios.delete('http://localhost:888/reply/ids?id=' + i).then(res => {
+                            this.getList()
+                            this.$message({
+                                type: 'success',
+                                message: '删除成功!'
+                            });
+                        })
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消删除'
+                        });
+                    });
+                },
                 deletei(i) {
                     this.$confirm('此操作将永久删除该帖子, 是否继续?', '提示', {
                         confirmButtonText: '确定',
@@ -588,7 +620,7 @@
                             // this.$data.userInfo = re.data.content
                             this.$data.myInfo = re.data.content
                             sessionStorage.setItem('userInfo', JSON.stringify(re.data.content))
-                            
+
                         }
                         else {
                             this.$message.error(re.data.content)
@@ -739,7 +771,6 @@
                 }
                 let _this = this
                 let param = _this.GetRequest()
-
                 let userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
                 if (userInfo != null) {
                     _this.$data.userInfo = userInfo

@@ -119,8 +119,8 @@
                             <el-row>
                                 <div @click="toDetial(o.id)">
                                     <img style=" width:80px;height:80px;float:left;" :src="o.img" alt="">
-                                    <div style="text-align:left;margin-left:20px;float: left">
-                                        <p><span @click="toDetial(o.id)" style="color:#989898">
+                                    <div style="text-align:left;margin-left:20px;float: left;width:80%">
+                                        <p><span @click="toDetial(o.id)" class="text-control" style="width:95%;color:#989898">
                                                 <b>
 
                                                     <span v-if="o.is_top>0">
@@ -161,7 +161,7 @@
                                 <el-tab-pane label="论坛热帖" name="first">
                                     <el-row>
                                         <el-col class="text-control" v-for="o in hotkeys" :span="8">
-                                            <a style="color:#669cfc;cursor:pointer;padding:5px;"
+                                            <a style="color:#669cfc;cursor:pointer;padding:5px;float:left" 
                                                 @click="toDetail(o.id,o.module_id)">{{o.title}}</a>
                                         </el-col>
                                     </el-row>
@@ -171,8 +171,8 @@
 
                                     <el-row>
                                         <el-col class="text-control" v-for="o in hotkeys" :span="8">
-                                            <a v-if="o.assess_times>30" style="color:#669cfc;cursor:pointer;padding:5px"
-                                                class="text-control" @click="toDetail(o.id,o.module_id)">{{o.title}}</a>
+                                            <a v-if="o.assess_times>430" style="color:#669cfc;cursor:pointer;padding:5px;float:left"
+                                                @click="toDetail(o.id,o.module_id)">{{o.title}}</a>
                                         </el-col>
                                     </el-row>
                                 </el-tab-pane>
@@ -233,9 +233,10 @@
                                 </p>
                                 <ul style="margin: 10px">
                                     <li class="text-control" v-for="(o,index) in hotkeys">
+                                           
 
-                                        <a v-if="index < 3" href="#" style="color:#e58434">{{index+1}} {{o.title}}</a>
-                                        <a v-else href="#">{{index+1}} {{o.title}}</a>
+                                        <a v-if="index < 3" href="#!" @click="toDetail(o.id,o.module_id)" style="color:#e58434">{{index+1}} {{o.title}}</a>
+                                        <a v-else  @click="toDetail(o.id,o.module_id)">{{index+1}} {{o.title}}</a>
                                     </li>
                                 </ul>
                             </el-card>

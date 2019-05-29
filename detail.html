@@ -12,6 +12,8 @@
     <!-- 引入样式 -->
     <!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
 
+    <script src="assets/js/jquery-2.2.4.min.js"></script>
+    <script src="assets/js/jquery.lazyload.min.js"></script>
     <!-- <script src="https://unpkg.com/element-ui/lib/index.js"></script> -->
     <!-- 引入组件库 -->
     <script src="assets/js/element.js"></script>
@@ -29,7 +31,6 @@
     <link rel="stylesheet" href="assets/css/slicknav.css">
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/element.css">
-
 </head>
 
 <body>
@@ -232,8 +233,9 @@
                             <el-card style="max-height:330px;margin-top:20px;text-align: left">
                                 <span style="color:#e58434;font-size:16px">推荐阅读 </span>
                                 <el-carousel indicator-position="none" height="150px">
-                                    <el-carousel-item v-for="o in introList" >
-                                        <img :src="o.src" alt="" style="width:100%;float:left;height:150px" @click="toDetail(o.id,o.module_id)">
+                                    <el-carousel-item v-for="o in introList">
+                                        <img :src="o.src" alt="" style="width:100%;float:left;height:150px"
+                                            @click="toDetail(o.id,o.module_id)">
                                         <div class="card-text-attach">{{o.title}}</div>
                                     </el-carousel-item>
                                 </el-carousel>
@@ -328,7 +330,6 @@
     <!-- 自定义组件模板 -->
     <script src="assets/js/editor.js"></script>
 
-    <script src="assets/js/jquery-2.2.4.min.js"></script>
     <script src="assets/js/vendor/popper.min.js"></script>
     <script src="assets/js/vendor/bootstrap.min.js"></script>
     <script src="assets/js/vendor/owl.carousel.min.js"></script>
@@ -338,6 +339,7 @@
     <script src="assets/js/vendor/slicknav.min.js"></script>
     <script src="assets/js/active.js"></script>
     <script>
+
         var E = window.wangEditor
         var app = new Vue({
             el: '#app',
@@ -399,7 +401,7 @@
                 dialogFormVisible: false,
 
             },
-             methods: {
+            methods: {
                 pub() {
                     let _this = this
 
@@ -410,14 +412,14 @@
                     location.href = ("publish.html")
 
                 },
-checkForm(param) {
+                checkForm(param) {
                     let _this = this
                     let searchUrl = encodeURI(`list.html?s=${_this.$data.s}`);   //使用encodeURI编码
                     let code = escape(_this.$data.s)
                     location.href = (`list.html?s=${code}&id=3`)
                 },
                 modify() {
-                    if(this.form.password!=this.rePassword){
+                    if (this.form.password != this.rePassword) {
                         this.$message.error('两次输入的密码不一致，请重新输入')
                         return false
                     }
@@ -629,7 +631,7 @@ checkForm(param) {
                                         _this.$data.selfList[i] = ress.data.content.records[i]
                                     }
 
-                                    
+
                                     console.log('selfList', _this.$data.selfList)
                                     _this.$data.ss = _this.$data.selfList
                                 } else {
@@ -651,7 +653,7 @@ checkForm(param) {
                                 _this.$data.introList.push(tmp)
                             }
                             _this.$data.introList = Array.from(new Set(_this.$data.introList))
-                            console.log('_this.$data.introList',_this.$data.introList)
+                            console.log('_this.$data.introList', _this.$data.introList)
 
                         }
 
@@ -663,6 +665,7 @@ checkForm(param) {
 
 
             mounted() {
+
                 this.editor = new E(this.$refs.toolbar, this.$refs.editor)
                 this.editor.customConfig.uploadImgShowBase64 = true // base 64 存储图片
                 this.editor.customConfig.menus = [
@@ -695,10 +698,14 @@ checkForm(param) {
                 window.onscroll = function () {
                     scrollFunction()
                 };
-
+                let f = 0
                 function scrollFunction() {
-
+                    if (f == 0) {
+                        $("img.lazy").lazyload({ effect: "fadeIn" });
+                        f++
+                    }
                     if (document.body.scrollTop > 150 || document.documentElement.scrollTop > 150) {
+
                         document.getElementById("control").className = "control";
                         document.getElementById("btnTop").style.display = "block";
                         document.getElementById("ta").style.display = "none";
